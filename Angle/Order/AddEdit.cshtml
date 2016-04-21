@@ -1,0 +1,95 @@
+﻿@model TMD.Web.ViewModels.Order.OrderViewModel
+
+@{
+    ViewBag.Title = Model.Order.OrderId > 0 ? "Update Order" : "Create Order";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddEdit", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+                <button type="submit" class="btn btn-circle blue">Save</button>
+                <a href="~/Order/Index">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>@ViewBag.Title
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Order.OrderId)
+                @Html.HiddenFor(m => m.Order.RecCreatedBy)
+                @Html.HiddenFor(m => m.Order.RecCreatedDt)
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Last Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Order.LastName, new { @class = "form-control mandatory toBeDisabled", placeholder = "Last Name", id = "LastName" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">First Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Order.FirstName, new { @class = "form-control mandatory toBeDisabled", placeholder = "First Name", id = "FirstName" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Date of Birth</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Order.DateOfBirth, new { @class = "form-control mandatory datepicker toBeDisabled", placeholder = "Select Date", id = "DateOfBirth", @readonly = "true"})
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Social Security Number</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Order.SSN, new { @class = "form-control mandatory toBeDisabled", placeholder = "Social Security Number", id = "SSN" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Order.SSN, "", new { @class = "required" })
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">County</label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.Order.CountyId, new SelectList(Model.Counties, "CountyId", "CountyName"), "Select County",new { @class = "form-control toBeDisabled", id = "CountryId" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20 orderStatusDiv">
+                    <label class="col-md-3 control-label">Order Status</label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.Order.OrderStatusId, new SelectList(Model.OrderStatuses, "StatusId", "StatusName"), new { @class = "form-control", id = "OrderStatusId" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+}
+
+
+<script>
+    
+    var isAdmin = '@User.IsInRole("Admin")';
+    jQuery(document).ready(function ($) {
+        if (isAdmin == "True") {
+            $('.' + 'toBeDisabled' + ':input').attr('readonly', true);
+            $('.orderStatusDiv').show();
+        } else {
+            $('.orderStatusDiv').hide();
+        }
+    });
+
+</script>
