@@ -1,0 +1,244 @@
+﻿@{
+    ViewBag.Title = "Manually Upload File";
+    Layout = "~/Views/Shared/_AngleLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form method="get" action="/" class="form-horizontal">
+            <div>
+                <fieldset>
+                    <legend>Manual File Upload</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Client</label>
+                        <div class="col-sm-4">
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-default" id="clientdd">
+                                    Select  <b class="caret"></b>
+                                </button>
+                                <ul role="menu" class="dropdown-menu animated zoomIn">
+                                    <li id="cl1">
+                                        <a href="#">Client 1</a>
+                                    </li>
+                                    <li id="cl2">
+                                        <a href="#">Client 2</a>
+                                    </li>
+                                    <li id="cl3">
+                                        <a href="#">Client 3</a>
+                                    </li>
+                                    <li id="cl4">
+                                        <a href="#">Client 4</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Service Provider</label>
+                        <div class="col-sm-4">
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-default" id="spdd">
+                                    Select  <b class="caret"></b>
+                                </button>
+                                <ul role="menu" class="dropdown-menu animated zoomIn">
+                                    <li id="sp1">
+                                        <a href="#">Telsta</a>
+                                    </li>
+                                    <li id="sp2">
+                                        <a href="#">Optus </a>
+                                    </li>
+                                    <li id="sp3">
+                                        <a href="#">Alpha</a>
+                                    </li>
+                                    <li id="sp4">
+                                        <a href="#">Beta</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!--File Upload Starts-->
+                
+                <div id="fileupload">
+                    <!-- Redirect browsers with JavaScript disabled to the origin page-->
+                    <noscript>
+                        <input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/">
+                    </noscript>
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload-->
+                    <div class="row fileupload-buttonbar">
+                        <div class="col-lg-7">
+                            <!-- The fileinput-button span is used to style the file input field as button-->
+                            <span class="btn btn-success fileinput-button">
+                                <i class="fa fa-fw fa-plus"></i>
+                                <span>Add files...</span>
+                                <input type="file" name="files[]" multiple="">
+                            </span>
+                            <button type="submit" class="btn btn-primary start">
+                                <i class="fa fa-fw fa-upload"></i>
+                                <span>Start upload</span>
+                            </button>
+                            <button type="reset" class="btn btn-warning cancel">
+                                <i class="fa fa-fw fa-times"></i>
+                                <span>Cancel upload</span>
+                            </button>
+                            <button type="button" class="btn btn-danger delete">
+                                <i class="fa fa-fw fa-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                            <!-- The global file processing state-->
+                            <span class="fileupload-process"></span>
+                        </div>
+                        <!-- The global progress state-->
+                        <div class="col-lg-5 fileupload-progress fade">
+                            <!-- The global progress bar-->
+                            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="progress progress-striped active">
+                                <div style="width:0%;" class="progress-bar progress-bar-success"></div>
+                            </div>
+                            <!-- The extended global progress state-->
+                            <div class="progress-extended">&nbsp;</div>
+                        </div>
+                    </div>
+                    <!-- The table listing the files available for upload/download-->
+                    <table role="presentation" class="table table-striped">
+                        <tbody class="files"></tbody>
+                    </table>
+                </div>
+
+                <!--File Upload Ends-->
+
+            </div>
+
+            <button type="button" class="btn btn-labeled btn-default align-right" onclick="window.location.href = '/Dashboard/Dashboard_V1'">
+                <span class="btn-label">
+                    <i class="fa fa-arrow-left"></i>
+                </span>Back
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $('#cl1').click(function () {
+        debugger;
+        $('#sp2').hide();
+        $('#sp3').hide();
+        $('#sp4').hide();
+        $('#spdd').text($('#sp1').text());
+    });
+
+    $('#cl2').click(function () {
+        debugger;
+        $('#sp1').hide();
+        $('#sp3').hide();
+        $('#sp4').hide();
+        $('#spdd').text($('#sp2').text());
+    });
+
+    $('#cl3').click(function () {
+        debugger;
+        $('#sp1').hide();
+        $('#sp2').hide();
+        $('#sp4').hide();
+        $('#spdd').text($('#sp3').text());
+    });
+
+    $('#cl4').click(function () {
+        debugger;
+        $('#sp1').hide();
+        $('#sp2').hide();
+        $('#sp3').hide();
+        $('#spdd').text($('#sp4').text());
+    });
+
+</script>
+
+<script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+            <button class="btn btn-primary start" disabled>
+                <em class="fa fa-fw fa-upload"></em>
+                <span>Start</span>
+            </button>
+            {% } %}
+            {% if (!i) { %}
+            <button class="btn btn-warning cancel">
+                <em class="fa fa-fw fa-times"></em>
+                <span>Cancel</span>
+            </button>
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+            <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+            <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deletewithcredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
+                <em class="fa fa-fw fa-trash"></em>
+                <span>Delete</span>
+            </button>
+            {% } else { %}
+            <button class="btn btn-warning cancel">
+                <em class="fa fa-fw fa-times"></em>
+                <span>Cancel</span>
+            </button>
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
+
+@section Styles {
+    @Styles.Render("~/bundles/fileUploadCss")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/fileUpload")
+    @Scripts.Render("~/bundles/demoUpload")
+}
+
+

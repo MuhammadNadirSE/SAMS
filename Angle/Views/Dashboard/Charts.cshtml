@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Views/Shared/_AngleLayout.cshtml";
+    ViewBag.Title = "Charts";
+}
+
+<h2>Drill Down Charts</h2>
+
+<div class="modal-body row">
+    <div class="col-md-6">
+        <div id="pie" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="column" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+</div>
+
+<div class="modal-body row">
+    <div class="dropdown align-right">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Filter By Month
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li id="threeMonths"><a href="#lineChart">Last 3 Months</a></li>
+            <li id="sixMonths"><a href="#lineChart">Last 6 Months</a></li>
+            <li id="twelveMonths"><a href="#lineChart">Last 12 Months</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="lineChart" class="modal-body row">
+    <div id="line" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+
+
+
+<script src="~/Scripts/js/highcharts.js"></script>
+<script src="~/Scripts/js/highcharts-more.js"></script>
+<script src="~/Scripts/js/modules/drilldown.js"></script>
+
+<script src="~/Scripts/js/ChartData.js"></script>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>

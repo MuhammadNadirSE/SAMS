@@ -1,0 +1,81 @@
+﻿@using TMD.Models.Common
+@{
+    var userAttendanceStatus = (EmployeeAttendanceStatus)Session["UserAttendanceStatus"];
+}
+
+<div id="statusBtn" class="" style="border-radius: 50% !important; background-color: white; height: 10px; width: 10px; margin-top: 20px; margin-left: 5px; float: left"></div>
+<li class="dropdown dropdown-user">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <span class="username username-hide-on-mobile" style="color: white">
+            Status            
+        </span>
+        <i class="fa fa-angle-down"></i>
+    </a>
+    
+    <ul class="dropdown-menu">
+        <li>
+            <a href="javascript:;" id="checkIn">
+                <i class="fa fa-circle" style="color: green"></i> Check in
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" id="away">
+                <i class="fa fa-circle" style="color: yellow"></i> Away
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" id="available">
+                <i class="fa fa-circle" style="color: greenyellow"></i> Available
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" id="checkOut" class="">
+                <i class="fa fa-circle" style="color: red"></i> Check out
+            </a>
+        </li>
+    </ul>
+</li>
+
+
+<script>
+    switch ('@userAttendanceStatus') {
+    case '@EmployeeAttendanceStatus.CheckedOut':
+        $('#statusBtn').css('background-color', 'red');
+
+        $('#checkOut').toggleClass('notAllowed');
+        $('#away').toggleClass('notAllowed');
+        $('#available').toggleClass('notAllowed');
+        break;
+
+    case '@EmployeeAttendanceStatus.CheckedIn':
+        $('#statusBtn').css('background-color', 'green');
+
+        $('#checkIn').toggleClass('notAllowed');
+        $('#available').toggleClass('notAllowed');
+        break;
+
+    case '@EmployeeAttendanceStatus.Away':
+        $('#statusBtn').css('background-color', 'yellow');
+        $('#away').toggleClass('notAllowed');
+        $('#checkIn').toggleClass('notAllowed');
+        break;
+
+    case '@EmployeeAttendanceStatus.Available':
+        $('#statusBtn').css('background-color', 'greenyellow');
+        $('#checkIn').toggleClass('notAllowed');
+        $('#available').toggleClass('notAllowed');
+        $('#away').addClass('notAllowed');
+        break;
+
+    case '@EmployeeAttendanceStatus.AlreadyAway':
+        $('#statusBtn').css('background-color', 'yellow');
+        $('#away').toggleClass('notAllowed');
+        $('#checkIn').toggleClass('notAllowed');
+        $('#available').toggleClass('notAllowed');
+
+        break;
+
+    default:
+    }
+
+</script>

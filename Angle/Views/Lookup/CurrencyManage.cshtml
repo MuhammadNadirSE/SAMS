@@ -1,0 +1,68 @@
+﻿@model TMD.Web.Models.CurrencyModel
+@{
+    ViewBag.Title = "Manage Currency";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 10;
+    Session["ParentMenu"] = 1;
+}
+
+@using (Html.BeginForm("CurrencyManage", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/Lookup/Currency">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Currency
+            </div>
+        </div>
+
+        <div class="portlet-body form formMinHeight500">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.CurrencyId)
+                @Html.HiddenFor(m => m.RecCreatedBy)
+                @Html.HiddenFor(m => m.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.CurrencyCode, "Currency Code (10 Digits)",new { @class = "col-md-3 control-label requiredLabel"})
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "form-control input-circle mandatory", placeholder = "Currency Code", @maxlength = 10 })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.CurrencySymbol, "Currency Symbol (10 Digits)", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.CurrencySymbol, new { @class = "form-control input-circle mandatory", placeholder = "Currency Symbol", @maxlength = 10 })
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ExchangeRate, "Exchange Rate", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ExchangeRate, new { @class = "form-control input-circle mandatory", placeholder = "Exchange Rate"})
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.IsBaseCurrency, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.CheckBoxFor(m => m.IsBaseCurrency, new { @class = "form-control input-circle"})
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+

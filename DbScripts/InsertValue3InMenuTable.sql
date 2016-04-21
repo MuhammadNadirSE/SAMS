@@ -1,0 +1,1 @@
+insert into Menu values('Employee Payrol','Employee Payrol',21,1,1,null,1,'PayRoll','Index','EmployeePayrol',null,null);

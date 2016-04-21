@@ -1,0 +1,59 @@
+﻿@model TMD.Web.Models.CompanyStatus
+@{
+    ViewBag.Title = "Manage Company Statuses";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 7;
+    Session["ParentMenu"] = 1;
+}
+
+@using (Html.BeginForm("CompanyStatusManage", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/Lookup/CompanyStatuses">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Company Statuses
+            </div>
+        </div>
+
+        <div class="portlet-body form formMinHeight500">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.StatusId)
+                @Html.HiddenFor(m => m.RecCreatedBy)
+                @Html.HiddenFor(m => m.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.StatusTitle, "Status Name", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.StatusTitle, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.SortOrder, "Sort Order", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SortOrder, new { @class = "form-control input-circle", placeholder = "Description", @type = "number" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.StatusDescription, "Status Description", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.StatusDescription, new { @class = "form-control input-circle", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+

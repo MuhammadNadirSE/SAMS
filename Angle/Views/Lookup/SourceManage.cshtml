@@ -1,0 +1,54 @@
+﻿@model TMD.Web.Models.Source
+@{
+    ViewBag.Title = "Manage Sources";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 6;
+    Session["ParentMenu"] = 1;
+}
+
+@using (Html.BeginForm("SourceManage", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/Lookup/Sources">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Sources
+            </div>
+        </div>
+
+        <div class="portlet-body form formMinHeight500">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.SourceId)
+                @Html.HiddenFor(m => m.RecCreatedBy)
+                @Html.HiddenFor(m => m.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.SourceName, "Source Name", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SourceName, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.SourceDescription, "Source Description", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.SourceDescription, new { @class = "form-control input-circle", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,75 @@
+﻿@model Angle.ViewModels.Client.ClientListViewModel
+
+@{
+    ViewBag.Title = "Clients";
+    Layout = "~/Views/Shared/_AngleLayout.cshtml";
+}
+
+<h2>Clients</h2>
+<button type="button" class="btn btn-pill-left btn-primary align-right fa fa-plus" onclick="window.location.href = '/Client/AddEdit'"> New</button>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="clientTable" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Account Number</th>
+                            <th>Service Provider</th>
+                            <th>Username</th>
+                            <th>Crawl Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var client in @Model.Clients)
+                    {
+                        <tr class="gradeX">
+                            <td>@Html.ActionLink(@client.ClientName, "AddEdit", new { id = @client.ClientId }) </td>
+                            <td>@client.AccountNumber</td>
+                            <td>@client.DistributorName</td>
+                            <td>@client.Username</td>
+                            <td>@client.CrawlDate</td>
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    $('#clientTable').dataTable({
+        'paging': true,  // Table pagination
+        'ordering': true,  // Column ordering 
+        'info': true,  // Bottom left status text
+        // Text translation options
+        // Note the required keywords between underscores (e.g _MENU_)
+        oLanguage: {
+            sSearch: 'Search all columns:',
+            sLengthMenu: '_MENU_ records per page',
+            info: 'Showing page _PAGE_ of _PAGES_',
+            zeroRecords: 'Nothing found - sorry',
+            infoEmpty: 'No records available',
+            infoFiltered: '(filtered from _MAX_ total records)'
+        },
+        // set columns options
+        'aoColumns': [
+            { 'bVisible': true },
+            { 'bVisible': true },
+            { 'bVisible': true },
+            { 'bVisible': false },
+            { 'bVisible': false }
+        ],
+        sDom: 'C<"clear">lfrtip',
+        colVis: {
+            order: 'alfa',
+            'buttonText': 'Show/Hide Columns'
+        }
+    });
+
+</script>

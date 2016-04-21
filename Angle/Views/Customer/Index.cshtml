@@ -1,0 +1,99 @@
+﻿@model IEnumerable<TMD.Web.Models.CustomerModel>
+    @{
+        ViewBag.Title = "Customers";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        Session["MenuKey"] = 22;
+    }
+
+<div class="container-fluid">
+    <header>
+        <h3 class="page-title">
+            @ViewBag.Title
+        </h3>        
+    </header>
+
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
+                        <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
+                        <a href="~/Expense/Create" class="btn red titleButton">Add New Customer</a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-actions">
+                        <div>
+                            <table class="responsive">
+                                <tr>
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Search </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("Search", "", new { @class = "searchInputs form-control listFilter", @id = "txtSearchCustomer", @placeholder = "Name, Phone, Email or Address" })
+                                        </div>
+                                    </td>
+                                    <td class="col-md-1"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet box blue">
+                    <table id="dataTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="tableHeaderWhite">Name</th>
+                                <th class="tableHeaderWhite">Phone</th>
+                                <th class="tableHeaderWhite">Address</th>
+                                <th class="tableHeaderWhite">Email</th>
+                                <th class="tableHeaderWhite">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink(@item.Name, "Create", new { id = item.Id }) </td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Comments</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#dataTable').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": false,
+            "bLengthChange": false,
+        });
+        $('#btnFltr').on('click', function (e) {
+            var searchN = $('#txtSearchCustomer').val();
+            oTable.fnFilter(searchN);
+        });
+        $('#btnResetFltr').on('click', function (e) {
+
+            $('#txtSearchCustomer').val('');
+            oTable.fnFilter('');
+        });
+    });
+</script>
+
+
+

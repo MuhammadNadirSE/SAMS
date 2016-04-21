@@ -1,0 +1,62 @@
+﻿@model TMD.Web.ViewModels.MunicipalViewModel
+@{
+    ViewBag.Title = "Manage Municipals";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 5;
+    Session["ParentMenu"] = 1;
+}
+
+@using (Html.BeginForm("MunicipalManage", "lookup", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/Lookup/Municipals">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Municipals
+            </div>
+        </div>
+
+        <div class="portlet-body form formMinHeight500">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Municipal.MunicipalId)
+                @Html.HiddenFor(m => m.Municipal.RecCreatedBy)
+                @Html.HiddenFor(m => m.Municipal.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Municipal.MunicipalName, "Municipal Name", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Municipal.MunicipalName, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                    </div>
+                </div>
+
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("City", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.Municipal.CityId, new SelectList(Model.CityList, "CityId", "CityName"), "Select One", new { @class = "form-control input-circle mandatory", @id = "CityId" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Municipal.MunicipalDescription, "Municipal Description", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.Municipal.MunicipalDescription, new { @class = "form-control input-circle", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+

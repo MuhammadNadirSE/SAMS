@@ -1,0 +1,1 @@
+alter table dbo.Ticket add WorkingDays float not null Default((0.0))

@@ -1,0 +1,221 @@
+﻿@model TMD.Web.ViewModels.Case.CaseViewModel
+
+@{
+    ViewBag.Title = Model.Case.CaseId > 0 ? "Update Case Information" : "Add Case Information";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddEdit", "Case", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+            <div class="tools">
+                <button type="submit" class="btn btn-circle blue" id="saveButton">Save</button>
+                <a href="~/Case/Index/@Model.OrderId">
+                    <button type="button" class="btn btn-circle default">Case List</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>@ViewBag.Title
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.OrderId)
+                @Html.HiddenFor(m => m.Case.CaseId)
+                @Html.HiddenFor(m => m.Case.RecCreatedBy)
+                @Html.HiddenFor(m => m.Case.RecCreatedDt)
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Case Number</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.CaseNumber, new { @class = "form-control", @id = "CaseNumber" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Filing Date</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.FilingDate, new { @class = "form-control datepicker", @id = "FilingDate" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">First Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.FirstName, new { @class = "form-control", @id = "FirstName" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Middle Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.MiddleName, new { @class = "form-control", @id = "MiddleName" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Last Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.LastName, new { @class = "form-control", @id = "LastName" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Social Security Number</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.SSN, new { @class = "form-control", @id = "SSN" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Case.SSN, "", new { @class = "required" })
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Disposition Date</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.DispositionDate, new { @class = "form-control datepicker", @id = "DispositionDate" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Address</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.Address, new { @class = "form-control", @id = "Address" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Aliases</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.Aliases, new { @class = "form-control", @id = "Aliases" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Sentencing</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.Sentencing, new { @class = "form-control", @id = "Sentencing" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">Case Notes</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Case.CaseNotes, new { @class = "form-control", @id = "CaseNotes" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20" style="float: right; padding-right: 15px">
+                    <button id="addCaseInfoButton" class="btn btn-circle blue">Add Charges</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                <div class="portlet box blue table-responsive">
+                    <table class="table-responsive" id="caseTable">
+                        <thead>
+                            <tr>
+                                <th style="display: none"></th>
+                                <th>Desc</th>
+                                <th>Level</th>
+                                <th>DispositionDate</th>
+                                <th>Disposition</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="caseInfoTable">
+                            @if (Model.Charges.Any())
+                            {
+                                for (int i = 0; i < Model.Charges.Count(); i++)
+                                {
+                                    <tr data-id="@i">
+                                        <td style='display:none'>
+                                            <input name='Charges.Index' type='hidden' value='@i' />
+                                            @Html.HiddenFor(model => model.Charges[i].CaseId, new { @class = "auto-resize toBeDisabled" })
+                                            @Html.HiddenFor(model => model.Charges[i].ChargeId, new { @class = "auto-resize toBeDisabled" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Charges[i].ChargeDescription, new { @class = "ChargeDescription toBeDisabled" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Charges[i].ChargeLevel, new { @class = "ChargeLevel toBeDisabled" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Charges[i].DispositionDate, new { @class = "datepicker DispositionDate toBeDisabled" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Charges[i].Disposition, new { @class = "Disposition toBeDisabled" })
+                                        </td>
+                                        <td><a class="delete deleteCaseRow" title="Delete" style="text-decoration: none;font-weight: bold;" href="javascript:;">X</a></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+}
+
+<script>
+    jQuery(document).ready(function ($) {
+
+        if ('@Model.Order.OrderStatusId' == 4) {
+            $('.' + 'toBeDisabled' + ':input').attr('readonly', true);
+            $("#addCaseInfoButton").hide();
+        }
+
+        $('#caseTable').dataTable({
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSorting": true,
+        });
+
+        $('#addCaseInfoButton').live("click", function (event) {
+            event.preventDefault();
+            debugger;
+            var index = $("#caseInfoTable").children("tr").length;
+            var id = $("#caseInfoTable").children("tr").attr("data-id");
+            if ($("#caseInfoTable").children("tr").children("td").html() == "No data available in table") {
+                index = index - 1;
+                $("#caseInfoTable").children("tr").remove();
+            }
+
+            var siteURL = $('#siteURL').val();
+            var indexCell = '<td style="display:none">' +
+                '<input name="Charges.Index" type="hidden" value = "' + index + '">' +
+                '<input id="Charges_' + index + '__CaseId" name = "Charges[' + index + '].CaseId type="hidden" />' +
+                '<input id="Charges_' + index + '__CaseId" name = "Charges[' + index + '].ChargeId type="hidden" />' +
+                '</td>';
+            var html = '<tr data-id=' + index + '>' + indexCell +
+                '<td> <input type="text" id="Charges_' + index + '__ChargeDescription" name = "Charges[' + index + '].ChargeDescription" class = "ChargeDescription"> </td>' +
+                '<td> <input type="text" id="Charges_' + index + '__ChargeLevel" name = "Charges[' + index + '].ChargeLevel" class = "ChargeLevel"> </td>' +
+                '<td> <input type="text" id="Charges_' + index + '__DispositionDate" name = "Charges[' + index + '].DispositionDate" class = "DispositionDate datepicker"> </td>' +
+                '<td> <input type="text" id="Charges_' + index + '__Disposition" name = "Charges[' + index + '].Disposition" class = "Disposition"> </td>' +
+                '<td><a class="delete deleteCaseRow" title="Delete" style="text-decoration: none;font-weight: bold;" href="javascript:;">X</a></td>';
+            $('#caseInfoTable').append(html);
+            $("tr[data-id=" + index + "] .datepicker").datepicker();
+        });
+
+        $('.deleteCaseRow').live("click", function () {
+            debugger;
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#caseTable').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
+        });
+
+        jQuery(function () {
+            $(".datepicker").datepicker();
+        });
+
+    });
+
+</script>

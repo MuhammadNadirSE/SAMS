@@ -1,0 +1,50 @@
+﻿@model Angle.ViewModels.ServiceProvider.ServiceProviderViewModel
+
+@{
+    ViewBag.Title = "Add/Update Service Provider";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form method="get" action="/" class="form-horizontal">
+            <div>
+
+                <fieldset>
+                    <legend>Service Provider Information</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Distributor.DistributorName, new { id = "DistributorName", @class = "form-control form-control-rounded" })
+                            @Html.ValidationMessageFor(m => m.Distributor.DistributorName, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Url</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Distributor.DistributorLink, new { id = "DistributorLink", @class = "form-control form-control-rounded" })
+                            @Html.ValidationMessageFor(m => m.Distributor.DistributorLink, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+
+            <button type="button" class="btn btn-labeled btn-default align-right" onclick="window.location.href = '/ServiceProvider/Index'">
+                <span class="btn-label">
+                    <i class="fa fa-arrow-left"></i>
+                </span>Back
+            </button>
+
+            <button type="submit" class="btn btn-labeled btn-default align-right">
+                <span class="btn-label">
+                    <i class="fa fa-check"></i>
+                </span>Save
+            </button>
+
+        </form>
+    </div>
+</div>
+

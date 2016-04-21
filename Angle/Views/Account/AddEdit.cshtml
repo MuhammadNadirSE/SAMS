@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Add/Update User";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form method="get" action="/" class="form-horizontal">
+            <div>
+                <fieldset>
+                    <legend>User Information</legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Role</label>
+                        <div class="col-sm-4">
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-default">
+                                    Select  <b class="caret"></b>
+                                </button>
+                                <ul role="menu" class="dropdown-menu animated zoomIn">
+                                    <li>
+                                        <a href="#">Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">User</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Client</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Username</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control form-control-rounded" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control form-control-rounded" />
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control form-control-rounded" />
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Contact</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control form-control-rounded" />
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Active/Inactive</label>
+                        <div class="col-lg-4">
+                            <div data-toggle="buttons" class="btn-group">
+                                <label class="btn btn-primary active">
+                                    <input id="option1" type="radio" name="options" checked="" />Active
+                                </label>
+                                <label class="btn btn-danger">
+                                    <input id="option2" type="radio" name="options" />Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+
+            </div>
+
+            <button type="button" class="btn btn-labeled btn-default align-right" onclick="window.location.href = '/Account/Users'">
+                <span class="btn-label">
+                    <i class="fa fa-arrow-left"></i>
+                </span>Back
+            </button>
+
+            <button type="button" class="btn btn-labeled btn-default align-right" onclick="window.location.href = 'Account/Users'">
+                <span class="btn-label">
+                    <i class="fa fa-check"></i>
+                </span>Save
+            </button>
+
+        </form>
+    </div>
+</div>
+

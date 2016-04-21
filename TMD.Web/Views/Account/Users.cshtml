@@ -1,0 +1,105 @@
+﻿@model List<TMD.Web.Models.AspNetUserModel>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 3;
+
+}
+
+@*<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="/Home/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                Users' List
+            </a>
+        </li>
+    </ul>
+</div>*@
+<header>
+    
+    @*<h3 class="page-title">
+        Users <small>(employee and members)</small>
+    </h3>*@
+    @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<div class="container-fluid">
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet box blue-hoki">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>@Model.Count User(s) - @Model.Count(x=>x.RoleId.Equals("1")) Admin(s) / @Model.Count(x => x.RoleId.Equals("2")) Client(s)
+                        </div>
+                        <div class="tools">
+                            <a href="~/Account/Create" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New User</a>
+                            @*<a href="javascript:;" class="collapse"></a>*@
+                            @*
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>*@
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive formMinHeight500">
+                            <table id="UserList" class="table table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>User Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Address</th>
+                                        @*<th>Is locked</th>
+                                        <th>Is Confirmed</th>*@
+                                        <th>Telephone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName }) </td>
+                                            <td>@item.UserName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.RoleName</td>
+                                            <td>@item.Address</td>
+                                            @*<td>@item.LockoutEnabledString</td>
+                                            <td>@item.IsConfirmedString</td>*@
+                                            <td>@item.Telephone</td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#UserList').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": false,
+            "bLengthChange": false
+        });
+    });
+</script>

@@ -1,0 +1,97 @@
+﻿@model  TMD.Web.Models.AspNetUserModel
+@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = "2";
+}
+<!-- Navigation Bar -->
+
+<!-- Page heading -->
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @*<h3 class="page-title">
+        My Profile <small>View and Edit Profile</small>
+    </h3>*@
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                <button type="submit" class="btn blue"><i class="fa fa-check"></i> Save</button>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Manage your profile
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid formMinHeight500">
+                @Html.AntiForgeryToken()
+
+                @*@Html.HiddenFor(m => m.UserId)
+            @Html.HiddenFor(m => m.oldRole)*@
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">First Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-circle mandatory", @placeholder = "Enter Name", @id = "Name" })
+                        @*<input type="text" name="FirstName" id="" class="form-control input-circle mandatory" placeholder="Enter First Name">*@
+                        @*@Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "required" })*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" name="LastName">Last Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle mandatory" })
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Email</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Address</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control input-circle mandatory" })
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Telephone</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control input-circle mandatory" })
+                    </div>
+
+                </div>
+
+
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" name="LastName">Role</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        
+    </div>
+   
+}
+
