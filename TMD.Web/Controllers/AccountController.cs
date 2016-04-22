@@ -243,10 +243,10 @@ namespace IdentitySample.Controllers
                                            var role = user.AspNetRoles.FirstOrDefault();
                             if (role.Id == Utility.MemberRoleId)
                             {
-                                return RedirectToAction("Home", "Admin");
+                                return RedirectToAction("Index", "Employees");
                             }
                             if (string.IsNullOrEmpty(returnUrl))
-                                return RedirectToAction("Home", "Admin");
+                                return RedirectToAction("Index", "Employees");
                             return RedirectToLocal(returnUrl);
                         }
                     case SignInStatus.LockedOut:
