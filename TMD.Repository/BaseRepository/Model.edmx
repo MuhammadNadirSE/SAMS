@@ -4,7 +4,21 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="200" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="City" Type="varchar" MaxLength="200" />
+          <Property Name="Street" Type="varchar" MaxLength="200" />
+          <Property Name="Address1" Type="varchar" MaxLength="500" />
+          <Property Name="Address2" Type="varchar" MaxLength="500" />
+          <Property Name="ContactID" Type="int" />
+          <Property Name="AddressType" Type="int" />
+        </EntityType>
         <EntityType Name="AllowanceType">
           <Key>
             <PropertyRef Name="TypeId" />
@@ -92,76 +106,6 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="BillDetail">
-          <Key>
-            <PropertyRef Name="BillDetailId" />
-          </Key>
-          <Property Name="BillDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" Nullable="false" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="BillDetailServiceTypeId" Type="int" />
-          <Property Name="BillDetailChargeTypeId" Type="int" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BillDetailChargeType">
-          <Key>
-            <PropertyRef Name="BillDetailChargeTypeId" />
-          </Key>
-          <Property Name="BillDetailChargeTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ChargeTypeName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ChargeTypeDescription" Type="nvarchar" MaxLength="1000" />
-          <Property Name="IsManuallyCreated" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BillDetailServiceType">
-          <Key>
-            <PropertyRef Name="BillDetailServiceTypeId" />
-          </Key>
-          <Property Name="BillDetailServiceTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceTypeName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ServiceTypeDescription" Type="nvarchar" MaxLength="1000" />
-          <Property Name="IsManuallyCreated" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CallUsageItemisation">
-          <Key>
-            <PropertyRef Name="CallUsageId" />
-          </Key>
-          <Property Name="CallUsageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" Nullable="false" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="CallUsageServiceType" Type="int" />
-          <Property Name="Date" Type="date" />
-          <Property Name="Time" Type="time" Precision="7" />
-          <Property Name="Origin" Type="nvarchar" MaxLength="100" />
-          <Property Name="Destination" Type="nvarchar" MaxLength="100" />
-          <Property Name="CalledNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="CallUsageTypeId" Type="int" />
-          <Property Name="Duration" Type="time" Precision="7" />
-          <Property Name="Volume" Type="nvarchar" MaxLength="50" />
-          <Property Name="InclGst" Type="decimal" Precision="8" Scale="8" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CallUsageServiceType">
-          <Key>
-            <PropertyRef Name="CallUsageServiceTypeId" />
-          </Key>
-          <Property Name="CallUsageServiceTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceTypeName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ServiceTypeDescription" Type="nvarchar" MaxLength="1000" />
-          <Property Name="IsManuallyCreated" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CallUsageType">
-          <Key>
-            <PropertyRef Name="CallUsageTypeId" />
-          </Key>
-          <Property Name="CallUsageTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CallUsageTypeName" Type="nvarchar" MaxLength="100" />
-          <Property Name="CallUsageTypeDescription" Type="nvarchar" MaxLength="1000" />
-          <Property Name="IsManuallyCreated" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -177,18 +121,22 @@
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="LogID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Client">
+        <EntityType Name="Contact">
           <Key>
-            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="ContactID" />
           </Key>
-          <Property Name="ClientId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="AccountNumber" Type="bigint" Nullable="false" />
-          <Property Name="Image" Type="nvarchar(max)" />
-          <Property Name="DistributorId" Type="int" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="100" />
-          <Property Name="Password" Type="nvarchar" MaxLength="200" />
-          <Property Name="CrawlDate" Type="int" />
+          <Property Name="ContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="200" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="200" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="PrimaryPhone" Type="varchar" MaxLength="30" />
+          <Property Name="HomePhone" Type="varchar" MaxLength="30" />
+          <Property Name="Fax" Type="varchar" MaxLength="30" />
+          <Property Name="CellNo" Type="varchar" MaxLength="30" />
+          <Property Name="ContactType" Type="int" />
+          <Property Name="AddressId" Type="int" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Designation">
           <Key>
@@ -202,14 +150,6 @@
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Distributor">
-          <Key>
-            <PropertyRef Name="DistributorId" />
-          </Key>
-          <Property Name="DistributorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DistributorName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="DistributorLink" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -257,69 +197,26 @@
           <Property Name="SupervisorId" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="FixedDetail">
+        <EntityType Name="Inquiry">
           <Key>
-            <PropertyRef Name="FixedDetailId" />
+            <PropertyRef Name="InquiryID" />
           </Key>
-          <Property Name="FixedDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" Nullable="false" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="ServiceTypeId" Type="int" />
-          <Property Name="ChargeTypeId" Type="int" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
+          <Property Name="InquiryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="500" />
+          <Property Name="ContactID" Type="int" />
+          <Property Name="InquiryDate" Type="datetime" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="ContactResponse" Type="varchar(max)" />
+          <Property Name="UserComments" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="FixedDirectoryCharges">
+        <EntityType Name="InquiryDetail">
           <Key>
-            <PropertyRef Name="FixedDirectoryChargesId" />
+            <PropertyRef Name="InquiryDetailID" />
           </Key>
-          <Property Name="FixedDirectoryChargesId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="ChargeTypeId" Type="int" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FixedNonStandard">
-          <Key>
-            <PropertyRef Name="FixedNonStandardCallsId" />
-          </Key>
-          <Property Name="FixedNonStandardCallsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FixedNoUsage">
-          <Key>
-            <PropertyRef Name="FixedNoUsageId" />
-          </Key>
-          <Property Name="FixedNoUsageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="SumOfInclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FixedTen">
-          <Key>
-            <PropertyRef Name="FixedTenId" />
-          </Key>
-          <Property Name="FixedTenId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="SumOfInclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ImportBatch">
-          <Key>
-            <PropertyRef Name="BatchId" />
-          </Key>
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
-          <Property Name="BillDate" Type="date" Nullable="false" />
+          <Property Name="InquiryDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InquiryID" Type="int" />
+          <Property Name="ProductID" Type="int" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -347,65 +244,89 @@
           <Property Name="Menu_MenuId" Type="int" />
           <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
         </EntityType>
-        <EntityType Name="MobileDetail">
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ProdCatTechSpecs">
+          <Property Name="ProdCatTechSpecsId" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="SpecName" Type="varchar" MaxLength="500" />
+        </EntityType>-->
+        <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="MobileDetailId" />
+            <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="MobileDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="ServiceTypeId" Type="int" />
-          <Property Name="ChargeTypeId" Type="int" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="500" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
+          <Property Name="DetailDescription" Type="varchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProductCategoryID" Type="nchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="MobilePlan">
+        <EntityType Name="ProductCategory">
           <Key>
-            <PropertyRef Name="MobilePlanId" />
+            <PropertyRef Name="ProductCategoryID" />
           </Key>
-          <Property Name="MobilePlanId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" Nullable="false" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="ChargeTypeDescription" Type="nvarchar" MaxLength="500" />
-          <Property Name="ServiceEquipmentTypeId" Type="int" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
+          <Property Name="ProductCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CatName" Type="varchar" MaxLength="500" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
+          <Property Name="DetailDescription" Type="varchar(max)" />
+          <Property Name="IsParent" Type="bit" />
+          <Property Name="ParentCatID" Type="int" />
         </EntityType>
-        <EntityType Name="ServiceEquipment">
+        <EntityType Name="ProductModel">
           <Key>
-            <PropertyRef Name="ServiceEquipmentId" />
+            <PropertyRef Name="ProductModelID" />
           </Key>
-          <Property Name="ServiceEquipmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientId" Type="bigint" Nullable="false" />
-          <Property Name="BillIssueDate" Type="date" />
-          <Property Name="ServiceNumber" Type="bigint" />
-          <Property Name="ChargeTypeDescription" Type="nvarchar" MaxLength="500" />
-          <Property Name="ServiceEquipmentTypeId" Type="int" />
-          <Property Name="InclGst" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BatchId" Type="bigint" Nullable="false" />
+          <Property Name="ProductModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="ModelName" Type="varchar" MaxLength="200" />
+          <Property Name="ModelDescription" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="ServiceEquipmentServiceType">
+        <EntityType Name="ProductTechSpecs">
           <Key>
-            <PropertyRef Name="ServiceEquipmentTypeId" />
+            <PropertyRef Name="ProductTechSpecsId" />
           </Key>
-          <Property Name="ServiceEquipmentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceTypeName" Type="varchar" MaxLength="100" />
-          <Property Name="ServiceTypeDescription" Type="varchar" MaxLength="1000" />
-          <Property Name="IsManuallyCreated" Type="bit" Nullable="false" />
+          <Property Name="ProductTechSpecsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SpecName" Type="varchar" MaxLength="500" />
+          <Property Name="SpecValue" Type="varchar" MaxLength="500" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="Quote">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="QuoteID" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="QuoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuoteReferenceNo" Type="varchar" MaxLength="200" />
+          <Property Name="Subject" Type="varchar" MaxLength="1000" />
+          <Property Name="PaymentTerms" Type="varchar" MaxLength="500" />
+          <Property Name="DeliveryTerms" Type="varchar(max)" />
+          <Property Name="InstallationTerms" Type="varchar(max)" />
+          <Property Name="FreeServiceTerms" Type="varchar(max)" />
+          <Property Name="WarrantyTerms" Type="varchar(max)" />
+          <Property Name="ValidityTerms" Type="varchar" MaxLength="500" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Make" Type="varchar" MaxLength="500" />
+          <Property Name="ModelId" Type="int" />
+        </EntityType>
+        <EntityType Name="Seeds">
+          <Key>
+            <PropertyRef Name="SeedID" />
+          </Key>
+          <Property Name="SeedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeedCode" Type="varchar" MaxLength="200" />
+          <Property Name="ValueCode" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="SeedValue">
+          <Key>
+            <PropertyRef Name="SeedValueID" />
+          </Key>
+          <Property Name="SeedValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeedID" Type="int" />
+          <Property Name="ValueCode" Type="varchar" MaxLength="100" />
+          <Property Name="ValueId" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -468,102 +389,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BillDetail_BillDetailChargeType">
-          <End Role="BillDetailChargeType" Type="Self.BillDetailChargeType" Multiplicity="0..1" />
-          <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BillDetail_BillDetailServiceType">
-          <End Role="BillDetailServiceType" Type="Self.BillDetailServiceType" Multiplicity="0..1" />
-          <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailServiceType">
-              <PropertyRef Name="BillDetailServiceTypeId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="BillDetailServiceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BillDetail_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BillDetail_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_CallUsageServiceType">
-          <End Role="CallUsageServiceType" Type="Self.CallUsageServiceType" Multiplicity="0..1" />
-          <End Role="CallUsageItemisation" Type="Self.CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CallUsageServiceType">
-              <PropertyRef Name="CallUsageServiceTypeId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="CallUsageServiceType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_CallUsageType">
-          <End Role="CallUsageType" Type="Self.CallUsageType" Multiplicity="0..1" />
-          <End Role="CallUsageItemisation" Type="Self.CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CallUsageType">
-              <PropertyRef Name="CallUsageTypeId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="CallUsageTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="CallUsageItemisation" Type="Self.CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="CallUsageItemisation" Type="Self.CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CategoryLog_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
@@ -573,18 +398,6 @@
             </Principal>
             <Dependent Role="CategoryLog">
               <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Client_Distributor">
-          <End Role="Distributor" Type="Self.Distributor" Multiplicity="1" />
-          <End Role="Client" Type="Self.Client" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Distributor">
-              <PropertyRef Name="DistributorId" />
-            </Principal>
-            <Dependent Role="Client">
-              <PropertyRef Name="DistributorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -752,219 +565,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FixedDetail_BillDetailChargeType">
-          <End Role="BillDetailChargeType" Type="Self.BillDetailChargeType" Multiplicity="0..1" />
-          <End Role="FixedDetail" Type="Self.FixedDetail" Multiplicity="*" />
+        <Association Name="FK_Inquiry">
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="0..1" />
+          <End Role="InquiryDetail" Type="Self.InquiryDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
+            <Principal Role="Inquiry">
+              <PropertyRef Name="InquiryID" />
             </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="ChargeTypeId" />
+            <Dependent Role="InquiryDetail">
+              <PropertyRef Name="InquiryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FixedDetail_BillDetailServiceType">
-          <End Role="BillDetailServiceType" Type="Self.BillDetailServiceType" Multiplicity="0..1" />
-          <End Role="FixedDetail" Type="Self.FixedDetail" Multiplicity="*" />
+        <Association Name="FK_SeedValue_Seeds">
+          <End Role="Seeds" Type="Self.Seeds" Multiplicity="0..1" />
+          <End Role="SeedValue" Type="Self.SeedValue" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BillDetailServiceType">
-              <PropertyRef Name="BillDetailServiceTypeId" />
+            <Principal Role="Seeds">
+              <PropertyRef Name="SeedID" />
             </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="ServiceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDetail_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="FixedDetail" Type="Self.FixedDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDetail_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="FixedDetail" Type="Self.FixedDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDirectoryCharges_BillDetailChargeType">
-          <End Role="BillDetailChargeType" Type="Self.BillDetailChargeType" Multiplicity="0..1" />
-          <End Role="FixedDirectoryCharges" Type="Self.FixedDirectoryCharges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Principal>
-            <Dependent Role="FixedDirectoryCharges">
-              <PropertyRef Name="ChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDirectoryCharges_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
-          <End Role="FixedDirectoryCharges" Type="Self.FixedDirectoryCharges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="FixedDirectoryCharges">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDirectoryCharges_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="FixedDirectoryCharges" Type="Self.FixedDirectoryCharges" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedDirectoryCharges">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedNonStandard_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="FixedNonStandard" Type="Self.FixedNonStandard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedNonStandard">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedNonStandardCalls_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
-          <End Role="FixedNonStandard" Type="Self.FixedNonStandard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="FixedNonStandard">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedNoUsage_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="FixedNoUsage" Type="Self.FixedNoUsage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedNoUsage">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedTen_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="FixedTen" Type="Self.FixedTen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedTen">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_BillDetailChargeType">
-          <End Role="BillDetailChargeType" Type="Self.BillDetailChargeType" Multiplicity="0..1" />
-          <End Role="MobileDetail" Type="Self.MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="ChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_BillDetailServiceType">
-          <End Role="BillDetailServiceType" Type="Self.BillDetailServiceType" Multiplicity="0..1" />
-          <End Role="MobileDetail" Type="Self.MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailServiceType">
-              <PropertyRef Name="BillDetailServiceTypeId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="ServiceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
-          <End Role="MobileDetail" Type="Self.MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="MobileDetail" Type="Self.MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceEquipment_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="ServiceEquipment" Type="Self.ServiceEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="ServiceEquipment">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceEquipment_ImportBatch">
-          <End Role="ImportBatch" Type="Self.ImportBatch" Multiplicity="1" />
-          <End Role="ServiceEquipment" Type="Self.ServiceEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="ServiceEquipment">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceEquipment_ServiceEquipmentServiceType">
-          <End Role="ServiceEquipmentServiceType" Type="Self.ServiceEquipmentServiceType" Multiplicity="0..1" />
-          <End Role="ServiceEquipment" Type="Self.ServiceEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceEquipmentServiceType">
-              <PropertyRef Name="ServiceEquipmentTypeId" />
-            </Principal>
-            <Dependent Role="ServiceEquipment">
-              <PropertyRef Name="ServiceEquipmentTypeId" />
+            <Dependent Role="SeedValue">
+              <PropertyRef Name="SeedID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1005,6 +626,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TMDModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AllowanceType" EntityType="Self.AllowanceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -1012,33 +634,24 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BillDetail" EntityType="Self.BillDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BillDetailChargeType" EntityType="Self.BillDetailChargeType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BillDetailServiceType" EntityType="Self.BillDetailServiceType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CallUsageItemisation" EntityType="Self.CallUsageItemisation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CallUsageServiceType" EntityType="Self.CallUsageServiceType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CallUsageType" EntityType="Self.CallUsageType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Distributor" EntityType="Self.Distributor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeePayroll" EntityType="Self.EmployeePayroll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeSupervisors" EntityType="Self.EmployeeSupervisors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FixedDetail" EntityType="Self.FixedDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FixedDirectoryCharges" EntityType="Self.FixedDirectoryCharges" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FixedNonStandard" EntityType="Self.FixedNonStandard" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FixedNoUsage" EntityType="Self.FixedNoUsage" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FixedTen" EntityType="Self.FixedTen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImportBatch" EntityType="Self.ImportBatch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inquiry" EntityType="Self.Inquiry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InquiryDetail" EntityType="Self.InquiryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MobileDetail" EntityType="Self.MobileDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MobilePlan" EntityType="Self.MobilePlan" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ServiceEquipment" EntityType="Self.ServiceEquipment" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ServiceEquipmentServiceType" EntityType="Self.ServiceEquipmentServiceType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductModel" EntityType="Self.ProductModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTechSpecs" EntityType="Self.ProductTechSpecs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quote" EntityType="Self.Quote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seeds" EntityType="Self.Seeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeedValue" EntityType="Self.SeedValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Attendance_Employee_EditedBy" Association="Self.FK_Attendance_Employee_EditedBy">
@@ -1049,45 +662,9 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Attendance" EntitySet="Attendance" />
           </AssociationSet>
-          <AssociationSet Name="FK_BillDetail_BillDetailChargeType" Association="Self.FK_BillDetail_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeType" />
-            <End Role="BillDetail" EntitySet="BillDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BillDetail_BillDetailServiceType" Association="Self.FK_BillDetail_BillDetailServiceType">
-            <End Role="BillDetailServiceType" EntitySet="BillDetailServiceType" />
-            <End Role="BillDetail" EntitySet="BillDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BillDetail_Client" Association="Self.FK_BillDetail_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="BillDetail" EntitySet="BillDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BillDetail_ImportBatch" Association="Self.FK_BillDetail_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="BillDetail" EntitySet="BillDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_CallUsageServiceType" Association="Self.FK_CallUsageItemisation_CallUsageServiceType">
-            <End Role="CallUsageServiceType" EntitySet="CallUsageServiceType" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_CallUsageType" Association="Self.FK_CallUsageItemisation_CallUsageType">
-            <End Role="CallUsageType" EntitySet="CallUsageType" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_Client" Association="Self.FK_CallUsageItemisation_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_ImportBatch" Association="Self.FK_CallUsageItemisation_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisation" />
-          </AssociationSet>
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Client_Distributor" Association="Self.FK_Client_Distributor">
-            <End Role="Distributor" EntitySet="Distributor" />
-            <End Role="Client" EntitySet="Client" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1141,77 +718,13 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeSupervisors" EntitySet="EmployeeSupervisors" />
           </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_BillDetailChargeType" Association="Self.FK_FixedDetail_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeType" />
-            <End Role="FixedDetail" EntitySet="FixedDetail" />
+          <AssociationSet Name="FK_Inquiry" Association="Self.FK_Inquiry">
+            <End Role="Inquiry" EntitySet="Inquiry" />
+            <End Role="InquiryDetail" EntitySet="InquiryDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_BillDetailServiceType" Association="Self.FK_FixedDetail_BillDetailServiceType">
-            <End Role="BillDetailServiceType" EntitySet="BillDetailServiceType" />
-            <End Role="FixedDetail" EntitySet="FixedDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_Client" Association="Self.FK_FixedDetail_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="FixedDetail" EntitySet="FixedDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_ImportBatch" Association="Self.FK_FixedDetail_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="FixedDetail" EntitySet="FixedDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDirectoryCharges_BillDetailChargeType" Association="Self.FK_FixedDirectoryCharges_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeType" />
-            <End Role="FixedDirectoryCharges" EntitySet="FixedDirectoryCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDirectoryCharges_Client" Association="Self.FK_FixedDirectoryCharges_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="FixedDirectoryCharges" EntitySet="FixedDirectoryCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDirectoryCharges_ImportBatch" Association="Self.FK_FixedDirectoryCharges_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="FixedDirectoryCharges" EntitySet="FixedDirectoryCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedNonStandard_ImportBatch" Association="Self.FK_FixedNonStandard_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="FixedNonStandard" EntitySet="FixedNonStandard" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedNonStandardCalls_Client" Association="Self.FK_FixedNonStandardCalls_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="FixedNonStandard" EntitySet="FixedNonStandard" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedNoUsage_ImportBatch" Association="Self.FK_FixedNoUsage_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="FixedNoUsage" EntitySet="FixedNoUsage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedTen_ImportBatch" Association="Self.FK_FixedTen_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="FixedTen" EntitySet="FixedTen" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_BillDetailChargeType" Association="Self.FK_MobileDetail_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeType" />
-            <End Role="MobileDetail" EntitySet="MobileDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_BillDetailServiceType" Association="Self.FK_MobileDetail_BillDetailServiceType">
-            <End Role="BillDetailServiceType" EntitySet="BillDetailServiceType" />
-            <End Role="MobileDetail" EntitySet="MobileDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_Client" Association="Self.FK_MobileDetail_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="MobileDetail" EntitySet="MobileDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_ImportBatch" Association="Self.FK_MobileDetail_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="MobileDetail" EntitySet="MobileDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceEquipment_Client" Association="Self.FK_ServiceEquipment_Client">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="ServiceEquipment" EntitySet="ServiceEquipment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceEquipment_ImportBatch" Association="Self.FK_ServiceEquipment_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatch" />
-            <End Role="ServiceEquipment" EntitySet="ServiceEquipment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceEquipment_ServiceEquipmentServiceType" Association="Self.FK_ServiceEquipment_ServiceEquipmentServiceType">
-            <End Role="ServiceEquipmentServiceType" EntitySet="ServiceEquipmentServiceType" />
-            <End Role="ServiceEquipment" EntitySet="ServiceEquipment" />
+          <AssociationSet Name="FK_SeedValue_Seeds" Association="Self.FK_SeedValue_Seeds">
+            <End Role="Seeds" EntitySet="Seeds" />
+            <End Role="SeedValue" EntitySet="SeedValue" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Employee" Association="Self.FK_Ticket_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -1336,132 +849,24 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="BillDetails" EntityType="TMD.Models.DomainModels.BillDetail" />
-          <EntitySet Name="BillDetailChargeTypes" EntityType="TMD.Models.DomainModels.BillDetailChargeType" />
-          <EntitySet Name="BillDetailServiceTypes" EntityType="TMD.Models.DomainModels.BillDetailServiceType" />
-          <EntitySet Name="CallUsageItemisations" EntityType="TMD.Models.DomainModels.CallUsageItemisation" />
-          <EntitySet Name="CallUsageServiceTypes" EntityType="TMD.Models.DomainModels.CallUsageServiceType" />
-          <EntitySet Name="CallUsageTypes" EntityType="TMD.Models.DomainModels.CallUsageType" />
-          <EntitySet Name="FixedDetails" EntityType="TMD.Models.DomainModels.FixedDetail" />
-          <EntitySet Name="FixedDirectoryCharges" EntityType="TMD.Models.DomainModels.FixedDirectoryCharge" />
-          <EntitySet Name="FixedNonStandards" EntityType="TMD.Models.DomainModels.FixedNonStandard" />
-          <EntitySet Name="FixedNoUsages" EntityType="TMD.Models.DomainModels.FixedNoUsage" />
-          <EntitySet Name="FixedTens" EntityType="TMD.Models.DomainModels.FixedTen" />
-          <EntitySet Name="ImportBatches" EntityType="TMD.Models.DomainModels.ImportBatch" />
-          <EntitySet Name="MobileDetails" EntityType="TMD.Models.DomainModels.MobileDetail" />
-          <EntitySet Name="MobilePlans" EntityType="TMD.Models.DomainModels.MobilePlan" />
-          <EntitySet Name="ServiceEquipments" EntityType="TMD.Models.DomainModels.ServiceEquipment" />
-          <EntitySet Name="ServiceEquipmentServiceTypes" EntityType="TMD.Models.DomainModels.ServiceEquipmentServiceType" />
-          <AssociationSet Name="FK_BillDetail_ImportBatch" Association="TMD.Models.DomainModels.FK_BillDetail_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="BillDetail" EntitySet="BillDetails" />
+          <EntitySet Name="Addresses" EntityType="TMD.Models.DomainModels.Address" />
+          <EntitySet Name="Contacts" EntityType="TMD.Models.DomainModels.Contact" />
+          <EntitySet Name="Inquiries" EntityType="TMD.Models.DomainModels.Inquiry" />
+          <EntitySet Name="InquiryDetails" EntityType="TMD.Models.DomainModels.InquiryDetail" />
+          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
+          <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
+          <EntitySet Name="ProductModels" EntityType="TMD.Models.DomainModels.ProductModel" />
+          <EntitySet Name="ProductTechSpecs" EntityType="TMD.Models.DomainModels.ProductTechSpec" />
+          <EntitySet Name="Quotes" EntityType="TMD.Models.DomainModels.Quote" />
+          <EntitySet Name="Seeds" EntityType="TMD.Models.DomainModels.Seed" />
+          <EntitySet Name="SeedValues" EntityType="TMD.Models.DomainModels.SeedValue" />
+          <AssociationSet Name="FK_Inquiry" Association="TMD.Models.DomainModels.FK_Inquiry">
+            <End Role="Inquiry" EntitySet="Inquiries" />
+            <End Role="InquiryDetail" EntitySet="InquiryDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_BillDetailChargeType" Association="TMD.Models.DomainModels.FK_FixedDetail_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeTypes" />
-            <End Role="FixedDetail" EntitySet="FixedDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDirectoryCharges_BillDetailChargeType" Association="TMD.Models.DomainModels.FK_FixedDirectoryCharges_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeTypes" />
-            <End Role="FixedDirectoryCharge" EntitySet="FixedDirectoryCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_BillDetailChargeType" Association="TMD.Models.DomainModels.FK_MobileDetail_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeTypes" />
-            <End Role="MobileDetail" EntitySet="MobileDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_BillDetailServiceType" Association="TMD.Models.DomainModels.FK_FixedDetail_BillDetailServiceType">
-            <End Role="BillDetailServiceType" EntitySet="BillDetailServiceTypes" />
-            <End Role="FixedDetail" EntitySet="FixedDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_BillDetailServiceType" Association="TMD.Models.DomainModels.FK_MobileDetail_BillDetailServiceType">
-            <End Role="BillDetailServiceType" EntitySet="BillDetailServiceTypes" />
-            <End Role="MobileDetail" EntitySet="MobileDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_CallUsageServiceType" Association="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageServiceType">
-            <End Role="CallUsageServiceType" EntitySet="CallUsageServiceTypes" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_CallUsageType" Association="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageType">
-            <End Role="CallUsageType" EntitySet="CallUsageTypes" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_ImportBatch" Association="TMD.Models.DomainModels.FK_CallUsageItemisation_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_ImportBatch" Association="TMD.Models.DomainModels.FK_FixedDetail_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="FixedDetail" EntitySet="FixedDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDirectoryCharges_ImportBatch" Association="TMD.Models.DomainModels.FK_FixedDirectoryCharges_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="FixedDirectoryCharge" EntitySet="FixedDirectoryCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedNonStandard_ImportBatch" Association="TMD.Models.DomainModels.FK_FixedNonStandard_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="FixedNonStandard" EntitySet="FixedNonStandards" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedNoUsage_ImportBatch" Association="TMD.Models.DomainModels.FK_FixedNoUsage_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="FixedNoUsage" EntitySet="FixedNoUsages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedTen_ImportBatch" Association="TMD.Models.DomainModels.FK_FixedTen_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="FixedTen" EntitySet="FixedTens" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_ImportBatch" Association="TMD.Models.DomainModels.FK_MobileDetail_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="MobileDetail" EntitySet="MobileDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceEquipment_ImportBatch" Association="TMD.Models.DomainModels.FK_ServiceEquipment_ImportBatch">
-            <End Role="ImportBatch" EntitySet="ImportBatches" />
-            <End Role="ServiceEquipment" EntitySet="ServiceEquipments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceEquipment_ServiceEquipmentServiceType" Association="TMD.Models.DomainModels.FK_ServiceEquipment_ServiceEquipmentServiceType">
-            <End Role="ServiceEquipmentServiceType" EntitySet="ServiceEquipmentServiceTypes" />
-            <End Role="ServiceEquipment" EntitySet="ServiceEquipments" />
-          </AssociationSet>
-          <EntitySet Name="Distributors" EntityType="TMD.Models.DomainModels.Distributor" />
-          <EntitySet Name="Clients" EntityType="TMD.Models.DomainModels.Client" />
-          <AssociationSet Name="FK_BillDetail_Client" Association="TMD.Models.DomainModels.FK_BillDetail_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="BillDetail" EntitySet="BillDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CallUsageItemisation_Client" Association="TMD.Models.DomainModels.FK_CallUsageItemisation_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="CallUsageItemisation" EntitySet="CallUsageItemisations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Client_Distributor" Association="TMD.Models.DomainModels.FK_Client_Distributor">
-            <End Role="Distributor" EntitySet="Distributors" />
-            <End Role="Client" EntitySet="Clients" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDetail_Client" Association="TMD.Models.DomainModels.FK_FixedDetail_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="FixedDetail" EntitySet="FixedDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedDirectoryCharges_Client" Association="TMD.Models.DomainModels.FK_FixedDirectoryCharges_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="FixedDirectoryCharge" EntitySet="FixedDirectoryCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FixedNonStandardCalls_Client" Association="TMD.Models.DomainModels.FK_FixedNonStandardCalls_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="FixedNonStandard" EntitySet="FixedNonStandards" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MobileDetail_Client" Association="TMD.Models.DomainModels.FK_MobileDetail_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="MobileDetail" EntitySet="MobileDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceEquipment_Client" Association="TMD.Models.DomainModels.FK_ServiceEquipment_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="ServiceEquipment" EntitySet="ServiceEquipments" />
-          </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="TMD.Models.DomainModels.sysdiagram" />
-          <AssociationSet Name="FK_BillDetail_BillDetailChargeType" Association="TMD.Models.DomainModels.FK_BillDetail_BillDetailChargeType">
-            <End Role="BillDetailChargeType" EntitySet="BillDetailChargeTypes" />
-            <End Role="BillDetail" EntitySet="BillDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BillDetail_BillDetailServiceType" Association="TMD.Models.DomainModels.FK_BillDetail_BillDetailServiceType">
-            <End Role="BillDetailServiceType" EntitySet="BillDetailServiceTypes" />
-            <End Role="BillDetail" EntitySet="BillDetails" />
+          <AssociationSet Name="FK_SeedValue_Seeds" Association="TMD.Models.DomainModels.FK_SeedValue_Seeds">
+            <End Role="Seed" EntitySet="Seeds" />
+            <End Role="SeedValue" EntitySet="SeedValues" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
@@ -1964,596 +1369,160 @@
           <End Type="TMD.Models.DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="BillDetail">
+        <EntityType Name="Address">
           <Key>
-            <PropertyRef Name="BillDetailId" />
+            <PropertyRef Name="AddressId" />
           </Key>
-          <Property Name="BillDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" Nullable="false" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="BillDetailServiceTypeId" Type="Int32" />
-          <Property Name="BillDetailChargeTypeId" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_BillDetail_ImportBatch" FromRole="BillDetail" ToRole="ImportBatch" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_BillDetail_Client" FromRole="BillDetail" ToRole="Client" />
-          <NavigationProperty Name="BillDetailChargeType" Relationship="TMD.Models.DomainModels.FK_BillDetail_BillDetailChargeType" FromRole="BillDetail" ToRole="BillDetailChargeType" />
-          <NavigationProperty Name="BillDetailServiceType" Relationship="TMD.Models.DomainModels.FK_BillDetail_BillDetailServiceType" FromRole="BillDetail" ToRole="BillDetailServiceType" />
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactID" Type="Int32" />
+          <Property Name="AddressType" Type="Int32" />
         </EntityType>
-        <EntityType Name="BillDetailChargeType">
+        <EntityType Name="Contact">
           <Key>
-            <PropertyRef Name="BillDetailChargeTypeId" />
+            <PropertyRef Name="ContactID" />
           </Key>
-          <Property Name="BillDetailChargeTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ChargeTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ChargeTypeDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsManuallyCreated" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="FixedDetails" Relationship="TMD.Models.DomainModels.FK_FixedDetail_BillDetailChargeType" FromRole="BillDetailChargeType" ToRole="FixedDetail" />
-          <NavigationProperty Name="FixedDirectoryCharges" Relationship="TMD.Models.DomainModels.FK_FixedDirectoryCharges_BillDetailChargeType" FromRole="BillDetailChargeType" ToRole="FixedDirectoryCharge" />
-          <NavigationProperty Name="MobileDetails" Relationship="TMD.Models.DomainModels.FK_MobileDetail_BillDetailChargeType" FromRole="BillDetailChargeType" ToRole="MobileDetail" />
-          <NavigationProperty Name="BillDetails" Relationship="TMD.Models.DomainModels.FK_BillDetail_BillDetailChargeType" FromRole="BillDetailChargeType" ToRole="BillDetail" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CellNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ContactType" Type="Int32" />
+          <Property Name="AddressId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="BillDetailServiceType">
+        <EntityType Name="Inquiry">
           <Key>
-            <PropertyRef Name="BillDetailServiceTypeId" />
+            <PropertyRef Name="InquiryID" />
           </Key>
-          <Property Name="BillDetailServiceTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceTypeDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsManuallyCreated" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="FixedDetails" Relationship="TMD.Models.DomainModels.FK_FixedDetail_BillDetailServiceType" FromRole="BillDetailServiceType" ToRole="FixedDetail" />
-          <NavigationProperty Name="MobileDetails" Relationship="TMD.Models.DomainModels.FK_MobileDetail_BillDetailServiceType" FromRole="BillDetailServiceType" ToRole="MobileDetail" />
-          <NavigationProperty Name="BillDetails" Relationship="TMD.Models.DomainModels.FK_BillDetail_BillDetailServiceType" FromRole="BillDetailServiceType" ToRole="BillDetail" />
+          <Property Name="InquiryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactID" Type="Int32" />
+          <Property Name="InquiryDate" Type="DateTime" Precision="3" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="ContactResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
         </EntityType>
-        <EntityType Name="CallUsageItemisation">
+        <EntityType Name="InquiryDetail">
           <Key>
-            <PropertyRef Name="CallUsageId" />
+            <PropertyRef Name="InquiryDetailID" />
           </Key>
-          <Property Name="CallUsageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" Nullable="false" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="CallUsageServiceType" Type="Int32" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="Time" Type="Time" Precision="7" />
-          <Property Name="Origin" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Destination" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CalledNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CallUsageTypeId" Type="Int32" />
-          <Property Name="Duration" Type="Time" Precision="7" />
-          <Property Name="Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InclGst" Type="Decimal" Precision="8" Scale="8" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CallUsageServiceType1" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageServiceType" FromRole="CallUsageItemisation" ToRole="CallUsageServiceType" />
-          <NavigationProperty Name="CallUsageType" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageType" FromRole="CallUsageItemisation" ToRole="CallUsageType" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_ImportBatch" FromRole="CallUsageItemisation" ToRole="ImportBatch" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_Client" FromRole="CallUsageItemisation" ToRole="Client" />
+          <Property Name="InquiryDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InquiryID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="InquiryDetail" ToRole="Inquiry" />
         </EntityType>
-        <EntityType Name="CallUsageServiceType">
+        <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="CallUsageServiceTypeId" />
+            <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="CallUsageServiceTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceTypeDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsManuallyCreated" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CallUsageItemisations" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageServiceType" FromRole="CallUsageServiceType" ToRole="CallUsageItemisation" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProductCategoryID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="CallUsageType">
+        <EntityType Name="ProductCategory">
           <Key>
-            <PropertyRef Name="CallUsageTypeId" />
+            <PropertyRef Name="ProductCategoryID" />
           </Key>
-          <Property Name="CallUsageTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CallUsageTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CallUsageTypeDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsManuallyCreated" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CallUsageItemisations" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageType" FromRole="CallUsageType" ToRole="CallUsageItemisation" />
+          <Property Name="ProductCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsParent" Type="Boolean" />
+          <Property Name="ParentCatID" Type="Int32" />
         </EntityType>
-        <EntityType Name="FixedDetail">
+        <EntityType Name="ProductModel">
           <Key>
-            <PropertyRef Name="FixedDetailId" />
+            <PropertyRef Name="ProductModelID" />
           </Key>
-          <Property Name="FixedDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" Nullable="false" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="ServiceTypeId" Type="Int32" />
-          <Property Name="ChargeTypeId" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="BillDetailChargeType" Relationship="TMD.Models.DomainModels.FK_FixedDetail_BillDetailChargeType" FromRole="FixedDetail" ToRole="BillDetailChargeType" />
-          <NavigationProperty Name="BillDetailServiceType" Relationship="TMD.Models.DomainModels.FK_FixedDetail_BillDetailServiceType" FromRole="FixedDetail" ToRole="BillDetailServiceType" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_FixedDetail_ImportBatch" FromRole="FixedDetail" ToRole="ImportBatch" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_FixedDetail_Client" FromRole="FixedDetail" ToRole="Client" />
+          <Property Name="ProductModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="ModelName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ModelDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="FixedDirectoryCharge">
+        <EntityType Name="ProductTechSpec">
           <Key>
-            <PropertyRef Name="FixedDirectoryChargesId" />
+            <PropertyRef Name="ProductTechSpecsId" />
           </Key>
-          <Property Name="FixedDirectoryChargesId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="ChargeTypeId" Type="Int32" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="BillDetailChargeType" Relationship="TMD.Models.DomainModels.FK_FixedDirectoryCharges_BillDetailChargeType" FromRole="FixedDirectoryCharge" ToRole="BillDetailChargeType" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_FixedDirectoryCharges_ImportBatch" FromRole="FixedDirectoryCharge" ToRole="ImportBatch" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_FixedDirectoryCharges_Client" FromRole="FixedDirectoryCharge" ToRole="Client" />
+          <Property Name="ProductTechSpecsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SpecName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SpecValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="FixedNonStandard">
+        <EntityType Name="Quote">
           <Key>
-            <PropertyRef Name="FixedNonStandardCallsId" />
+            <PropertyRef Name="QuoteID" />
           </Key>
-          <Property Name="FixedNonStandardCallsId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_FixedNonStandard_ImportBatch" FromRole="FixedNonStandard" ToRole="ImportBatch" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_FixedNonStandardCalls_Client" FromRole="FixedNonStandard" ToRole="Client" />
+          <Property Name="QuoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteReferenceNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentTerms" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="InstallationTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FreeServiceTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WarrantyTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ValidityTerms" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Make" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ModelId" Type="Int32" />
         </EntityType>
-        <EntityType Name="FixedNoUsage">
+        <EntityType Name="Seed">
           <Key>
-            <PropertyRef Name="FixedNoUsageId" />
+            <PropertyRef Name="SeedID" />
           </Key>
-          <Property Name="FixedNoUsageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="SumOfInclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_FixedNoUsage_ImportBatch" FromRole="FixedNoUsage" ToRole="ImportBatch" />
+          <Property Name="SeedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeedCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ValueCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SeedValues" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="Seed" ToRole="SeedValue" />
         </EntityType>
-        <EntityType Name="FixedTen">
+        <EntityType Name="SeedValue">
           <Key>
-            <PropertyRef Name="FixedTenId" />
+            <PropertyRef Name="SeedValueID" />
           </Key>
-          <Property Name="FixedTenId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="SumOfInclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_FixedTen_ImportBatch" FromRole="FixedTen" ToRole="ImportBatch" />
+          <Property Name="SeedValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeedID" Type="Int32" />
+          <Property Name="ValueCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ValueId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Seed" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="SeedValue" ToRole="Seed" />
         </EntityType>
-        <EntityType Name="ImportBatch">
-          <Key>
-            <PropertyRef Name="BatchId" />
-          </Key>
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="BillDetails" Relationship="TMD.Models.DomainModels.FK_BillDetail_ImportBatch" FromRole="ImportBatch" ToRole="BillDetail" />
-          <NavigationProperty Name="CallUsageItemisations" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_ImportBatch" FromRole="ImportBatch" ToRole="CallUsageItemisation" />
-          <NavigationProperty Name="FixedDetails" Relationship="TMD.Models.DomainModels.FK_FixedDetail_ImportBatch" FromRole="ImportBatch" ToRole="FixedDetail" />
-          <NavigationProperty Name="FixedDirectoryCharges" Relationship="TMD.Models.DomainModels.FK_FixedDirectoryCharges_ImportBatch" FromRole="ImportBatch" ToRole="FixedDirectoryCharge" />
-          <NavigationProperty Name="FixedNonStandards" Relationship="TMD.Models.DomainModels.FK_FixedNonStandard_ImportBatch" FromRole="ImportBatch" ToRole="FixedNonStandard" />
-          <NavigationProperty Name="FixedNoUsages" Relationship="TMD.Models.DomainModels.FK_FixedNoUsage_ImportBatch" FromRole="ImportBatch" ToRole="FixedNoUsage" />
-          <NavigationProperty Name="FixedTens" Relationship="TMD.Models.DomainModels.FK_FixedTen_ImportBatch" FromRole="ImportBatch" ToRole="FixedTen" />
-          <NavigationProperty Name="MobileDetails" Relationship="TMD.Models.DomainModels.FK_MobileDetail_ImportBatch" FromRole="ImportBatch" ToRole="MobileDetail" />
-          <NavigationProperty Name="ServiceEquipments" Relationship="TMD.Models.DomainModels.FK_ServiceEquipment_ImportBatch" FromRole="ImportBatch" ToRole="ServiceEquipment" />
-        </EntityType>
-        <EntityType Name="MobileDetail">
-          <Key>
-            <PropertyRef Name="MobileDetailId" />
-          </Key>
-          <Property Name="MobileDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="ServiceTypeId" Type="Int32" />
-          <Property Name="ChargeTypeId" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="BillDetailChargeType" Relationship="TMD.Models.DomainModels.FK_MobileDetail_BillDetailChargeType" FromRole="MobileDetail" ToRole="BillDetailChargeType" />
-          <NavigationProperty Name="BillDetailServiceType" Relationship="TMD.Models.DomainModels.FK_MobileDetail_BillDetailServiceType" FromRole="MobileDetail" ToRole="BillDetailServiceType" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_MobileDetail_ImportBatch" FromRole="MobileDetail" ToRole="ImportBatch" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_MobileDetail_Client" FromRole="MobileDetail" ToRole="Client" />
-        </EntityType>
-        <EntityType Name="MobilePlan">
-          <Key>
-            <PropertyRef Name="MobilePlanId" />
-          </Key>
-          <Property Name="MobilePlanId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" Nullable="false" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="ChargeTypeDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceEquipmentTypeId" Type="Int32" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ServiceEquipment">
-          <Key>
-            <PropertyRef Name="ServiceEquipmentId" />
-          </Key>
-          <Property Name="ServiceEquipmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientId" Type="Int64" Nullable="false" />
-          <Property Name="BillIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ServiceNumber" Type="Int64" />
-          <Property Name="ChargeTypeDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceEquipmentTypeId" Type="Int32" />
-          <Property Name="InclGst" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BatchId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ImportBatch" Relationship="TMD.Models.DomainModels.FK_ServiceEquipment_ImportBatch" FromRole="ServiceEquipment" ToRole="ImportBatch" />
-          <NavigationProperty Name="ServiceEquipmentServiceType" Relationship="TMD.Models.DomainModels.FK_ServiceEquipment_ServiceEquipmentServiceType" FromRole="ServiceEquipment" ToRole="ServiceEquipmentServiceType" />
-          <NavigationProperty Name="Client" Relationship="TMD.Models.DomainModels.FK_ServiceEquipment_Client" FromRole="ServiceEquipment" ToRole="Client" />
-        </EntityType>
-        <EntityType Name="ServiceEquipmentServiceType">
-          <Key>
-            <PropertyRef Name="ServiceEquipmentTypeId" />
-          </Key>
-          <Property Name="ServiceEquipmentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ServiceTypeDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IsManuallyCreated" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ServiceEquipments" Relationship="TMD.Models.DomainModels.FK_ServiceEquipment_ServiceEquipmentServiceType" FromRole="ServiceEquipmentServiceType" ToRole="ServiceEquipment" />
-        </EntityType>
-        <Association Name="FK_BillDetail_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.BillDetail" Role="BillDetail" Multiplicity="*" />
+        <Association Name="FK_Inquiry">
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.InquiryDetail" Role="InquiryDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
+            <Principal Role="Inquiry">
+              <PropertyRef Name="InquiryID" />
             </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="BatchId" />
+            <Dependent Role="InquiryDetail">
+              <PropertyRef Name="InquiryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FixedDetail_BillDetailChargeType">
-          <End Type="TMD.Models.DomainModels.BillDetailChargeType" Role="BillDetailChargeType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.FixedDetail" Role="FixedDetail" Multiplicity="*" />
+        <Association Name="FK_SeedValue_Seeds">
+          <End Type="TMD.Models.DomainModels.Seed" Role="Seed" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.SeedValue" Role="SeedValue" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
+            <Principal Role="Seed">
+              <PropertyRef Name="SeedID" />
             </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="ChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDirectoryCharges_BillDetailChargeType">
-          <End Type="TMD.Models.DomainModels.BillDetailChargeType" Role="BillDetailChargeType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.FixedDirectoryCharge" Role="FixedDirectoryCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Principal>
-            <Dependent Role="FixedDirectoryCharge">
-              <PropertyRef Name="ChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_BillDetailChargeType">
-          <End Type="TMD.Models.DomainModels.BillDetailChargeType" Role="BillDetailChargeType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.MobileDetail" Role="MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="ChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDetail_BillDetailServiceType">
-          <End Type="TMD.Models.DomainModels.BillDetailServiceType" Role="BillDetailServiceType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.FixedDetail" Role="FixedDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailServiceType">
-              <PropertyRef Name="BillDetailServiceTypeId" />
-            </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="ServiceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_BillDetailServiceType">
-          <End Type="TMD.Models.DomainModels.BillDetailServiceType" Role="BillDetailServiceType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.MobileDetail" Role="MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailServiceType">
-              <PropertyRef Name="BillDetailServiceTypeId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="ServiceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_CallUsageServiceType">
-          <End Type="TMD.Models.DomainModels.CallUsageServiceType" Role="CallUsageServiceType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.CallUsageItemisation" Role="CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CallUsageServiceType">
-              <PropertyRef Name="CallUsageServiceTypeId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="CallUsageServiceType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_CallUsageType">
-          <End Type="TMD.Models.DomainModels.CallUsageType" Role="CallUsageType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.CallUsageItemisation" Role="CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CallUsageType">
-              <PropertyRef Name="CallUsageTypeId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="CallUsageTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.CallUsageItemisation" Role="CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDetail_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.FixedDetail" Role="FixedDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDirectoryCharges_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.FixedDirectoryCharge" Role="FixedDirectoryCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedDirectoryCharge">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedNonStandard_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.FixedNonStandard" Role="FixedNonStandard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedNonStandard">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedNoUsage_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.FixedNoUsage" Role="FixedNoUsage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedNoUsage">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedTen_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.FixedTen" Role="FixedTen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="FixedTen">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.MobileDetail" Role="MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceEquipment_ImportBatch">
-          <End Type="TMD.Models.DomainModels.ImportBatch" Role="ImportBatch" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.ServiceEquipment" Role="ServiceEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportBatch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="ServiceEquipment">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceEquipment_ServiceEquipmentServiceType">
-          <End Type="TMD.Models.DomainModels.ServiceEquipmentServiceType" Role="ServiceEquipmentServiceType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.ServiceEquipment" Role="ServiceEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceEquipmentServiceType">
-              <PropertyRef Name="ServiceEquipmentTypeId" />
-            </Principal>
-            <Dependent Role="ServiceEquipment">
-              <PropertyRef Name="ServiceEquipmentTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Distributor">
-          <Key>
-            <PropertyRef Name="DistributorId" />
-          </Key>
-          <Property Name="DistributorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DistributorName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DistributorLink" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Clients" Relationship="TMD.Models.DomainModels.FK_Client_Distributor" FromRole="Distributor" ToRole="Client" />
-        </EntityType>
-        <EntityType Name="Client">
-          <Key>
-            <PropertyRef Name="ClientId" />
-          </Key>
-          <Property Name="ClientId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AccountNumber" Type="Int64" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DistributorId" Type="Int32" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CrawlDate" Type="Int32" />
-          <NavigationProperty Name="BillDetails" Relationship="TMD.Models.DomainModels.FK_BillDetail_Client" FromRole="Client" ToRole="BillDetail" />
-          <NavigationProperty Name="CallUsageItemisations" Relationship="TMD.Models.DomainModels.FK_CallUsageItemisation_Client" FromRole="Client" ToRole="CallUsageItemisation" />
-          <NavigationProperty Name="Distributor" Relationship="TMD.Models.DomainModels.FK_Client_Distributor" FromRole="Client" ToRole="Distributor" />
-          <NavigationProperty Name="FixedDetails" Relationship="TMD.Models.DomainModels.FK_FixedDetail_Client" FromRole="Client" ToRole="FixedDetail" />
-          <NavigationProperty Name="FixedDirectoryCharges" Relationship="TMD.Models.DomainModels.FK_FixedDirectoryCharges_Client" FromRole="Client" ToRole="FixedDirectoryCharge" />
-          <NavigationProperty Name="FixedNonStandards" Relationship="TMD.Models.DomainModels.FK_FixedNonStandardCalls_Client" FromRole="Client" ToRole="FixedNonStandard" />
-          <NavigationProperty Name="MobileDetails" Relationship="TMD.Models.DomainModels.FK_MobileDetail_Client" FromRole="Client" ToRole="MobileDetail" />
-          <NavigationProperty Name="ServiceEquipments" Relationship="TMD.Models.DomainModels.FK_ServiceEquipment_Client" FromRole="Client" ToRole="ServiceEquipment" />
-        </EntityType>
-        <Association Name="FK_BillDetail_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.BillDetail" Role="BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CallUsageItemisation_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.CallUsageItemisation" Role="CallUsageItemisation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="CallUsageItemisation">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Client_Distributor">
-          <End Type="TMD.Models.DomainModels.Distributor" Role="Distributor" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Distributor">
-              <PropertyRef Name="DistributorId" />
-            </Principal>
-            <Dependent Role="Client">
-              <PropertyRef Name="DistributorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDetail_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.FixedDetail" Role="FixedDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="FixedDetail">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedDirectoryCharges_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.FixedDirectoryCharge" Role="FixedDirectoryCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="FixedDirectoryCharge">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FixedNonStandardCalls_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.FixedNonStandard" Role="FixedNonStandard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="FixedNonStandard">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MobileDetail_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.MobileDetail" Role="MobileDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="MobileDetail">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceEquipment_Client">
-          <End Type="TMD.Models.DomainModels.Client" Role="Client" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.ServiceEquipment" Role="ServiceEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="ServiceEquipment">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <Association Name="FK_BillDetail_BillDetailChargeType">
-          <End Type="TMD.Models.DomainModels.BillDetailChargeType" Role="BillDetailChargeType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.BillDetail" Role="BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailChargeType">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="BillDetailChargeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BillDetail_BillDetailServiceType">
-          <End Type="TMD.Models.DomainModels.BillDetailServiceType" Role="BillDetailServiceType" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.BillDetail" Role="BillDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetailServiceType">
-              <PropertyRef Name="BillDetailServiceTypeId" />
-            </Principal>
-            <Dependent Role="BillDetail">
-              <PropertyRef Name="BillDetailServiceTypeId" />
+            <Dependent Role="SeedValue">
+              <PropertyRef Name="SeedID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2800,237 +1769,143 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="BillDetails">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.BillDetail">
-              <MappingFragment StoreEntitySet="BillDetail">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="ContactType" ColumnName="ContactType" />
+                <ScalarProperty Name="CellNo" ColumnName="CellNo" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="PrimaryPhone" ColumnName="PrimaryPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inquiries">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Inquiry">
+              <MappingFragment StoreEntitySet="Inquiry">
+                <ScalarProperty Name="UserComments" ColumnName="UserComments" />
+                <ScalarProperty Name="ContactResponse" ColumnName="ContactResponse" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="InquiryDate" ColumnName="InquiryDate" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="InquiryID" ColumnName="InquiryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InquiryDetails">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.InquiryDetail">
+              <MappingFragment StoreEntitySet="InquiryDetail">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="InquiryID" ColumnName="InquiryID" />
+                <ScalarProperty Name="InquiryDetailID" ColumnName="InquiryDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="ParentCatID" ColumnName="ParentCatID" />
+                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
+                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="CatName" ColumnName="CatName" />
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductModels">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductModel">
+              <MappingFragment StoreEntitySet="ProductModel">
+                <ScalarProperty Name="ModelDescription" ColumnName="ModelDescription" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ProductModelID" ColumnName="ProductModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTechSpecs">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductTechSpec">
+              <MappingFragment StoreEntitySet="ProductTechSpecs">
+                <ScalarProperty Name="SpecValue" ColumnName="SpecValue" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductTechSpecsId" ColumnName="ProductTechSpecsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotes">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Quote">
+              <MappingFragment StoreEntitySet="Quote">
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ValidityTerms" ColumnName="ValidityTerms" />
+                <ScalarProperty Name="WarrantyTerms" ColumnName="WarrantyTerms" />
+                <ScalarProperty Name="FreeServiceTerms" ColumnName="FreeServiceTerms" />
+                <ScalarProperty Name="InstallationTerms" ColumnName="InstallationTerms" />
+                <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="QuoteReferenceNo" ColumnName="QuoteReferenceNo" />
+                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seeds">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Seed">
+              <MappingFragment StoreEntitySet="Seeds">
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="BillDetailChargeTypeId" ColumnName="BillDetailChargeTypeId" />
-                <ScalarProperty Name="BillDetailServiceTypeId" ColumnName="BillDetailServiceTypeId" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="BillDetailId" ColumnName="BillDetailId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ValueCode" ColumnName="ValueCode" />
+                <ScalarProperty Name="SeedCode" ColumnName="SeedCode" />
+                <ScalarProperty Name="SeedID" ColumnName="SeedID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BillDetailChargeTypes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.BillDetailChargeType">
-              <MappingFragment StoreEntitySet="BillDetailChargeType">
-                <ScalarProperty Name="IsManuallyCreated" ColumnName="IsManuallyCreated" />
-                <ScalarProperty Name="ChargeTypeDescription" ColumnName="ChargeTypeDescription" />
-                <ScalarProperty Name="ChargeTypeName" ColumnName="ChargeTypeName" />
-                <ScalarProperty Name="BillDetailChargeTypeId" ColumnName="BillDetailChargeTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BillDetailServiceTypes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.BillDetailServiceType">
-              <MappingFragment StoreEntitySet="BillDetailServiceType">
-                <ScalarProperty Name="IsManuallyCreated" ColumnName="IsManuallyCreated" />
-                <ScalarProperty Name="ServiceTypeDescription" ColumnName="ServiceTypeDescription" />
-                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
-                <ScalarProperty Name="BillDetailServiceTypeId" ColumnName="BillDetailServiceTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CallUsageItemisations">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CallUsageItemisation">
-              <MappingFragment StoreEntitySet="CallUsageItemisation">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="Volume" ColumnName="Volume" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="CallUsageTypeId" ColumnName="CallUsageTypeId" />
-                <ScalarProperty Name="CalledNumber" ColumnName="CalledNumber" />
-                <ScalarProperty Name="Destination" ColumnName="Destination" />
-                <ScalarProperty Name="Origin" ColumnName="Origin" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="CallUsageServiceType" ColumnName="CallUsageServiceType" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="CallUsageId" ColumnName="CallUsageId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CallUsageServiceTypes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CallUsageServiceType">
-              <MappingFragment StoreEntitySet="CallUsageServiceType">
-                <ScalarProperty Name="IsManuallyCreated" ColumnName="IsManuallyCreated" />
-                <ScalarProperty Name="ServiceTypeDescription" ColumnName="ServiceTypeDescription" />
-                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
-                <ScalarProperty Name="CallUsageServiceTypeId" ColumnName="CallUsageServiceTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CallUsageTypes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.CallUsageType">
-              <MappingFragment StoreEntitySet="CallUsageType">
-                <ScalarProperty Name="IsManuallyCreated" ColumnName="IsManuallyCreated" />
-                <ScalarProperty Name="CallUsageTypeDescription" ColumnName="CallUsageTypeDescription" />
-                <ScalarProperty Name="CallUsageTypeName" ColumnName="CallUsageTypeName" />
-                <ScalarProperty Name="CallUsageTypeId" ColumnName="CallUsageTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FixedDetails">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.FixedDetail">
-              <MappingFragment StoreEntitySet="FixedDetail">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <EntitySetMapping Name="SeedValues">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.SeedValue">
+              <MappingFragment StoreEntitySet="SeedValue">
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ChargeTypeId" ColumnName="ChargeTypeId" />
-                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="FixedDetailId" ColumnName="FixedDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FixedDirectoryCharges">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.FixedDirectoryCharge">
-              <MappingFragment StoreEntitySet="FixedDirectoryCharges">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="ChargeTypeId" ColumnName="ChargeTypeId" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="FixedDirectoryChargesId" ColumnName="FixedDirectoryChargesId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FixedNonStandards">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.FixedNonStandard">
-              <MappingFragment StoreEntitySet="FixedNonStandard">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="FixedNonStandardCallsId" ColumnName="FixedNonStandardCallsId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FixedNoUsages">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.FixedNoUsage">
-              <MappingFragment StoreEntitySet="FixedNoUsage">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="SumOfInclGst" ColumnName="SumOfInclGst" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="FixedNoUsageId" ColumnName="FixedNoUsageId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FixedTens">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.FixedTen">
-              <MappingFragment StoreEntitySet="FixedTen">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="SumOfInclGst" ColumnName="SumOfInclGst" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="FixedTenId" ColumnName="FixedTenId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ImportBatches">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ImportBatch">
-              <MappingFragment StoreEntitySet="ImportBatch">
-                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MobileDetails">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.MobileDetail">
-              <MappingFragment StoreEntitySet="MobileDetail">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ChargeTypeId" ColumnName="ChargeTypeId" />
-                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="MobileDetailId" ColumnName="MobileDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MobilePlans">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.MobilePlan">
-              <MappingFragment StoreEntitySet="MobilePlan">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="ServiceEquipmentTypeId" ColumnName="ServiceEquipmentTypeId" />
-                <ScalarProperty Name="ChargeTypeDescription" ColumnName="ChargeTypeDescription" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="MobilePlanId" ColumnName="MobilePlanId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceEquipments">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ServiceEquipment">
-              <MappingFragment StoreEntitySet="ServiceEquipment">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="InclGst" ColumnName="InclGst" />
-                <ScalarProperty Name="ServiceEquipmentTypeId" ColumnName="ServiceEquipmentTypeId" />
-                <ScalarProperty Name="ChargeTypeDescription" ColumnName="ChargeTypeDescription" />
-                <ScalarProperty Name="ServiceNumber" ColumnName="ServiceNumber" />
-                <ScalarProperty Name="BillIssueDate" ColumnName="BillIssueDate" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="ServiceEquipmentId" ColumnName="ServiceEquipmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceEquipmentServiceTypes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ServiceEquipmentServiceType">
-              <MappingFragment StoreEntitySet="ServiceEquipmentServiceType">
-                <ScalarProperty Name="IsManuallyCreated" ColumnName="IsManuallyCreated" />
-                <ScalarProperty Name="ServiceTypeDescription" ColumnName="ServiceTypeDescription" />
-                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
-                <ScalarProperty Name="ServiceEquipmentTypeId" ColumnName="ServiceEquipmentTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Distributors">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Distributor">
-              <MappingFragment StoreEntitySet="Distributor">
-                <ScalarProperty Name="DistributorLink" ColumnName="DistributorLink" />
-                <ScalarProperty Name="DistributorName" ColumnName="DistributorName" />
-                <ScalarProperty Name="DistributorId" ColumnName="DistributorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Clients">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Client">
-              <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="CrawlDate" ColumnName="CrawlDate" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="DistributorId" ColumnName="DistributorId" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ValueId" ColumnName="ValueId" />
+                <ScalarProperty Name="ValueCode" ColumnName="ValueCode" />
+                <ScalarProperty Name="SeedID" ColumnName="SeedID" />
+                <ScalarProperty Name="SeedValueID" ColumnName="SeedValueID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3091,52 +1966,19 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Ticket_Employee_ApprovedBy" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Ticket_TicketType" />
         <AssociationConnector Association="TMD.Models.DomainModels.AspNetUserRoles" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.BillDetail" Width="1.875" PointX="19.25" PointY="27.875" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.BillDetailChargeType" Width="1.5" PointX="14.375" PointY="22.875" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.BillDetailServiceType" Width="1.5" PointX="14.375" PointY="32" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.CallUsageItemisation" Width="1.5" PointX="16.625" PointY="26.25" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.CallUsageServiceType" Width="1.5" PointX="14.375" PointY="37.875" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.CallUsageType" Width="1.5" PointX="14.375" PointY="35.125" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.FixedDetail" Width="1.5" PointX="16.625" PointY="21.625" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.FixedDirectoryCharge" Width="1.5" PointX="19.625" PointY="32" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.FixedNonStandard" Width="1.5" PointX="19.625" PointY="24.125" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.FixedNoUsage" Width="1.5" PointX="16.625" PointY="50.875" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.FixedTen" Width="1.5" PointX="16.625" PointY="32.375" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ImportBatch" Width="1.5" PointX="14.375" PointY="28" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.MobileDetail" Width="1.5" PointX="22.625" PointY="27.625" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.MobilePlan" Width="1.5" PointX="13.375" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ServiceEquipment" Width="1.5" PointX="22.625" PointY="23" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ServiceEquipmentServiceType" Width="1.5" PointX="20.375" PointY="20.5" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_BillDetail_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDetail_BillDetailChargeType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDirectoryCharges_BillDetailChargeType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_MobileDetail_BillDetailChargeType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDetail_BillDetailServiceType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_MobileDetail_BillDetailServiceType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageServiceType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_CallUsageItemisation_CallUsageType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_CallUsageItemisation_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDetail_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDirectoryCharges_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedNonStandard_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedNoUsage_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedTen_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_MobileDetail_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_ServiceEquipment_ImportBatch" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_ServiceEquipment_ServiceEquipmentServiceType" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Distributor" Width="1.5" PointX="8.875" PointY="20.25" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Client" Width="1.5" PointX="11.125" PointY="19.125" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_BillDetail_Client" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_CallUsageItemisation_Client" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Client_Distributor" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDetail_Client" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedDirectoryCharges_Client" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_FixedNonStandardCalls_Client" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_MobileDetail_Client" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_ServiceEquipment_Client" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_BillDetail_BillDetailChargeType" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_BillDetail_BillDetailServiceType" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Contact" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="14.75" PointY="15" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="17" PointY="15.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="1.5" PointX="16.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductModel" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductTechSpec" Width="1.5" PointX="11.75" PointY="10.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Seed" Width="1.5" PointX="14.75" PointY="10.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.SeedValue" Width="1.5" PointX="17" PointY="10.875" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SeedValue_Seeds" />
         </Diagram>
     </Diagrams>
   </Designer>

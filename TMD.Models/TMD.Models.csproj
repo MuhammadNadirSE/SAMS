@@ -105,6 +105,7 @@
     <Compile Include="Common\OrderByColumnAttendance.cs" />
     <Compile Include="Common\EmployeeAttendanceStatus.cs" />
     <Compile Include="Common\OrderByColumn.cs" />
+    <Compile Include="DomainModels\Address.cs" />
     <Compile Include="DomainModels\AllowanceType.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="DomainModels\CallUsageServiceType.cs" />
     <Compile Include="DomainModels\CallUsageType.cs" />
     <Compile Include="DomainModels\Client.cs" />
+    <Compile Include="DomainModels\Contact.cs" />
     <Compile Include="DomainModels\Designation.cs" />
     <Compile Include="DomainModels\Distributor.cs" />
     <Compile Include="DomainModels\Employee.cs" />
@@ -132,9 +134,18 @@
     <Compile Include="DomainModels\FixedNoUsage.cs" />
     <Compile Include="DomainModels\FixedTen.cs" />
     <Compile Include="DomainModels\ImportBatch.cs" />
+    <Compile Include="DomainModels\Inquiry.cs" />
+    <Compile Include="DomainModels\InquiryDetail.cs" />
     <Compile Include="DomainModels\Leave.cs" />
     <Compile Include="DomainModels\MobileDetail.cs" />
     <Compile Include="DomainModels\MobilePlan.cs" />
+    <Compile Include="DomainModels\Product.cs" />
+    <Compile Include="DomainModels\ProductCategory.cs" />
+    <Compile Include="DomainModels\ProductModel.cs" />
+    <Compile Include="DomainModels\ProductTechSpec.cs" />
+    <Compile Include="DomainModels\Quote.cs" />
+    <Compile Include="DomainModels\Seed.cs" />
+    <Compile Include="DomainModels\SeedValue.cs" />
     <Compile Include="DomainModels\ServiceEquipment.cs" />
     <Compile Include="DomainModels\ServiceEquipmentServiceType.cs" />
     <Compile Include="DomainModels\Ticket.cs" />
