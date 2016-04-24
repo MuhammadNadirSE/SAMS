@@ -9,16 +9,14 @@
 
 namespace TMD.Models.DomainModels
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class ProductCategory
     {
         public int ProductCategoryID { get; set; }
         public string CatName { get; set; }
         public string ShortDescription { get; set; }
         public string DetailDescription { get; set; }
-        public Nullable<bool> IsParent { get; set; }
-        public Nullable<int> ParentCatID { get; set; }
+        public bool? IsParent { get; set; }
+        public int? ParentCatID { get; set; }
     }
 }
