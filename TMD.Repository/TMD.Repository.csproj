@@ -145,6 +145,7 @@
     <Compile Include="Repositories\LeaveRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
+    <Compile Include="Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="Repositories\TicketTypeRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />

@@ -298,6 +298,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
+    <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TicketTypeController.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
+    <Compile Include="ModelMappers\ProductCategoryMappers.cs" />
     <Compile Include="ModelMappers\TicketMapper.cs" />
     <Compile Include="ModelMappers\TicketTypeMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -336,6 +338,7 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PayRollListWebModel.cs" />
+    <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Models\TicketTypeModel.cs" />
     <Compile Include="PayPal\NVPAPICaller.cs" />
@@ -396,6 +399,7 @@
     <Compile Include="ViewModels\Payroll\EmployeePayrollModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollCreateViewModel.cs" />
+    <Compile Include="ViewModels\ProductCategory\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModels\Ticket\TicketReplyViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\UserRoles\AspNetRoleModel.cs" />

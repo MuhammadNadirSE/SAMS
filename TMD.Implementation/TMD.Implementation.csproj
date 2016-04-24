@@ -140,6 +140,7 @@
     <Compile Include="Services\LoggerService.cs" />
     <Compile Include="Services\MenuRightsService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\ProductCategoryService.cs" />
     <Compile Include="Services\TicketService.cs" />
     <Compile Include="Services\TicketTypeService.cs" />
     <Compile Include="Services\UsersService.cs" />

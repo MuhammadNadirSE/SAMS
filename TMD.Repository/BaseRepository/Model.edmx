@@ -244,13 +244,6 @@
           <Property Name="Menu_MenuId" Type="int" />
           <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ProdCatTechSpecs">
-          <Property Name="ProdCatTechSpecsId" Type="int" />
-          <Property Name="CategoryId" Type="int" />
-          <Property Name="SpecName" Type="varchar" MaxLength="500" />
-        </EntityType>-->
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -577,6 +570,18 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductCategory_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="ProductCategory1" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="ProductCategory1">
+              <PropertyRef Name="ParentCatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SeedValue_Seeds">
           <End Role="Seeds" Type="Self.Seeds" Multiplicity="0..1" />
           <End Role="SeedValue" Type="Self.SeedValue" Multiplicity="*" />
@@ -721,6 +726,10 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
           <AssociationSet Name="FK_Inquiry" Association="Self.FK_Inquiry">
             <End Role="Inquiry" EntitySet="Inquiry" />
             <End Role="InquiryDetail" EntitySet="InquiryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="Self.FK_ProductCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="ProductCategory1" EntitySet="ProductCategory" />
           </AssociationSet>
           <AssociationSet Name="FK_SeedValue_Seeds" Association="Self.FK_SeedValue_Seeds">
             <End Role="Seeds" EntitySet="Seeds" />
@@ -867,6 +876,10 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
           <AssociationSet Name="FK_SeedValue_Seeds" Association="TMD.Models.DomainModels.FK_SeedValue_Seeds">
             <End Role="Seed" EntitySet="Seeds" />
             <End Role="SeedValue" EntitySet="SeedValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="ProductCategory1" EntitySet="ProductCategories" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
@@ -1444,6 +1457,8 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
           <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsParent" Type="Boolean" />
           <Property Name="ParentCatID" Type="Int32" />
+          <NavigationProperty Name="ProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
+          <NavigationProperty Name="ProductCategoryParent" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
         </EntityType>
         <EntityType Name="ProductModel">
           <Key>
@@ -1523,6 +1538,18 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
             </Principal>
             <Dependent Role="SeedValue">
               <PropertyRef Name="SeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_ProductCategory">
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="ProductCategory1">
+              <PropertyRef Name="ParentCatID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1931,7 +1958,7 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="66">
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="98">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Menu" Width="1.875" PointX="1.375" PointY="9.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.MenuRight" Width="1.5" PointX="3.875" PointY="9.125" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
@@ -1971,7 +1998,7 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="14.75" PointY="15" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="17" PointY="15.5" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="1.5" PointX="16.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="2.375" PointX="16.75" PointY="5.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductModel" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductTechSpec" Width="1.5" PointX="11.75" PointY="10.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="18.75" PointY="0.75" />
@@ -1979,6 +2006,7 @@ warning 6013: The table/view 'HatanSystem.dbo.ProdCatTechSpecs' does not have a 
         <EntityTypeShape EntityType="TMD.Models.DomainModels.SeedValue" Width="1.5" PointX="17" PointY="10.875" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_SeedValue_Seeds" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
         </Diagram>
     </Diagrams>
   </Designer>

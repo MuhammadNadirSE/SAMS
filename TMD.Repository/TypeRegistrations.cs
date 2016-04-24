@@ -28,6 +28,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<IClientRepository, ClientRepository>();
             unityContainer.RegisterType<IDistributorRepository, DistributorRepository>();
             unityContainer.RegisterType<IBillDetailRepository, BillDetailRepository>();
+            unityContainer.RegisterType<IProductCategoryRepository, ProductCategoryRepository>();
         }
     }
 }

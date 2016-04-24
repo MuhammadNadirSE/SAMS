@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 namespace TMD.Models.DomainModels
 {
 
@@ -18,5 +19,8 @@ namespace TMD.Models.DomainModels
         public string DetailDescription { get; set; }
         public bool? IsParent { get; set; }
         public int? ParentCatID { get; set; }
+
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ProductCategory ProductCategoryParent { get; set; }
     }
 }

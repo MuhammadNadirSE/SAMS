@@ -32,6 +32,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<IClientService, ClientService>();
             unityContainer.RegisterType<IDistributorService, DistributorService>();
             unityContainer.RegisterType<IBillDetailService, BillDetailService>();
+            unityContainer.RegisterType<IProductCategoryService, ProductCategoryService>();
         } 
     }
 }
