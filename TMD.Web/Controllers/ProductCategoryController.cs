@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
-using TMD.Web.Models;
 using TMD.Web.ViewModels.ProductCategory;
 using TMD.Web.ModelMappers;
 
@@ -12,7 +8,7 @@ namespace TMD.Web.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        private readonly IProductCategoryService productCategoryService { get; set; }
+        private readonly IProductCategoryService productCategoryService;
         public ProductCategoryController(IProductCategoryService productCategoryService)
         {
             this.productCategoryService = productCategoryService;
