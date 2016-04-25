@@ -1,1 +1,0 @@
-insert into Menu values('View Employees','View Employees',20,0,0,5,1,null,null,'ViewEmployees',null,null);
