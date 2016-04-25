@@ -1,4 +1,4 @@
-﻿@model TMD.Web.ViewModels.ProductCategoryViewModel 
+﻿@model TMD.Web.ViewModels.ProductCategory.ProductCategoryViewModel 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 8;
@@ -28,14 +28,25 @@
         <div class="portlet-body form formMinHeight500">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.ProductCategoryModel.CategoryId)
+                @*@Html.HiddenFor(m => m.ProductCategoryModel.CategoryId)
                 @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedBy)
-                @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedDate)
+                @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedDate)*@
+
+                
+                  
+                        <div class="form-group  margin-top-20 ">
+                            <label class="col-md-3 control-label requiredLabel">Parent Category</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => x.ProductCategory.ParentCatID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.ProductCategory.ParentCatID), "--Please Select--", new { @class = "form-control  input-circle " })
+                            </div>
+                        </div>
+                    
+                
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductCategoryModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.ProductCategory.CatName, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductCategoryModel.Name, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                        @Html.TextBoxFor(m => m.ProductCategory.CatName, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
                     </div>
                 </div>
                 @*<div class="form-group margin-top-20">
@@ -45,11 +56,20 @@
                     </div>
                 </div>*@
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductCategoryModel.Description, new { @class = "col-md-3 control-label" })
+                    @Html.LabelFor(m => m.ProductCategory.ShortDescription, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.ProductCategoryModel.Description, new { @class = "form-control input-circle", placeholder = "Description" })
+                        @Html.TextAreaFor(m => m.ProductCategory.ShortDescription, new { @class = "form-control input-circle", placeholder = "Description" })
                     </div>
                 </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductCategory.DetailDescription, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.ProductCategory.DetailDescription, new { @class = "form-control input-circle", placeholder = "Description" })
+                    </div>
+                </div>
+
+                
             </div>
 
         </div>

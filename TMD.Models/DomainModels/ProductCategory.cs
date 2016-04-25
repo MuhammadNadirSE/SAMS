@@ -17,7 +17,7 @@ namespace TMD.Models.DomainModels
         public string CatName { get; set; }
         public string ShortDescription { get; set; }
         public string DetailDescription { get; set; }
-        public bool? IsParent { get; set; }
+        public bool IsParent { get; set; }
         public int? ParentCatID { get; set; }
 
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }

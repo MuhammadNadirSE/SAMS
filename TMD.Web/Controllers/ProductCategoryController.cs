@@ -33,10 +33,14 @@ namespace TMD.Web.Controllers
         {
             ProductCategoryViewModel productCategoryViewModel = new ProductCategoryViewModel();
            
-                var prodCatResp=productCategoryService.GetProductCategoryResponse((int)id);
+                var prodCatResp=productCategoryService.GetProductCategoryResponse(id);
                 if (prodCatResp.ProductCategory != null)
                 {
                     productCategoryViewModel.ProductCategory = prodCatResp.ProductCategory.MapServerToClient();
+                }
+                else
+                {
+                    productCategoryViewModel.ProductCategory = new Models.ProductCategoryModel();
                 }
 
                 productCategoryViewModel.ProductCategories = prodCatResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
@@ -47,13 +51,21 @@ namespace TMD.Web.Controllers
         //
         // POST: /ProductCategory/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProductCategoryViewModel productCategoryViewModel)
         {
             try
             {
                 // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (productCategoryViewModel.ProductCategory.ProductCategoryID > 0)
+                {
+                    productCategoryService.UpdateCategory(productCategoryViewModel.ProductCategory.MapClientToServer());
+                }
+                else
+                {
+                    productCategoryService.AddCategory(productCategoryViewModel.ProductCategory.MapClientToServer());
+                }
+                
+                return RedirectToAction("Create");
             }
             catch
             {
