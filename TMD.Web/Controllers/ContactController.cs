@@ -30,7 +30,7 @@ namespace TMD.Web.Controllers
 
         //
         // GET: /Contact/Create
-        public ActionResult Create(int id)
+        public ActionResult Create(int? id)
         {
             ContactViewModel contactViewModel = new ContactViewModel();
 
