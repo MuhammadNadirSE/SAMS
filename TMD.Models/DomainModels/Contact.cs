@@ -26,5 +26,16 @@ namespace TMD.Models.DomainModels
         public Nullable<int> ContactType { get; set; }
         public Nullable<int> AddressId { get; set; }
         public string CompanyName { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTime UpdateDate { get; set; }
+
+        
+        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUser AspNetUser1 { get; set; }
+        
+        public virtual ICollection<Inquiry> Inquiries { get; set; }
     }
 }

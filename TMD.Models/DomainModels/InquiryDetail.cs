@@ -15,9 +15,10 @@ namespace TMD.Models.DomainModels
     public partial class InquiryDetail
     {
         public int InquiryDetailID { get; set; }
-        public Nullable<int> InquiryID { get; set; }
-        public Nullable<int> ProductID { get; set; }
-    
+        public int InquiryID { get; set; }
+        public int ProductID { get; set; }
+
         public virtual Inquiry Inquiry { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -137,6 +137,10 @@
           <Property Name="ContactType" Type="int" />
           <Property Name="AddressId" Type="int" />
           <Property Name="CompanyName" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Designation">
           <Key>
@@ -202,21 +206,25 @@
             <PropertyRef Name="InquiryID" />
           </Key>
           <Property Name="InquiryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
           <Property Name="CompanyName" Type="varchar" MaxLength="500" />
-          <Property Name="ContactID" Type="int" />
-          <Property Name="InquiryDate" Type="datetime" />
-          <Property Name="Priority" Type="int" />
+          <Property Name="ContactID" Type="int" Nullable="false" />
+          <Property Name="InquiryDate" Type="datetime" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
           <Property Name="ContactResponse" Type="varchar(max)" />
           <Property Name="UserComments" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="InquiryDetail">
           <Key>
             <PropertyRef Name="InquiryDetailID" />
           </Key>
           <Property Name="InquiryDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InquiryID" Type="int" />
-          <Property Name="ProductID" Type="int" />
+          <Property Name="InquiryID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -263,7 +271,7 @@
           <Property Name="CatName" Type="varchar" MaxLength="500" />
           <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
           <Property Name="DetailDescription" Type="varchar(max)" />
-          <Property Name="IsParent" Type="bit" />
+          <Property Name="IsParent" Type="bit" Nullable="false" />
           <Property Name="ParentCatID" Type="int" />
         </EntityType>
         <EntityType Name="ProductModel">
@@ -358,6 +366,18 @@
           <Property Name="RecLastUpdatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RecLastUpdateOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Address_Contact">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Attendance_Employee_EditedBy">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
@@ -391,6 +411,30 @@
             </Principal>
             <Dependent Role="CategoryLog">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactCreatedBy_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactUpdatedBy_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="UpdatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -559,7 +603,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Inquiry">
-          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="0..1" />
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="1" />
           <End Role="InquiryDetail" Type="Self.InquiryDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Inquiry">
@@ -567,6 +611,66 @@
             </Principal>
             <Dependent Role="InquiryDetail">
               <PropertyRef Name="InquiryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inquiry_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inquiry_Contact">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inquiryCreatedBy_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inquirydetail_product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InquiryDetail" Type="Self.InquiryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="InquiryDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inquiryUpdatedBy_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="UpdatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -659,6 +763,10 @@
           <EntitySet Name="SeedValue" EntityType="Self.SeedValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Address_Contact" Association="Self.FK_Address_Contact">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
           <AssociationSet Name="FK_Attendance_Employee_EditedBy" Association="Self.FK_Attendance_Employee_EditedBy">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Attendance" EntitySet="Attendance" />
@@ -670,6 +778,14 @@
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactCreatedBy_AspNetUsers" Association="Self.FK_ContactCreatedBy_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactUpdatedBy_AspNetUsers" Association="Self.FK_ContactUpdatedBy_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Contact" EntitySet="Contact" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -726,6 +842,26 @@
           <AssociationSet Name="FK_Inquiry" Association="Self.FK_Inquiry">
             <End Role="Inquiry" EntitySet="Inquiry" />
             <End Role="InquiryDetail" EntitySet="InquiryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inquiry_AspNetUsers" Association="Self.FK_Inquiry_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Inquiry" EntitySet="Inquiry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inquiry_Contact" Association="Self.FK_Inquiry_Contact">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="Inquiry" EntitySet="Inquiry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inquiryCreatedBy_AspNetUsers" Association="Self.FK_inquiryCreatedBy_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Inquiry" EntitySet="Inquiry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inquirydetail_product" Association="Self.FK_inquirydetail_product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InquiryDetail" EntitySet="InquiryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inquiryUpdatedBy_AspNetUsers" Association="Self.FK_inquiryUpdatedBy_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Inquiry" EntitySet="Inquiry" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="Self.FK_ProductCategory_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -858,21 +994,12 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Addresses" EntityType="TMD.Models.DomainModels.Address" />
-          <EntitySet Name="Contacts" EntityType="TMD.Models.DomainModels.Contact" />
-          <EntitySet Name="Inquiries" EntityType="TMD.Models.DomainModels.Inquiry" />
-          <EntitySet Name="InquiryDetails" EntityType="TMD.Models.DomainModels.InquiryDetail" />
-          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
           <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
           <EntitySet Name="ProductModels" EntityType="TMD.Models.DomainModels.ProductModel" />
           <EntitySet Name="ProductTechSpecs" EntityType="TMD.Models.DomainModels.ProductTechSpec" />
           <EntitySet Name="Quotes" EntityType="TMD.Models.DomainModels.Quote" />
           <EntitySet Name="Seeds" EntityType="TMD.Models.DomainModels.Seed" />
           <EntitySet Name="SeedValues" EntityType="TMD.Models.DomainModels.SeedValue" />
-          <AssociationSet Name="FK_Inquiry" Association="TMD.Models.DomainModels.FK_Inquiry">
-            <End Role="Inquiry" EntitySet="Inquiries" />
-            <End Role="InquiryDetail" EntitySet="InquiryDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_SeedValue_Seeds" Association="TMD.Models.DomainModels.FK_SeedValue_Seeds">
             <End Role="Seed" EntitySet="Seeds" />
             <End Role="SeedValue" EntitySet="SeedValues" />
@@ -880,6 +1007,47 @@
           <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategories" />
             <End Role="ProductCategory1" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="TMD.Models.DomainModels.Address" />
+          <EntitySet Name="Contacts" EntityType="TMD.Models.DomainModels.Contact" />
+          <EntitySet Name="Inquiries" EntityType="TMD.Models.DomainModels.Inquiry" />
+          <EntitySet Name="InquiryDetails" EntityType="TMD.Models.DomainModels.InquiryDetail" />
+          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
+          <AssociationSet Name="FK_Address_Contact" Association="TMD.Models.DomainModels.FK_Address_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactCreatedBy_AspNetUsers" Association="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactUpdatedBy_AspNetUsers" Association="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inquiry_AspNetUsers" Association="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Inquiry" EntitySet="Inquiries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inquiryCreatedBy_AspNetUsers" Association="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Inquiry" EntitySet="Inquiries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inquiryUpdatedBy_AspNetUsers" Association="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Inquiry" EntitySet="Inquiries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inquiry_Contact" Association="TMD.Models.DomainModels.FK_Inquiry_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Inquiry" EntitySet="Inquiries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inquiry" Association="TMD.Models.DomainModels.FK_Inquiry">
+            <End Role="Inquiry" EntitySet="Inquiries" />
+            <End Role="InquiryDetail" EntitySet="InquiryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inquirydetail_product" Association="TMD.Models.DomainModels.FK_inquirydetail_product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="InquiryDetail" EntitySet="InquiryDetails" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
@@ -1039,6 +1207,11 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="Employees" Relationship="TMD.Models.DomainModels.FK_Employee_AspNetUsers" FromRole="AspNetUser" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="TMD.Models.DomainModels.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="Contacts" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Contact" />
+          <NavigationProperty Name="Contacts1" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Contact" />
+          <NavigationProperty Name="Inquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
+          <NavigationProperty Name="Inquiries1" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
+          <NavigationProperty Name="Inquiries2" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
         </EntityType>
         <EntityType Name="Attendance">
           <Key>
@@ -1382,71 +1555,6 @@
           <End Type="TMD.Models.DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressId" />
-          </Key>
-          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Street" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ContactID" Type="Int32" />
-          <Property Name="AddressType" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Contact">
-          <Key>
-            <PropertyRef Name="ContactID" />
-          </Key>
-          <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="PrimaryPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="HomePhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Fax" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="CellNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ContactType" Type="Int32" />
-          <Property Name="AddressId" Type="Int32" />
-          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Inquiry">
-          <Key>
-            <PropertyRef Name="InquiryID" />
-          </Key>
-          <Property Name="InquiryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ContactID" Type="Int32" />
-          <Property Name="InquiryDate" Type="DateTime" Precision="3" />
-          <Property Name="Priority" Type="Int32" />
-          <Property Name="ContactResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="UserComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
-        </EntityType>
-        <EntityType Name="InquiryDetail">
-          <Key>
-            <PropertyRef Name="InquiryDetailID" />
-          </Key>
-          <Property Name="InquiryDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InquiryID" Type="Int32" />
-          <Property Name="ProductID" Type="Int32" />
-          <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="InquiryDetail" ToRole="Inquiry" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ProductCategoryID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
             <PropertyRef Name="ProductCategoryID" />
@@ -1455,7 +1563,7 @@
           <Property Name="CatName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsParent" Type="Boolean" />
+          <Property Name="IsParent" Type="Boolean" Nullable="false" />
           <Property Name="ParentCatID" Type="Int32" />
           <NavigationProperty Name="ProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
           <NavigationProperty Name="ProductCategoryParent" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
@@ -1517,18 +1625,6 @@
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Seed" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="SeedValue" ToRole="Seed" />
         </EntityType>
-        <Association Name="FK_Inquiry">
-          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.InquiryDetail" Role="InquiryDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inquiry">
-              <PropertyRef Name="InquiryID" />
-            </Principal>
-            <Dependent Role="InquiryDetail">
-              <PropertyRef Name="InquiryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SeedValue_Seeds">
           <End Type="TMD.Models.DomainModels.Seed" Role="Seed" Multiplicity="0..1" />
           <End Type="TMD.Models.DomainModels.SeedValue" Role="SeedValue" Multiplicity="*" />
@@ -1550,6 +1646,198 @@
             </Principal>
             <Dependent Role="ProductCategory1">
               <PropertyRef Name="ParentCatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactID" Type="Int32" />
+          <Property Name="AddressType" Type="Int32" />
+          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Address" ToRole="Contact" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CellNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ContactType" Type="Int32" />
+          <Property Name="AddressId" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Addresses" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Contact" ToRole="Address" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser1" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
+          <NavigationProperty Name="Inquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Contact" ToRole="Inquiry" />
+        </EntityType>
+        <EntityType Name="Inquiry">
+          <Key>
+            <PropertyRef Name="InquiryID" />
+          </Key>
+          <Property Name="InquiryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" />
+          <Property Name="InquiryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="ContactResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser1" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser2" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Inquiry" ToRole="Contact" />
+          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
+        </EntityType>
+        <EntityType Name="InquiryDetail">
+          <Key>
+            <PropertyRef Name="InquiryDetailID" />
+          </Key>
+          <Property Name="InquiryDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InquiryID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="InquiryDetail" ToRole="Inquiry" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_inquirydetail_product" FromRole="InquiryDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProductCategoryID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_inquirydetail_product" FromRole="Product" ToRole="InquiryDetail" />
+        </EntityType>
+        <Association Name="FK_Address_Contact">
+          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactCreatedBy_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactUpdatedBy_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inquiry_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inquiryCreatedBy_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inquiryUpdatedBy_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inquiry_Contact">
+          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Inquiry">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inquiry">
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.InquiryDetail" Role="InquiryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inquiry">
+              <PropertyRef Name="InquiryID" />
+            </Principal>
+            <Dependent Role="InquiryDetail">
+              <PropertyRef Name="InquiryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inquirydetail_product">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.InquiryDetail" Role="InquiryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="InquiryDetail">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1796,74 +2084,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contacts">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Contact">
-              <MappingFragment StoreEntitySet="Contact">
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="ContactType" ColumnName="ContactType" />
-                <ScalarProperty Name="CellNo" ColumnName="CellNo" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
-                <ScalarProperty Name="PrimaryPhone" ColumnName="PrimaryPhone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Inquiries">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Inquiry">
-              <MappingFragment StoreEntitySet="Inquiry">
-                <ScalarProperty Name="UserComments" ColumnName="UserComments" />
-                <ScalarProperty Name="ContactResponse" ColumnName="ContactResponse" />
-                <ScalarProperty Name="Priority" ColumnName="Priority" />
-                <ScalarProperty Name="InquiryDate" ColumnName="InquiryDate" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="InquiryID" ColumnName="InquiryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InquiryDetails">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.InquiryDetail">
-              <MappingFragment StoreEntitySet="InquiryDetail">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="InquiryID" ColumnName="InquiryID" />
-                <ScalarProperty Name="InquiryDetailID" ColumnName="InquiryDetailID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
-                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
@@ -1936,6 +2156,82 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="ContactType" ColumnName="ContactType" />
+                <ScalarProperty Name="CellNo" ColumnName="CellNo" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="PrimaryPhone" ColumnName="PrimaryPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inquiries">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Inquiry">
+              <MappingFragment StoreEntitySet="Inquiry">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UserComments" ColumnName="UserComments" />
+                <ScalarProperty Name="ContactResponse" ColumnName="ContactResponse" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="InquiryDate" ColumnName="InquiryDate" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="InquiryID" ColumnName="InquiryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InquiryDetails">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.InquiryDetail">
+              <MappingFragment StoreEntitySet="InquiryDetail">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="InquiryID" ColumnName="InquiryID" />
+                <ScalarProperty Name="InquiryDetailID" ColumnName="InquiryDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1958,7 +2254,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="98">
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="54">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Menu" Width="1.875" PointX="1.375" PointY="9.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.MenuRight" Width="1.5" PointX="3.875" PointY="9.125" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
@@ -1993,20 +2289,28 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Ticket_Employee_ApprovedBy" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Ticket_TicketType" />
         <AssociationConnector Association="TMD.Models.DomainModels.AspNetUserRoles" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Contact" Width="1.5" PointX="16.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="14.75" PointY="15" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="17" PointY="15.5" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="3.75" PointY="0.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="2.375" PointX="16.75" PointY="5.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductModel" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductTechSpec" Width="1.5" PointX="11.75" PointY="10.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="18.75" PointY="0.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Seed" Width="1.5" PointX="14.75" PointY="10.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.SeedValue" Width="1.5" PointX="17" PointY="10.875" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_SeedValue_Seeds" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="7.375" PointY="25.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Contact" Width="1.5" PointX="5.125" PointY="19.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="9.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="11.625" PointY="18.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="9.375" PointY="29.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Address_Contact" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry_Contact" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_inquirydetail_product" />
         </Diagram>
     </Diagrams>
   </Designer>

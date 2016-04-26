@@ -23,5 +23,7 @@ namespace TMD.Models.DomainModels
         public string Address2 { get; set; }
         public Nullable<int> ContactID { get; set; }
         public Nullable<int> AddressType { get; set; }
+
+        public virtual Contact Contact { get; set; }
     }
 }
