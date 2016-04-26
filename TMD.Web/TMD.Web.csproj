@@ -294,6 +294,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="ModelMappers\AttendanceModelMapper.cs" />
     <Compile Include="ModelMappers\CaseMapper.cs" />
     <Compile Include="ModelMappers\ChargeMapper.cs" />
+    <Compile Include="ModelMappers\ContactMappers.cs" />
     <Compile Include="ModelMappers\EmployeeSupervisorMapper.cs" />
     <Compile Include="ModelMappers\AspNetRoleMapper.cs" />
     <Compile Include="ModelMappers\DesignationMapper.cs" />
@@ -335,6 +337,7 @@
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
     <Compile Include="Models\Common\CompanyStatusDropdownModel.cs" />
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PayRollListWebModel.cs" />
@@ -391,6 +394,7 @@
     <Compile Include="ViewModels\Common\MessageViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\Contact\ContactViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
     <Compile Include="ViewModels\Designation\DesignationModel.cs" />
     <Compile Include="ViewModels\EmployeeSupervisor\EmployeeSupervisorModel.cs" />
@@ -1768,6 +1772,8 @@
     <Content Include="Views\Payroll\Index.cshtml" />
     <Content Include="Views\Attendance\Edit.cshtml" />
     <Content Include="Views\Attendance\Manual.cshtml" />
+    <Content Include="Views\Contact\Create.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

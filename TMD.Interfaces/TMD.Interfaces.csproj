@@ -60,6 +60,7 @@
     <Compile Include="IRepository\IAspNetRoleRepository.cs" />
     <Compile Include="IRepository\IBillDetailRepository.cs" />
     <Compile Include="IRepository\IClientRepository.cs" />
+    <Compile Include="IRepository\IContactRepository.cs" />
     <Compile Include="IRepository\IDistributorRepository.cs" />
     <Compile Include="IRepository\IEmployeePayrollRepository.cs" />
     <Compile Include="IRepository\IEmployeeSupervisorRepository.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="IServices\IAspNetRoleService.cs" />
     <Compile Include="IServices\IBillDetailService.cs" />
     <Compile Include="IServices\IClientService.cs" />
+    <Compile Include="IServices\IContactService.cs" />
     <Compile Include="IServices\IDistributorService.cs" />
     <Compile Include="IServices\IEmployeePayrollService.cs" />
     <Compile Include="IServices\IEmployeeSupervisorService.cs" />
