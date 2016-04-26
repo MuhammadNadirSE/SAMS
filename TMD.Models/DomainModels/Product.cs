@@ -20,5 +20,8 @@ namespace TMD.Models.DomainModels
         public string DetailDescription { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string ProductCategoryID { get; set; }
+
+        
+        public virtual ICollection<InquiryDetail> InquiryDetails { get; set; }
     }
 }
