@@ -29,9 +29,24 @@ namespace TMD.Models.DomainModels
         public string LastName { get; set; }
         public string Telephone { get; set; }
         public string UserComments { get; set; }
+
+        
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
+        
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        
         public virtual ICollection<Employee> Employees { get; set; }
+        
+        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        
+        public virtual ICollection<Contact> CreatedContacts { get; set; }
+        
+        public virtual ICollection<Contact> UpdatedContacts { get; set; }
+        
+        public virtual ICollection<Inquiry> ConductedInquiries { get; set; }
+        
+        public virtual ICollection<Inquiry> CreatedInquiries { get; set; }
+        
+        public virtual ICollection<Inquiry> UpdatedInquiries { get; set; }
     }
 }

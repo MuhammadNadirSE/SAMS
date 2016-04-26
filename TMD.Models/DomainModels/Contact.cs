@@ -33,8 +33,8 @@ namespace TMD.Models.DomainModels
 
         
         public virtual ICollection<Address> Addresses { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual AspNetUser ContactCreatedBy { get; set; }
+        public virtual AspNetUser ContactUpdatedBy { get; set; }
         
         public virtual ICollection<Inquiry> Inquiries { get; set; }
     }

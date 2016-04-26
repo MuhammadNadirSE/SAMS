@@ -28,8 +28,8 @@ namespace TMD.Models.DomainModels
         public System.DateTime UpdateDate { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
-        public virtual AspNetUser AspNetUser2 { get; set; }
+        public virtual AspNetUser CreatedInquiries { get; set; }
+        public virtual AspNetUser UpdatedInquiries { get; set; }
         public virtual Contact Contact { get; set; }
         
         public virtual ICollection<InquiryDetail> InquiryDetails { get; set; }
