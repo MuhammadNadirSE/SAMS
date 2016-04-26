@@ -1207,11 +1207,11 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="Employees" Relationship="TMD.Models.DomainModels.FK_Employee_AspNetUsers" FromRole="AspNetUser" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="TMD.Models.DomainModels.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
-          <NavigationProperty Name="Contacts" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Contact" />
-          <NavigationProperty Name="Contacts1" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Contact" />
-          <NavigationProperty Name="Inquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
-          <NavigationProperty Name="Inquiries1" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
-          <NavigationProperty Name="Inquiries2" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
+          <NavigationProperty Name="CreatedContacts" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Contact" />
+          <NavigationProperty Name="UpdatedContacts" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Contact" />
+          <NavigationProperty Name="ConductedInquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
+          <NavigationProperty Name="CreatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
+          <NavigationProperty Name="UpdatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
         </EntityType>
         <EntityType Name="Attendance">
           <Key>
@@ -1685,8 +1685,8 @@
           <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Addresses" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Contact" ToRole="Address" />
-          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
+          <NavigationProperty Name="ContactCreatedBy" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
+          <NavigationProperty Name="ContactUpdatedBy" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
           <NavigationProperty Name="Inquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Contact" ToRole="Inquiry" />
         </EntityType>
         <EntityType Name="Inquiry">
@@ -1706,8 +1706,8 @@
           <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser2" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="CreatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
           <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Inquiry" ToRole="Contact" />
           <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
         </EntityType>
@@ -2254,7 +2254,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="54">
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="71">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Menu" Width="1.875" PointX="1.375" PointY="9.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.MenuRight" Width="1.5" PointX="3.875" PointY="9.125" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
@@ -2263,7 +2263,7 @@
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.875" PointY="6" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="6.125" PointY="4.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="6.125" PointY="7.625" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="1.5" PointX="2.875" PointY="3.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="2" PointX="2.875" PointY="3.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Attendance" Width="1.5" PointX="6.25" PointY="11" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="4.375" PointY="16" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="6.625" PointY="15.875" />
@@ -2299,7 +2299,7 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="7.375" PointY="25.25" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Contact" Width="1.5" PointX="5.125" PointY="19.25" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="9.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.875" PointX="9.375" PointY="17.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="11.625" PointY="18.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="9.375" PointY="29.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Address_Contact" />
