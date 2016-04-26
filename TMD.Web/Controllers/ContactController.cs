@@ -35,9 +35,8 @@ namespace TMD.Web.Controllers
             ContactViewModel contactViewModel = new ContactViewModel();
 
              contactViewModel.Contact = new Models.ContactModel();
-            
-
-           // ContactViewModel.ProductCategories = prodCatResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
+            if(id !=null)
+                contactViewModel.Contact = contactService.GetContactById((int)id).MapServerToClient();
 
              return View(contactViewModel);
         }
