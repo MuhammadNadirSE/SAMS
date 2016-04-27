@@ -15,8 +15,14 @@ namespace TMD.Models.DomainModels
     public partial class ProductModel
     {
         public int ProductModelID { get; set; }
-        public Nullable<int> CategoryId { get; set; }
+        public int ProductId { get; set; }
         public string ModelName { get; set; }
         public string ModelDescription { get; set; }
+
+        public virtual Product Product { get; set; }
+        
+        public virtual ICollection<ProductTechSpec> ProductTechSpecs { get; set; }
+        
+        public virtual ICollection<Quote> Quotes { get; set; }
     }
 }

@@ -10,14 +10,14 @@
             <PropertyRef Name="AddressId" />
           </Key>
           <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Country" Type="varchar" MaxLength="200" />
-          <Property Name="State" Type="varchar" MaxLength="200" />
-          <Property Name="City" Type="varchar" MaxLength="200" />
-          <Property Name="Street" Type="varchar" MaxLength="200" />
-          <Property Name="Address1" Type="varchar" MaxLength="500" />
-          <Property Name="Address2" Type="varchar" MaxLength="500" />
-          <Property Name="ContactID" Type="int" />
-          <Property Name="AddressType" Type="int" />
+          <Property Name="Country" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Street" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address1" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Address2" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ContactID" Type="int" Nullable="false" />
+          <Property Name="AddressType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AllowanceType">
           <Key>
@@ -206,13 +206,13 @@
             <PropertyRef Name="InquiryID" />
           </Key>
           <Property Name="InquiryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
-          <Property Name="CompanyName" Type="varchar" MaxLength="500" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="ContactID" Type="int" Nullable="false" />
           <Property Name="InquiryDate" Type="datetime" Nullable="false" />
           <Property Name="Priority" Type="int" Nullable="false" />
-          <Property Name="ContactResponse" Type="varchar(max)" />
-          <Property Name="UserComments" Type="varchar(max)" />
+          <Property Name="ContactResponse" Type="varchar(max)" Nullable="false" />
+          <Property Name="UserComments" Type="varchar(max)" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -257,77 +257,98 @@
             <PropertyRef Name="ProductID" />
           </Key>
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductName" Type="varchar" MaxLength="500" />
-          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
-          <Property Name="DetailDescription" Type="varchar(max)" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ProductCategoryID" Type="nchar" MaxLength="10" />
+          <Property Name="ProductName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DetailDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ProductCategoryID" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
             <PropertyRef Name="ProductCategoryID" />
           </Key>
           <Property Name="ProductCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CatName" Type="varchar" MaxLength="500" />
-          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
-          <Property Name="DetailDescription" Type="varchar(max)" />
+          <Property Name="CatName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DetailDescription" Type="varchar(max)" Nullable="false" />
           <Property Name="IsParent" Type="bit" Nullable="false" />
           <Property Name="ParentCatID" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductModel">
           <Key>
             <PropertyRef Name="ProductModelID" />
           </Key>
           <Property Name="ProductModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CategoryId" Type="int" />
-          <Property Name="ModelName" Type="varchar" MaxLength="200" />
-          <Property Name="ModelDescription" Type="varchar(max)" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ModelName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ModelDescription" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductTechSpecs">
           <Key>
             <PropertyRef Name="ProductTechSpecsId" />
           </Key>
           <Property Name="ProductTechSpecsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductID" Type="int" />
-          <Property Name="SpecName" Type="varchar" MaxLength="500" />
-          <Property Name="SpecValue" Type="varchar" MaxLength="500" />
+          <Property Name="ProductModelId" Type="int" Nullable="false" />
+          <Property Name="TechSpecId" Type="int" Nullable="false" />
+          <Property Name="SpecValue" Type="varchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="Quote">
           <Key>
             <PropertyRef Name="QuoteID" />
           </Key>
           <Property Name="QuoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuoteReferenceNo" Type="varchar" MaxLength="200" />
-          <Property Name="Subject" Type="varchar" MaxLength="1000" />
-          <Property Name="PaymentTerms" Type="varchar" MaxLength="500" />
-          <Property Name="DeliveryTerms" Type="varchar(max)" />
-          <Property Name="InstallationTerms" Type="varchar(max)" />
-          <Property Name="FreeServiceTerms" Type="varchar(max)" />
-          <Property Name="WarrantyTerms" Type="varchar(max)" />
-          <Property Name="ValidityTerms" Type="varchar" MaxLength="500" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="Make" Type="varchar" MaxLength="500" />
-          <Property Name="ModelId" Type="int" />
+          <Property Name="QuoteReferenceNo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Subject" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="PaymentTerms" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DeliveryTerms" Type="varchar(max)" Nullable="false" />
+          <Property Name="InstallationTerms" Type="varchar(max)" Nullable="false" />
+          <Property Name="FreeServiceTerms" Type="varchar(max)" Nullable="false" />
+          <Property Name="WarrantyTerms" Type="varchar(max)" Nullable="false" />
+          <Property Name="ValidityTerms" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Make" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ModelId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Seeds">
           <Key>
             <PropertyRef Name="SeedID" />
           </Key>
           <Property Name="SeedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SeedCode" Type="varchar" MaxLength="200" />
-          <Property Name="ValueCode" Type="varchar" MaxLength="50" />
-          <Property Name="Value" Type="int" />
-          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="SeedCode" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="SeedValue">
           <Key>
             <PropertyRef Name="SeedValueID" />
           </Key>
           <Property Name="SeedValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SeedID" Type="int" />
-          <Property Name="ValueCode" Type="varchar" MaxLength="100" />
-          <Property Name="ValueId" Type="int" />
-          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="SeedID" Type="int" Nullable="false" />
+          <Property Name="ValueCode" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ValueId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TechnicalSpecs">
+          <Key>
+            <PropertyRef Name="TechnicalSpecId" />
+          </Key>
+          <Property Name="TechnicalSpecId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpecName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -367,7 +388,7 @@
           <Property Name="RecLastUpdateOn" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Address_Contact">
-          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contact">
@@ -615,7 +636,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Inquiry_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -650,7 +671,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inquirydetail_product">
+        <Association Name="FK_InquiryDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="InquiryDetail" Type="Self.InquiryDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -674,6 +695,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductCategory_ProductCategory">
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
           <End Role="ProductCategory1" Type="Self.ProductCategory" Multiplicity="*" />
@@ -686,8 +755,104 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductCategory_UpdatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductModel_ProductCategory">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductModel" Type="Self.ProductModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductModel">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTechSpecs_ProductModel">
+          <End Role="ProductModel" Type="Self.ProductModel" Multiplicity="1" />
+          <End Role="ProductTechSpecs" Type="Self.ProductTechSpecs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="ProductTechSpecs">
+              <PropertyRef Name="ProductModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTechSpecs_TechnicalSpecs">
+          <End Role="TechnicalSpecs" Type="Self.TechnicalSpecs" Multiplicity="1" />
+          <End Role="ProductTechSpecs" Type="Self.ProductTechSpecs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechnicalSpecs">
+              <PropertyRef Name="TechnicalSpecId" />
+            </Principal>
+            <Dependent Role="ProductTechSpecs">
+              <PropertyRef Name="TechSpecId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_ProductModel">
+          <End Role="ProductModel" Type="Self.ProductModel" Multiplicity="1" />
+          <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SeedValue_Seeds">
-          <End Role="Seeds" Type="Self.Seeds" Multiplicity="0..1" />
+          <End Role="Seeds" Type="Self.Seeds" Multiplicity="1" />
           <End Role="SeedValue" Type="Self.SeedValue" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Seeds">
@@ -695,6 +860,30 @@
             </Principal>
             <Dependent Role="SeedValue">
               <PropertyRef Name="SeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalSpecs_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TechnicalSpecs" Type="Self.TechnicalSpecs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechnicalSpecs">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalSpecs_CreatdBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TechnicalSpecs" Type="Self.TechnicalSpecs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechnicalSpecs">
+              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -761,6 +950,7 @@
           <EntitySet Name="Quote" EntityType="Self.Quote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seeds" EntityType="Self.Seeds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SeedValue" EntityType="Self.SeedValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechnicalSpecs" EntityType="Self.TechnicalSpecs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Address_Contact" Association="Self.FK_Address_Contact">
@@ -855,7 +1045,7 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Inquiry" EntitySet="Inquiry" />
           </AssociationSet>
-          <AssociationSet Name="FK_inquirydetail_product" Association="Self.FK_inquirydetail_product">
+          <AssociationSet Name="FK_InquiryDetail_Product" Association="Self.FK_InquiryDetail_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="InquiryDetail" EntitySet="InquiryDetail" />
           </AssociationSet>
@@ -863,13 +1053,69 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Inquiry" EntitySet="Inquiry" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_AspNetUsers" Association="Self.FK_Product_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_AspNetUsers1" Association="Self.FK_Product_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_AspNetUsers" Association="Self.FK_ProductCategory_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="Self.FK_ProductCategory_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="ProductCategory1" EntitySet="ProductCategory" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_UpdatedBy" Association="Self.FK_ProductCategory_UpdatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductModel_ProductCategory" Association="Self.FK_ProductModel_ProductCategory">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductModel" EntitySet="ProductModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTechSpecs_ProductModel" Association="Self.FK_ProductTechSpecs_ProductModel">
+            <End Role="ProductModel" EntitySet="ProductModel" />
+            <End Role="ProductTechSpecs" EntitySet="ProductTechSpecs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTechSpecs_TechnicalSpecs" Association="Self.FK_ProductTechSpecs_TechnicalSpecs">
+            <End Role="TechnicalSpecs" EntitySet="TechnicalSpecs" />
+            <End Role="ProductTechSpecs" EntitySet="ProductTechSpecs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_AspNetUsers" Association="Self.FK_Quote_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Quote" EntitySet="Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_AspNetUsers1" Association="Self.FK_Quote_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Quote" EntitySet="Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_Product" Association="Self.FK_Quote_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Quote" EntitySet="Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_ProductModel" Association="Self.FK_Quote_ProductModel">
+            <End Role="ProductModel" EntitySet="ProductModel" />
+            <End Role="Quote" EntitySet="Quote" />
+          </AssociationSet>
           <AssociationSet Name="FK_SeedValue_Seeds" Association="Self.FK_SeedValue_Seeds">
             <End Role="Seeds" EntitySet="Seeds" />
             <End Role="SeedValue" EntitySet="SeedValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalSpecs_AspNetUsers" Association="Self.FK_TechnicalSpecs_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TechnicalSpecs" EntitySet="TechnicalSpecs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalSpecs_CreatdBy" Association="Self.FK_TechnicalSpecs_CreatdBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TechnicalSpecs" EntitySet="TechnicalSpecs" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Employee" Association="Self.FK_Ticket_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -994,29 +1240,7 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
-          <EntitySet Name="ProductModels" EntityType="TMD.Models.DomainModels.ProductModel" />
-          <EntitySet Name="ProductTechSpecs" EntityType="TMD.Models.DomainModels.ProductTechSpec" />
-          <EntitySet Name="Quotes" EntityType="TMD.Models.DomainModels.Quote" />
-          <EntitySet Name="Seeds" EntityType="TMD.Models.DomainModels.Seed" />
-          <EntitySet Name="SeedValues" EntityType="TMD.Models.DomainModels.SeedValue" />
-          <AssociationSet Name="FK_SeedValue_Seeds" Association="TMD.Models.DomainModels.FK_SeedValue_Seeds">
-            <End Role="Seed" EntitySet="Seeds" />
-            <End Role="SeedValue" EntitySet="SeedValues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory">
-            <End Role="ProductCategory" EntitySet="ProductCategories" />
-            <End Role="ProductCategory1" EntitySet="ProductCategories" />
-          </AssociationSet>
-          <EntitySet Name="Addresses" EntityType="TMD.Models.DomainModels.Address" />
           <EntitySet Name="Contacts" EntityType="TMD.Models.DomainModels.Contact" />
-          <EntitySet Name="Inquiries" EntityType="TMD.Models.DomainModels.Inquiry" />
-          <EntitySet Name="InquiryDetails" EntityType="TMD.Models.DomainModels.InquiryDetail" />
-          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
-          <AssociationSet Name="FK_Address_Contact" Association="TMD.Models.DomainModels.FK_Address_Contact">
-            <End Role="Contact" EntitySet="Contacts" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
           <AssociationSet Name="FK_ContactCreatedBy_AspNetUsers" Association="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Contact" EntitySet="Contacts" />
@@ -1025,6 +1249,12 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Contact" EntitySet="Contacts" />
           </AssociationSet>
+          <EntitySet Name="Inquiries" EntityType="TMD.Models.DomainModels.Inquiry" />
+          <EntitySet Name="InquiryDetails" EntityType="TMD.Models.DomainModels.InquiryDetail" />
+          <EntitySet Name="Quotes" EntityType="TMD.Models.DomainModels.Quote" />
+          <EntitySet Name="Seeds" EntityType="TMD.Models.DomainModels.Seed" />
+          <EntitySet Name="SeedValues" EntityType="TMD.Models.DomainModels.SeedValue" />
+          <EntitySet Name="TechnicalSpecs" EntityType="TMD.Models.DomainModels.TechnicalSpec" />
           <AssociationSet Name="FK_Inquiry_AspNetUsers" Association="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Inquiry" EntitySet="Inquiries" />
@@ -1037,6 +1267,22 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Inquiry" EntitySet="Inquiries" />
           </AssociationSet>
+          <AssociationSet Name="FK_Quote_AspNetUsers" Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_AspNetUsers1" Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers1">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalSpecs_AspNetUsers" Association="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TechnicalSpec" EntitySet="TechnicalSpecs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalSpecs_CreatdBy" Association="TMD.Models.DomainModels.FK_TechnicalSpecs_CreatdBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TechnicalSpec" EntitySet="TechnicalSpecs" />
+          </AssociationSet>
           <AssociationSet Name="FK_Inquiry_Contact" Association="TMD.Models.DomainModels.FK_Inquiry_Contact">
             <End Role="Contact" EntitySet="Contacts" />
             <End Role="Inquiry" EntitySet="Inquiries" />
@@ -1045,9 +1291,66 @@
             <End Role="Inquiry" EntitySet="Inquiries" />
             <End Role="InquiryDetail" EntitySet="InquiryDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_inquirydetail_product" Association="TMD.Models.DomainModels.FK_inquirydetail_product">
+          <AssociationSet Name="FK_SeedValue_Seeds" Association="TMD.Models.DomainModels.FK_SeedValue_Seeds">
+            <End Role="Seed" EntitySet="Seeds" />
+            <End Role="SeedValue" EntitySet="SeedValues" />
+          </AssociationSet>
+          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
+          <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
+          <EntitySet Name="ProductModels" EntityType="TMD.Models.DomainModels.ProductModel" />
+          <EntitySet Name="ProductTechSpecs" EntityType="TMD.Models.DomainModels.ProductTechSpec" />
+          <AssociationSet Name="FK_Product_AspNetUsers" Association="TMD.Models.DomainModels.FK_Product_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_AspNetUsers1" Association="TMD.Models.DomainModels.FK_Product_AspNetUsers1">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_AspNetUsers" Association="TMD.Models.DomainModels.FK_ProductCategory_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_UpdatedBy" Association="TMD.Models.DomainModels.FK_ProductCategory_UpdatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InquiryDetail_Product" Association="TMD.Models.DomainModels.FK_InquiryDetail_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="InquiryDetail" EntitySet="InquiryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="TMD.Models.DomainModels.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductModel_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductModel_ProductCategory">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductModel" EntitySet="ProductModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_Product" Association="TMD.Models.DomainModels.FK_Quote_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="ProductCategory1" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTechSpecs_ProductModel" Association="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel">
+            <End Role="ProductModel" EntitySet="ProductModels" />
+            <End Role="ProductTechSpec" EntitySet="ProductTechSpecs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_ProductModel" Association="TMD.Models.DomainModels.FK_Quote_ProductModel">
+            <End Role="ProductModel" EntitySet="ProductModels" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTechSpecs_TechnicalSpecs" Association="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs">
+            <End Role="TechnicalSpec" EntitySet="TechnicalSpecs" />
+            <End Role="ProductTechSpec" EntitySet="ProductTechSpecs" />
+          </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="TMD.Models.DomainModels.Address" />
+          <AssociationSet Name="FK_Address_Contact" Association="TMD.Models.DomainModels.FK_Address_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Address" EntitySet="Addresses" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
@@ -1212,7 +1515,15 @@
           <NavigationProperty Name="ConductedInquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
           <NavigationProperty Name="CreatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
           <NavigationProperty Name="UpdatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
-        </EntityType>
+          <NavigationProperty Name="CreatedQuotes" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers" FromRole="AspNetUser" ToRole="Quote" />
+          <NavigationProperty Name="UpdatedQuotes" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" FromRole="AspNetUser" ToRole="Quote" />
+          <NavigationProperty Name="UpdatedTechnicalSpecs" Relationship="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers" FromRole="AspNetUser" ToRole="TechnicalSpec" />
+          <NavigationProperty Name="CreatedTechnicalSpecs" Relationship="TMD.Models.DomainModels.FK_TechnicalSpecs_CreatdBy" FromRole="AspNetUser" ToRole="TechnicalSpec" />
+          <NavigationProperty Name="CreatedProducts" Relationship="TMD.Models.DomainModels.FK_Product_AspNetUsers" FromRole="AspNetUser" ToRole="Product" />
+          <NavigationProperty Name="UpdatedProducts" Relationship="TMD.Models.DomainModels.FK_Product_AspNetUsers1" FromRole="AspNetUser" ToRole="Product" />
+          <NavigationProperty Name="CreatedProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_AspNetUsers" FromRole="AspNetUser" ToRole="ProductCategory" />
+          <NavigationProperty Name="UpdatedProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_UpdatedBy" FromRole="AspNetUser" ToRole="ProductCategory" />
+          </EntityType>
         <EntityType Name="Attendance">
           <Key>
             <PropertyRef Name="AttendanceId" />
@@ -1555,115 +1866,6 @@
           <End Type="TMD.Models.DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="ProductCategory">
-          <Key>
-            <PropertyRef Name="ProductCategoryID" />
-          </Key>
-          <Property Name="ProductCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CatName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsParent" Type="Boolean" Nullable="false" />
-          <Property Name="ParentCatID" Type="Int32" />
-          <NavigationProperty Name="ProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
-          <NavigationProperty Name="ProductCategoryParent" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
-        </EntityType>
-        <EntityType Name="ProductModel">
-          <Key>
-            <PropertyRef Name="ProductModelID" />
-          </Key>
-          <Property Name="ProductModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="ModelName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ModelDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ProductTechSpec">
-          <Key>
-            <PropertyRef Name="ProductTechSpecsId" />
-          </Key>
-          <Property Name="ProductTechSpecsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="Int32" />
-          <Property Name="SpecName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="SpecValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Quote">
-          <Key>
-            <PropertyRef Name="QuoteID" />
-          </Key>
-          <Property Name="QuoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuoteReferenceNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentTerms" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="InstallationTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FreeServiceTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="WarrantyTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ValidityTerms" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Make" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ModelId" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Seed">
-          <Key>
-            <PropertyRef Name="SeedID" />
-          </Key>
-          <Property Name="SeedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SeedCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ValueCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Value" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SeedValues" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="Seed" ToRole="SeedValue" />
-        </EntityType>
-        <EntityType Name="SeedValue">
-          <Key>
-            <PropertyRef Name="SeedValueID" />
-          </Key>
-          <Property Name="SeedValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SeedID" Type="Int32" />
-          <Property Name="ValueCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ValueId" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Seed" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="SeedValue" ToRole="Seed" />
-        </EntityType>
-        <Association Name="FK_SeedValue_Seeds">
-          <End Type="TMD.Models.DomainModels.Seed" Role="Seed" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.SeedValue" Role="SeedValue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seed">
-              <PropertyRef Name="SeedID" />
-            </Principal>
-            <Dependent Role="SeedValue">
-              <PropertyRef Name="SeedID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductCategory_ProductCategory">
-          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductCategory">
-              <PropertyRef Name="ProductCategoryID" />
-            </Principal>
-            <Dependent Role="ProductCategory1">
-              <PropertyRef Name="ParentCatID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressId" />
-          </Key>
-          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Street" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ContactID" Type="Int32" />
-          <Property Name="AddressType" Type="Int32" />
-          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Address" ToRole="Contact" />
-        </EntityType>
         <EntityType Name="Contact">
           <Key>
             <PropertyRef Name="ContactID" />
@@ -1684,67 +1886,11 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Contact" ToRole="Address" />
           <NavigationProperty Name="ContactCreatedBy" Relationship="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
           <NavigationProperty Name="ContactUpdatedBy" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
           <NavigationProperty Name="Inquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Contact" ToRole="Inquiry" />
+          <NavigationProperty Name="Addresses" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Contact" ToRole="Address" />
         </EntityType>
-        <EntityType Name="Inquiry">
-          <Key>
-            <PropertyRef Name="InquiryID" />
-          </Key>
-          <Property Name="InquiryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ContactID" Type="Int32" Nullable="false" />
-          <Property Name="InquiryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Priority" Type="Int32" Nullable="false" />
-          <Property Name="ContactResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="UserComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
-          <NavigationProperty Name="CreatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
-          <NavigationProperty Name="UpdatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
-          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Inquiry" ToRole="Contact" />
-          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
-        </EntityType>
-        <EntityType Name="InquiryDetail">
-          <Key>
-            <PropertyRef Name="InquiryDetailID" />
-          </Key>
-          <Property Name="InquiryDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InquiryID" Type="Int32" Nullable="false" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="InquiryDetail" ToRole="Inquiry" />
-          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_inquirydetail_product" FromRole="InquiryDetail" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ProductCategoryID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_inquirydetail_product" FromRole="Product" ToRole="InquiryDetail" />
-        </EntityType>
-        <Association Name="FK_Address_Contact">
-          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contact">
-              <PropertyRef Name="ContactID" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="ContactID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ContactCreatedBy_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="*" />
@@ -1769,8 +1915,99 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Inquiry">
+          <Key>
+            <PropertyRef Name="InquiryID" />
+          </Key>
+          <Property Name="InquiryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" />
+          <Property Name="InquiryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="ContactResponse" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserComments" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ConductedBy" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
+          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Inquiry" ToRole="Contact" />
+          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
+        </EntityType>
+        <EntityType Name="InquiryDetail">
+          <Key>
+            <PropertyRef Name="InquiryDetailID" />
+          </Key>
+          <Property Name="InquiryDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InquiryID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="InquiryDetail" ToRole="Inquiry" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_InquiryDetail_Product" FromRole="InquiryDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Quote">
+          <Key>
+            <PropertyRef Name="QuoteID" />
+          </Key>
+          <Property Name="QuoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteReferenceNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentTerms" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="InstallationTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FreeServiceTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WarrantyTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ValidityTerms" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Make" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ModelId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="QouteCreatedBy" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers" FromRole="Quote" ToRole="AspNetUser" />
+          <NavigationProperty Name="QouteUpdatedBy" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" FromRole="Quote" ToRole="AspNetUser" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_Quote_Product" FromRole="Quote" ToRole="Product" />
+          <NavigationProperty Name="ProductModel" Relationship="TMD.Models.DomainModels.FK_Quote_ProductModel" FromRole="Quote" ToRole="ProductModel" />
+        </EntityType>
+        <EntityType Name="Seed">
+          <Key>
+            <PropertyRef Name="SeedID" />
+          </Key>
+          <Property Name="SeedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeedCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SeedValues" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="Seed" ToRole="SeedValue" />
+        </EntityType>
+        <EntityType Name="SeedValue">
+          <Key>
+            <PropertyRef Name="SeedValueID" />
+          </Key>
+          <Property Name="SeedValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeedID" Type="Int32" Nullable="false" />
+          <Property Name="ValueCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ValueId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Seed" Relationship="TMD.Models.DomainModels.FK_SeedValue_Seeds" FromRole="SeedValue" ToRole="Seed" />
+        </EntityType>
+        <EntityType Name="TechnicalSpec">
+          <Key>
+            <PropertyRef Name="TechnicalSpecId" />
+          </Key>
+          <Property Name="TechnicalSpecId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SpecName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers" FromRole="TechnicalSpec" ToRole="AspNetUser" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_TechnicalSpecs_CreatdBy" FromRole="TechnicalSpec" ToRole="AspNetUser" />
+          <NavigationProperty Name="ProductTechSpecs" Relationship="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs" FromRole="TechnicalSpec" ToRole="ProductTechSpec" />
+        </EntityType>
         <Association Name="FK_Inquiry_AspNetUsers">
-          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
@@ -1805,6 +2042,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Quote_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_AspNetUsers1">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalSpecs_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.TechnicalSpec" Role="TechnicalSpec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechnicalSpec">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalSpecs_CreatdBy">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.TechnicalSpec" Role="TechnicalSpec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechnicalSpec">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Inquiry_Contact">
           <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="*" />
@@ -1829,7 +2114,131 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inquirydetail_product">
+        <Association Name="FK_SeedValue_Seeds">
+          <End Type="TMD.Models.DomainModels.Seed" Role="Seed" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.SeedValue" Role="SeedValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seed">
+              <PropertyRef Name="SeedID" />
+            </Principal>
+            <Dependent Role="SeedValue">
+              <PropertyRef Name="SeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DetailDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ProductCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_Product_AspNetUsers" FromRole="Product" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_Product_AspNetUsers1" FromRole="Product" ToRole="AspNetUser" />
+          <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_InquiryDetail_Product" FromRole="Product" ToRole="InquiryDetail" />
+          <NavigationProperty Name="ProductCategory" Relationship="TMD.Models.DomainModels.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="ProductModels" Relationship="TMD.Models.DomainModels.FK_ProductModel_ProductCategory" FromRole="Product" ToRole="ProductModel" />
+          <NavigationProperty Name="Quotes" Relationship="TMD.Models.DomainModels.FK_Quote_Product" FromRole="Product" ToRole="Quote" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="ProductCategoryID" />
+          </Key>
+          <Property Name="ProductCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DetailDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsParent" Type="Boolean" Nullable="false" />
+          <Property Name="ParentCatID" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_ProductCategory_AspNetUsers" FromRole="ProductCategory" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_ProductCategory_UpdatedBy" FromRole="ProductCategory" ToRole="AspNetUser" />
+          <NavigationProperty Name="Products" Relationship="TMD.Models.DomainModels.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+          <NavigationProperty Name="SubProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
+          <NavigationProperty Name="ParentProductCategory" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="ProductModel">
+          <Key>
+            <PropertyRef Name="ProductModelID" />
+          </Key>
+          <Property Name="ProductModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ModelName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ModelDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ProductModel_ProductCategory" FromRole="ProductModel" ToRole="Product" />
+          <NavigationProperty Name="ProductTechSpecs" Relationship="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel" FromRole="ProductModel" ToRole="ProductTechSpec" />
+          <NavigationProperty Name="Quotes" Relationship="TMD.Models.DomainModels.FK_Quote_ProductModel" FromRole="ProductModel" ToRole="Quote" />
+        </EntityType>
+        <EntityType Name="ProductTechSpec">
+          <Key>
+            <PropertyRef Name="ProductTechSpecsId" />
+          </Key>
+          <Property Name="ProductTechSpecsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductModelId" Type="Int32" Nullable="false" />
+          <Property Name="TechSpecId" Type="Int32" Nullable="false" />
+          <Property Name="SpecValue" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductModel" Relationship="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel" FromRole="ProductTechSpec" ToRole="ProductModel" />
+          <NavigationProperty Name="TechnicalSpec" Relationship="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs" FromRole="ProductTechSpec" ToRole="TechnicalSpec" />
+        </EntityType>
+        <Association Name="FK_Product_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_AspNetUsers1">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_UpdatedBy">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InquiryDetail_Product">
           <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.InquiryDetail" Role="InquiryDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1838,6 +2247,117 @@
             </Principal>
             <Dependent Role="InquiryDetail">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductModel_ProductCategory">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductModel" Role="ProductModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductModel">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_Product">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_ProductCategory">
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="ProductCategory1">
+              <PropertyRef Name="ParentCatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTechSpecs_ProductModel">
+          <End Type="TMD.Models.DomainModels.ProductModel" Role="ProductModel" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductTechSpec" Role="ProductTechSpec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="ProductTechSpec">
+              <PropertyRef Name="ProductModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_ProductModel">
+          <End Type="TMD.Models.DomainModels.ProductModel" Role="ProductModel" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTechSpecs_TechnicalSpecs">
+          <End Type="TMD.Models.DomainModels.TechnicalSpec" Role="TechnicalSpec" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductTechSpec" Role="ProductTechSpec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechnicalSpec">
+              <PropertyRef Name="TechnicalSpecId" />
+            </Principal>
+            <Dependent Role="ProductTechSpec">
+              <PropertyRef Name="TechSpecId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" />
+          <Property Name="AddressType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Address" ToRole="Contact" />
+        </EntityType>
+        <Association Name="FK_Address_Contact">
+          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="ContactID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2084,93 +2604,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="ProductCategories">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
-              <MappingFragment StoreEntitySet="ProductCategory">
-                <ScalarProperty Name="ParentCatID" ColumnName="ParentCatID" />
-                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
-                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
-                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
-                <ScalarProperty Name="CatName" ColumnName="CatName" />
-                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductModels">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductModel">
-              <MappingFragment StoreEntitySet="ProductModel">
-                <ScalarProperty Name="ModelDescription" ColumnName="ModelDescription" />
-                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ProductModelID" ColumnName="ProductModelID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductTechSpecs">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductTechSpec">
-              <MappingFragment StoreEntitySet="ProductTechSpecs">
-                <ScalarProperty Name="SpecValue" ColumnName="SpecValue" />
-                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ProductTechSpecsId" ColumnName="ProductTechSpecsId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Quotes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Quote">
-              <MappingFragment StoreEntitySet="Quote">
-                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
-                <ScalarProperty Name="Make" ColumnName="Make" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ValidityTerms" ColumnName="ValidityTerms" />
-                <ScalarProperty Name="WarrantyTerms" ColumnName="WarrantyTerms" />
-                <ScalarProperty Name="FreeServiceTerms" ColumnName="FreeServiceTerms" />
-                <ScalarProperty Name="InstallationTerms" ColumnName="InstallationTerms" />
-                <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
-                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="QuoteReferenceNo" ColumnName="QuoteReferenceNo" />
-                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Seeds">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Seed">
-              <MappingFragment StoreEntitySet="Seeds">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ValueCode" ColumnName="ValueCode" />
-                <ScalarProperty Name="SeedCode" ColumnName="SeedCode" />
-                <ScalarProperty Name="SeedID" ColumnName="SeedID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SeedValues">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.SeedValue">
-              <MappingFragment StoreEntitySet="SeedValue">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ValueId" ColumnName="ValueId" />
-                <ScalarProperty Name="ValueCode" ColumnName="ValueCode" />
-                <ScalarProperty Name="SeedID" ColumnName="SeedID" />
-                <ScalarProperty Name="SeedValueID" ColumnName="SeedValueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Contacts">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Contact">
               <MappingFragment StoreEntitySet="Contact">
@@ -2220,15 +2653,124 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Quotes">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Quote">
+              <MappingFragment StoreEntitySet="Quote">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ValidityTerms" ColumnName="ValidityTerms" />
+                <ScalarProperty Name="WarrantyTerms" ColumnName="WarrantyTerms" />
+                <ScalarProperty Name="FreeServiceTerms" ColumnName="FreeServiceTerms" />
+                <ScalarProperty Name="InstallationTerms" ColumnName="InstallationTerms" />
+                <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="QuoteReferenceNo" ColumnName="QuoteReferenceNo" />
+                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seeds">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Seed">
+              <MappingFragment StoreEntitySet="Seeds">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SeedCode" ColumnName="SeedCode" />
+                <ScalarProperty Name="SeedID" ColumnName="SeedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeedValues">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.SeedValue">
+              <MappingFragment StoreEntitySet="SeedValue">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ValueId" ColumnName="ValueId" />
+                <ScalarProperty Name="ValueCode" ColumnName="ValueCode" />
+                <ScalarProperty Name="SeedID" ColumnName="SeedID" />
+                <ScalarProperty Name="SeedValueID" ColumnName="SeedValueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechnicalSpecs">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.TechnicalSpec">
+              <MappingFragment StoreEntitySet="TechnicalSpecs">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="TechnicalSpecId" ColumnName="TechnicalSpecId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
                 <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ParentCatID" ColumnName="ParentCatID" />
+                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
+                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="CatName" ColumnName="CatName" />
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductModels">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductModel">
+              <MappingFragment StoreEntitySet="ProductModel">
+                <ScalarProperty Name="ModelDescription" ColumnName="ModelDescription" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductModelID" ColumnName="ProductModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTechSpecs">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductTechSpec">
+              <MappingFragment StoreEntitySet="ProductTechSpecs">
+                <ScalarProperty Name="SpecValue" ColumnName="SpecValue" />
+                <ScalarProperty Name="TechSpecId" ColumnName="TechSpecId" />
+                <ScalarProperty Name="ProductModelId" ColumnName="ProductModelId" />
+                <ScalarProperty Name="ProductTechSpecsId" ColumnName="ProductTechSpecsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2254,19 +2796,19 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Menu" Width="1.875" PointX="1.375" PointY="9.125" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.MenuRight" Width="1.5" PointX="3.875" PointY="9.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.MenuRight" Width="1.5" PointX="4.875" PointY="9.625" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AllowanceType" Width="1.5" PointX="9.125" PointY="12" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.875" PointY="6" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="6.125" PointY="4.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="6.125" PointY="7.625" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="2" PointX="2.875" PointY="3.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="2" PointX="3.75" PointY="11.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Attendance" Width="1.5" PointX="6.25" PointY="11" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="4.375" PointY="16" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="6.625" PointY="15.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="18.875" PointY="15" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="16.5" PointY="14.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Designation" Width="1.5" PointX="6.875" PointY="0.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Employee" Width="2.25" PointX="8.375" PointY="4" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.EmployeePayroll" Width="1.5" PointX="11.375" PointY="6.5" />
@@ -2289,28 +2831,43 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Ticket_Employee_ApprovedBy" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Ticket_TicketType" />
         <AssociationConnector Association="TMD.Models.DomainModels.AspNetUserRoles" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="2.375" PointX="16.75" PointY="5.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductModel" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductTechSpec" Width="1.5" PointX="11.75" PointY="10.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="18.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Seed" Width="1.5" PointX="14.75" PointY="10.875" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.SeedValue" Width="1.5" PointX="17" PointY="10.875" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_SeedValue_Seeds" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="7.375" PointY="25.25" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Contact" Width="1.5" PointX="5.125" PointY="19.25" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.875" PointX="9.375" PointY="17.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="11.625" PointY="18.875" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="9.375" PointY="29.75" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Address_Contact" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Contact" Width="1.5" PointX="6.625" PointY="16.25" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ContactCreatedBy_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="9.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="12.125" PointY="21.375" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="14.125" PointY="12.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Seed" Width="1.5" PointX="13.375" PointY="1.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.SeedValue" Width="1.5" PointX="15.625" PointY="0.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.TechnicalSpec" Width="1.5" PointX="1.25" PointY="26.5" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_TechnicalSpecs_CreatdBy" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry_Contact" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_inquirydetail_product" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_SeedValue_Seeds" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="9.875" PointY="23" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="1.5" PointX="1.25" PointY="30.375" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductModel" Width="1.5" PointX="12.125" PointY="24.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductTechSpec" Width="1.5" PointX="3.5" PointY="26.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Product_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Product_AspNetUsers1" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_UpdatedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_InquiryDetail_Product" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Product_ProductCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductModel_ProductCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_Product" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_ProductModel" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="8.875" PointY="28.25" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Address_Contact" />
         </Diagram>
     </Diagrams>
   </Designer>

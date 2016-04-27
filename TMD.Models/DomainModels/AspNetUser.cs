@@ -30,6 +30,7 @@ namespace TMD.Models.DomainModels
         public string Telephone { get; set; }
         public string UserComments { get; set; }
 
+
         
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         
@@ -48,5 +49,21 @@ namespace TMD.Models.DomainModels
         public virtual ICollection<Inquiry> CreatedInquiries { get; set; }
         
         public virtual ICollection<Inquiry> UpdatedInquiries { get; set; }
+        
+        public virtual ICollection<Quote> CreatedQuotes { get; set; }
+        
+        public virtual ICollection<Quote> UpdatedQuotes { get; set; }
+        
+        public virtual ICollection<TechnicalSpec> UpdatedTechnicalSpecs { get; set; }
+        
+        public virtual ICollection<TechnicalSpec> CreatedTechnicalSpecs { get; set; }
+        
+        public virtual ICollection<Product> CreatedProducts { get; set; }
+        
+        public virtual ICollection<Product> UpdatedProducts { get; set; }
+        
+        public virtual ICollection<ProductCategory> CreatedProductCategories { get; set; }
+        
+        public virtual ICollection<ProductCategory> UpdatedProductCategories { get; set; }
     }
 }
