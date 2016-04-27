@@ -10,10 +10,7 @@ namespace TMD.Models.DomainModels
     {
         public int SeedID { get; set; }
         public string SeedCode { get; set; }
-        public string ValueCode { get; set; }
-        public Nullable<int> Value { get; set; }
         public string Description { get; set; }
-
         public virtual ICollection<SeedValue> SeedValues { get; set; }
     }
 }

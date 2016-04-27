@@ -12,7 +12,7 @@ namespace TMD.Models.DomainModels
     using System;
     using System.Collections.Generic;
     
-    public partial class Quote
+    public class Quote
     {
         public int QuoteID { get; set; }
         public string QuoteReferenceNo { get; set; }
@@ -23,8 +23,17 @@ namespace TMD.Models.DomainModels
         public string FreeServiceTerms { get; set; }
         public string WarrantyTerms { get; set; }
         public string ValidityTerms { get; set; }
-        public Nullable<int> ProductId { get; set; }
+        public int ProductId { get; set; }
         public string Make { get; set; }
-        public Nullable<int> ModelId { get; set; }
+        public int ModelId { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTime UpdatedDate { get; set; }
+
+        public virtual AspNetUser QouteCreatedBy { get; set; }
+        public virtual AspNetUser QouteUpdatedBy { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductModel ProductModel { get; set; }
     }
 }

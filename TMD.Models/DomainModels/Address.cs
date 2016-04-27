@@ -21,8 +21,8 @@ namespace TMD.Models.DomainModels
         public string Street { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        public Nullable<int> ContactID { get; set; }
-        public Nullable<int> AddressType { get; set; }
+        public int ContactID { get; set; }
+        public int AddressType { get; set; }
 
         public virtual Contact Contact { get; set; }
     }

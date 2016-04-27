@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace TMD.Models.DomainModels
 {
 
-    public partial class ProductCategory
+    public class ProductCategory
     {
         public int ProductCategoryID { get; set; }
         public string CatName { get; set; }
@@ -19,8 +19,17 @@ namespace TMD.Models.DomainModels
         public string DetailDescription { get; set; }
         public bool IsParent { get; set; }
         public int? ParentCatID { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTime UpdatedDate { get; set; }
 
-        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
-        public virtual ProductCategory ProductCategoryParent { get; set; }
+        public virtual AspNetUser CreatedByUser { get; set; }
+        public virtual AspNetUser UpdatedByUser { get; set; }
+        
+        public virtual ICollection<Product> Products { get; set; }
+        
+        public virtual ICollection<ProductCategory> SubProductCategories { get; set; }
+        public virtual ProductCategory ParentProductCategory { get; set; }
     }
 }

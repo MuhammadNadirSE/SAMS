@@ -15,8 +15,11 @@ namespace TMD.Models.DomainModels
     public partial class ProductTechSpec
     {
         public int ProductTechSpecsId { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public string SpecName { get; set; }
+        public int ProductModelId { get; set; }
+        public int TechSpecId { get; set; }
         public string SpecValue { get; set; }
+
+        public virtual ProductModel ProductModel { get; set; }
+        public virtual TechnicalSpec TechnicalSpec { get; set; }
     }
 }

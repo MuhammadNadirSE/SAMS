@@ -148,6 +148,7 @@
     <Compile Include="DomainModels\SeedValue.cs" />
     <Compile Include="DomainModels\ServiceEquipment.cs" />
     <Compile Include="DomainModels\ServiceEquipmentServiceType.cs" />
+    <Compile Include="DomainModels\TechnicalSpec.cs" />
     <Compile Include="DomainModels\Ticket.cs" />
     <Compile Include="DomainModels\TicketType.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">

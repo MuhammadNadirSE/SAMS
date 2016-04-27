@@ -27,9 +27,9 @@ namespace TMD.Models.DomainModels
         public string UpdatedBy { get; set; }
         public System.DateTime UpdateDate { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser CreatedInquiries { get; set; }
-        public virtual AspNetUser UpdatedInquiries { get; set; }
+        public virtual AspNetUser ConductedBy { get; set; }
+        public virtual AspNetUser CreatedByUser { get; set; }
+        public virtual AspNetUser UpdatedByUser { get; set; }
         public virtual Contact Contact { get; set; }
         
         public virtual ICollection<InquiryDetail> InquiryDetails { get; set; }
