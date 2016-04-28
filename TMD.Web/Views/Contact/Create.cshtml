@@ -8,7 +8,8 @@
 
 @using (Html.BeginForm("Create", "Contact", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "ContactForm" }))
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(x=>x.Contact.ContactID)
 
     <div class="portlet portletCustomHeight light bg-inverse">
         <div class="portlet-title">
