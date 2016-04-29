@@ -310,6 +310,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="ModelMappers\AddressMappers.cs" />
     <Compile Include="ModelMappers\AllowanceTypeMapper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\AttendanceModelMapper.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="ModelMappers\TicketTypeMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\AllowanceTypeModel.cs" />
     <Compile Include="Models\ApiModels\MunicipalApiModel.cs" />
     <Compile Include="Models\AspNetUserModel.cs" />

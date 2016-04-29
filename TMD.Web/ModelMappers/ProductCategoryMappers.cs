@@ -15,11 +15,15 @@ namespace TMD.Web.ModelMappers
             return new ProductCategory {
 
                 ProductCategoryID = source.ProductCategoryID,
-                CatName = source.CatName,
-                ShortDescription = source.ShortDescription,
-                DetailDescription = source.DetailDescription,
+                CatName = source.CatName ?? "",
+                ShortDescription = String.IsNullOrEmpty(source.ShortDescription) ? "" : source.ShortDescription,
+                DetailDescription = source.DetailDescription??"",
                 IsParent = source.IsParent,
-                ParentCatID = source.ParentCatID
+                ParentCatID = source.ParentCatID,
+                UpdatedBy = source.UpdatedBy,
+                UpdatedDate = source.UpdatedDate,
+                CreatedDate = source.CreatedDate,
+                CreatedBy = source.CreatedBy
                     
                 };
         }
@@ -33,7 +37,11 @@ namespace TMD.Web.ModelMappers
                 ShortDescription = source.ShortDescription,
                 DetailDescription = source.DetailDescription,
                 IsParent = source.IsParent,
-                ParentCatID = source.ParentCatID
+                ParentCatID = source.ParentCatID,
+                UpdatedBy = source.UpdatedBy,
+                UpdatedDate = source.UpdatedDate,
+                CreatedDate = source.CreatedDate,
+                CreatedBy = source.CreatedBy
 
             };
         }

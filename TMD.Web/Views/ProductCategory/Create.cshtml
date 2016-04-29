@@ -8,6 +8,11 @@
 
 @using (Html.BeginForm("Create", "ProductCategory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+
+    @Html.HiddenFor(x => x.ProductCategory.CreatedDate);
+    @Html.HiddenFor(x => x.ProductCategory.CreatedBy);
+    
+    
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
             <div class="tools">
@@ -58,6 +63,7 @@
                     @Html.LabelFor(m => m.ProductCategory.ShortDescription, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
                         @Html.TextAreaFor(m => m.ProductCategory.ShortDescription, new { @class = "form-control input-circle", placeholder = "Description" })
+                        @Html.ValidationMessageFor(x=>x.ProductCategory.ShortDescription)
                     </div>
                 </div>
 

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ViewModels.ProductCategory;
 using TMD.Web.ModelMappers;
@@ -55,6 +57,8 @@ namespace TMD.Web.Controllers
         {
             try
             {
+                productCategoryViewModel.ProductCategory.UpdatedDate = DateTime.UtcNow;
+                productCategoryViewModel.ProductCategory.UpdatedBy = User.Identity.GetUserId();
                 // TODO: Add insert logic here
                 if (productCategoryViewModel.ProductCategory.ProductCategoryID > 0)
                 {
@@ -62,12 +66,15 @@ namespace TMD.Web.Controllers
                 }
                 else
                 {
+                    productCategoryViewModel.ProductCategory.CreatedDate = DateTime.UtcNow;
+                    productCategoryViewModel.ProductCategory.CreatedBy = User.Identity.GetUserId();
+
                     productCategoryService.AddCategory(productCategoryViewModel.ProductCategory.MapClientToServer());
                 }
                 
                 return RedirectToAction("Create");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

@@ -12,10 +12,10 @@ namespace TMD.Web.ViewModels.Contact
     {
         public ContactViewModel()
         {
-            Contacts = new List<ContactModel>();
+            Addresses = new List<AddressModel>();
         }
         public ContactModel Contact { get; set; }
-        public IList<ContactModel> Contacts { get; set; }
+        public IList<AddressModel> Addresses { get; set; }
 
     }
 }

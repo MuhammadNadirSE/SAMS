@@ -37,8 +37,13 @@ namespace TMD.Web.Controllers
             ContactViewModel contactViewModel = new ContactViewModel();
 
              contactViewModel.Contact = new Models.ContactModel();
-            if(id !=null)
-                contactViewModel.Contact = contactService.GetContactById((int)id).MapServerToClient();
+            if (id != null)
+            {
+                var contact = contactService.GetContactById((int)id);
+                if (contact != null)
+                    contactViewModel.Contact = contact.MapServerToClient();
+            }
+                
 
              return View(contactViewModel);
         }
@@ -50,19 +55,21 @@ namespace TMD.Web.Controllers
         {
             try
             {
-                ContactViewModel.Contact.CreatedDate = DateTime.UtcNow;
                 ContactViewModel.Contact.UpdateDate = DateTime.UtcNow;
-                ContactViewModel.Contact.CreatedBy = User.Identity.GetUserId();
                 ContactViewModel.Contact.UpdatedBy = User.Identity.GetUserId();
 
                 
                 // TODO: Add insert logic here
                 if (ContactViewModel.Contact.ContactID > 0)
                 {
+                   
                     contactService.UpdateCategory(ContactViewModel.Contact.MapClientToServer());
                 }
                 else
                 {
+                    ContactViewModel.Contact.CreatedDate = DateTime.UtcNow;
+                    ContactViewModel.Contact.CreatedBy = User.Identity.GetUserId();
+               
                     contactService.AddCategory(ContactViewModel.Contact.MapClientToServer());
                 }
 

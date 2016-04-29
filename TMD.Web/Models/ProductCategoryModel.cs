@@ -26,5 +26,10 @@ namespace TMD.Web.Models
 
         [Display(Name = "Parent Category")]
         public int? ParentCatID { get; set; }
+
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTime UpdatedDate { get; set; }
     }
 }
