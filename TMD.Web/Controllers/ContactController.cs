@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ViewModels.Contact;
 using TMD.Web.ModelMappers;
@@ -41,13 +43,19 @@ namespace TMD.Web.Controllers
              return View(contactViewModel);
         }
 
-        //
+        //d
         // POST: /Contact/Create
         [HttpPost]
         public ActionResult Create(ContactViewModel ContactViewModel)
         {
             try
             {
+                ContactViewModel.Contact.CreatedDate = DateTime.UtcNow;
+                ContactViewModel.Contact.UpdateDate = DateTime.UtcNow;
+                ContactViewModel.Contact.CreatedBy = User.Identity.GetUserId();
+                ContactViewModel.Contact.UpdatedBy = User.Identity.GetUserId();
+
+                
                 // TODO: Add insert logic here
                 if (ContactViewModel.Contact.ContactID > 0)
                 {
@@ -60,7 +68,7 @@ namespace TMD.Web.Controllers
 
                 return RedirectToAction("Create");
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

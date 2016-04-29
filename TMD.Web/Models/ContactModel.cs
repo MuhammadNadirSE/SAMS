@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web.Models
 {
@@ -42,5 +43,20 @@ namespace TMD.Web.Models
 
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
+
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTime UpdateDate { get; set; }
+
+        public virtual AspNetUser ContactCreatedBy { get; set; }
+        public virtual AspNetUser ContactUpdatedBy { get; set; }
+
+        public virtual ICollection<Inquiry> Inquiries { get; set; }
+
+        public virtual ICollection<Address> Addresses { get; set; }
+
+
+
     }
 }

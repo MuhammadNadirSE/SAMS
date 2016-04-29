@@ -26,7 +26,11 @@ namespace TMD.Web.ModelMappers
                 Fax = source.Fax,
                 ContactType = source.ContactType,
                 AddressId = source.AddressId,
-                CompanyName = source.CompanyName
+                CompanyName = source.CompanyName,
+                CreatedBy = source.CreatedBy,
+                CreatedDate = source.CreatedDate,
+                UpdateDate = source.UpdateDate,
+                UpdatedBy = source.UpdatedBy
 
             };
         }
@@ -46,7 +50,11 @@ namespace TMD.Web.ModelMappers
                 Fax = source.Fax,
                 ContactType = source.ContactType,
                 AddressId = source.AddressId,
-                CompanyName = source.CompanyName
+                CompanyName = source.CompanyName,
+                CreatedBy = source.CreatedBy,
+                CreatedDate = source.CreatedDate,
+                UpdateDate = source.UpdateDate,
+                UpdatedBy = source.UpdatedBy
 
             };
         }
