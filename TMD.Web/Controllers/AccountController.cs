@@ -80,6 +80,7 @@ namespace IdentitySample.Controllers
 
         #region Public
 
+        #region Managers
         public ApplicationUserManager UserManager
         {
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
@@ -91,7 +92,8 @@ namespace IdentitySample.Controllers
             get { return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>(); }
             private set { _roleManager = value; }
         }
-
+        #endregion
+        
         #region Change Password
         public ActionResult ChangePassword()
         {
@@ -183,8 +185,6 @@ namespace IdentitySample.Controllers
         {
             try
             {
-                //if (string.IsNullOrEmpty(returnUrl))
-                //    returnUrl = "/Home/Index";
                 if (!ModelState.IsValid)
                 {
                     return View(model);
@@ -1003,9 +1003,7 @@ namespace IdentitySample.Controllers
             return Json(new { filename = userPhoto.FileName, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
-      
-
+        
         #region Pricing
         [AllowAnonymous]
         public ActionResult Pricing()
@@ -1138,10 +1136,15 @@ namespace IdentitySample.Controllers
             //return Redirect(redirect);
         }
 
-      
+
 
 
         #endregion
+
+
+        #endregion
+
+        #region Helpers
         private async Task SaveAccessToken(TMD.Models.DomainModels.AspNetUser user, ClaimsIdentity identity)
         {
             var userclaims = await UserManager.GetClaimsAsync(user.Id);
@@ -1158,11 +1161,6 @@ namespace IdentitySample.Controllers
                 }
             }
         }
-
-        #endregion
-
-        #region Helpers
-
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -1216,8 +1214,6 @@ namespace IdentitySample.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-
-        #endregion
         private void updateSessionValues(AspNetUser user)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
@@ -1226,5 +1222,7 @@ namespace IdentitySample.Controllers
             Session["UserID"] = result.Id;
             Session["RoleName"] = role;
         }
+        #endregion
+
     }
 }
