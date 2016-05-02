@@ -133,9 +133,9 @@ namespace IdentitySample
         protected void Application_BeginRequest()
         {
             //On each request, it will disable the creation of Cache for that request/page.
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
-            Response.Cache.SetNoStore();
+            //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            //Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            //Response.Cache.SetNoStore();
         }
         void ConfigureApi(HttpConfiguration config)
         {

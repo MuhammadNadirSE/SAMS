@@ -199,7 +199,7 @@ namespace IdentitySample.Controllers
                     user = await UserManager.FindByNameAsync(model.Email);
                 }
                 
-                if (user != null)
+                 if (user != null)
                 {
                     if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                     {
@@ -243,10 +243,10 @@ namespace IdentitySample.Controllers
                                            var role = user.AspNetRoles.FirstOrDefault();
                             if (role.Id == Utility.MemberRoleId)
                             {
-                                return RedirectToAction("Index", "Employees");
+                                return RedirectToAction("Home", "Admin");
                             }
                             if (string.IsNullOrEmpty(returnUrl))
-                                return RedirectToAction("Index", "Employees");
+                                return RedirectToAction("Home", "Admin");
                             return RedirectToLocal(returnUrl);
                         }
                     case SignInStatus.LockedOut:

@@ -66,15 +66,15 @@ namespace TMD.Web.Controllers
             Session["RoleName"] = role;
 
 
-            var userAttendance = attendanceService.GetAttendanceByEmployeeIdInCurrentDate((int)Session["EmployeeID"]);
-            if (userAttendance == null)
-            {
-                Session["UserAttendanceStatus"] = EmployeeAttendanceStatus.CheckedOut;
-            }
-            else
-            {
-                Session["UserAttendanceStatus"] = (EmployeeAttendanceStatus)userAttendance.Status;
-            }
+            //var userAttendance = attendanceService.GetAttendanceByEmployeeIdInCurrentDate((int)Session["EmployeeID"]);
+            //if (userAttendance == null)
+            //{
+            //    Session["UserAttendanceStatus"] = EmployeeAttendanceStatus.CheckedOut;
+            //}
+            //else
+            //{
+            //    Session["UserAttendanceStatus"] = (EmployeeAttendanceStatus)userAttendance.Status;
+            //}
             
 
             //AspNetUser userResult = UserManager.FindById(User.Identity.GetUserId());

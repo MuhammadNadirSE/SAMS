@@ -10,7 +10,15 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return RedirectToAction("Login","Account");
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return RedirectToAction("Home", "Admin");
+            }
+            
         }
 
         public ActionResult OneColumn()
