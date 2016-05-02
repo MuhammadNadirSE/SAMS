@@ -92,6 +92,8 @@ namespace TMD.Repository.BaseRepository
         public DbSet<BillDetail> BillDetails { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Contact> Contact { get; set; }
+        public DbSet<Notification> Notification { get; set; }
+        public DbSet<NotificationRecipient> NotificationRecipient { get; set; }
 
 
 

@@ -34,7 +34,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<IBillDetailService, BillDetailService>();
             unityContainer.RegisterType<IProductCategoryService, ProductCategoryService>();
             unityContainer.RegisterType<IContactService, ContactService>();
-
+            unityContainer.RegisterType<INotificationService, NotificationService>();
         } 
     }
 }

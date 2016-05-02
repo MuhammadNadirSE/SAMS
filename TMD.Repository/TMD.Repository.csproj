@@ -143,6 +143,8 @@
     <Compile Include="Repositories\EmployeeSupervisorRepository.cs" />
     <Compile Include="Repositories\DesignationRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
+    <Compile Include="Repositories\NotificationRecipientRepository.cs" />
+    <Compile Include="Repositories\NotificationRepository.cs" />
     <Compile Include="Repositories\LeaveRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
