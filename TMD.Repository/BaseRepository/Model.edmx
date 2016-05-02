@@ -252,6 +252,28 @@
           <Property Name="Menu_MenuId" Type="int" />
           <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
         </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="ActionPerformed" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationRecipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -695,6 +717,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Notification_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationRecipient_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationRecipient_Notification">
+          <End Role="Notification" Type="Self.Notification" Multiplicity="1" />
+          <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -943,6 +1001,8 @@
           <EntitySet Name="InquiryDetail" EntityType="Self.InquiryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationRecipient" EntityType="Self.NotificationRecipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductModel" EntityType="Self.ProductModel" Schema="dbo" store:Type="Tables" />
@@ -1052,6 +1112,18 @@
           <AssociationSet Name="FK_inquiryUpdatedBy_AspNetUsers" Association="Self.FK_inquiryUpdatedBy_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Inquiry" EntitySet="Inquiry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_AspNetUsers" Association="Self.FK_Notification_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationRecipient_AspNetUsers" Association="Self.FK_NotificationRecipient_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationRecipient_Notification" Association="Self.FK_NotificationRecipient_Notification">
+            <End Role="Notification" EntitySet="Notification" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_AspNetUsers" Association="Self.FK_Product_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1352,6 +1424,20 @@
             <End Role="Contact" EntitySet="Contacts" />
             <End Role="Address" EntitySet="Addresses" />
           </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="TMD.Models.DomainModels.Notification" />
+          <EntitySet Name="NotificationRecipients" EntityType="TMD.Models.DomainModels.NotificationRecipient" />
+          <AssociationSet Name="FK_Notification_AspNetUsers" Association="TMD.Models.DomainModels.FK_Notification_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationRecipient_AspNetUsers" Association="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationRecipient_Notification" Association="TMD.Models.DomainModels.FK_NotificationRecipient_Notification">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
           <Property Type="Int32" Name="EbayItemtId" Nullable="false" />
@@ -1523,6 +1609,8 @@
           <NavigationProperty Name="UpdatedProducts" Relationship="TMD.Models.DomainModels.FK_Product_AspNetUsers1" FromRole="AspNetUser" ToRole="Product" />
           <NavigationProperty Name="CreatedProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_AspNetUsers" FromRole="AspNetUser" ToRole="ProductCategory" />
           <NavigationProperty Name="UpdatedProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_UpdatedBy" FromRole="AspNetUser" ToRole="ProductCategory" />
+          <NavigationProperty Name="Notifications" Relationship="TMD.Models.DomainModels.FK_Notification_AspNetUsers" FromRole="AspNetUser" ToRole="Notification" />
+          <NavigationProperty Name="NotificationRecipients" Relationship="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers" FromRole="AspNetUser" ToRole="NotificationRecipient" />
           </EntityType>
         <EntityType Name="Attendance">
           <Key>
@@ -2361,6 +2449,68 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ActionPerformed" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_Notification_AspNetUsers" FromRole="Notification" ToRole="AspNetUser" />
+          <NavigationProperty Name="NotificationRecipients" Relationship="TMD.Models.DomainModels.FK_NotificationRecipient_Notification" FromRole="Notification" ToRole="NotificationRecipient" />
+        </EntityType>
+        <EntityType Name="NotificationRecipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RecipientUser" Relationship="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers" FromRole="NotificationRecipient" ToRole="AspNetUser" />
+          <NavigationProperty Name="Notification" Relationship="TMD.Models.DomainModels.FK_NotificationRecipient_Notification" FromRole="NotificationRecipient" ToRole="Notification" />
+        </EntityType>
+        <Association Name="FK_Notification_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationRecipient_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationRecipient_Notification">
+          <End Type="TMD.Models.DomainModels.Notification" Role="Notification" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2774,6 +2924,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ActionPerformed" ColumnName="ActionPerformed" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationRecipients">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.NotificationRecipient">
+              <MappingFragment StoreEntitySet="NotificationRecipient">
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2868,6 +3042,11 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="8.875" PointY="28.25" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Address_Contact" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Notification" Width="1.5" PointX="6.5" PointY="22.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.NotificationRecipient" Width="1.5" PointX="11.75" PointY="18.375" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Notification_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_NotificationRecipient_Notification" />
         </Diagram>
     </Diagrams>
   </Designer>

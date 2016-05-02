@@ -65,5 +65,7 @@ namespace TMD.Models.DomainModels
         public virtual ICollection<ProductCategory> CreatedProductCategories { get; set; }
         
         public virtual ICollection<ProductCategory> UpdatedProductCategories { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
     }
 }

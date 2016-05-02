@@ -139,6 +139,8 @@
     <Compile Include="DomainModels\Leave.cs" />
     <Compile Include="DomainModels\MobileDetail.cs" />
     <Compile Include="DomainModels\MobilePlan.cs" />
+    <Compile Include="DomainModels\Notification.cs" />
+    <Compile Include="DomainModels\NotificationRecipient.cs" />
     <Compile Include="DomainModels\Product.cs" />
     <Compile Include="DomainModels\ProductCategory.cs" />
     <Compile Include="DomainModels\ProductModel.cs" />
