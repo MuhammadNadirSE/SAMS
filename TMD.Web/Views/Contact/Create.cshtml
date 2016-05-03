@@ -3,6 +3,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 8;
     Session["ParentMenu"] = 1;
+
+    //string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    string display = "";
+    bool readonly1 = true;
 }
 
 
@@ -110,18 +114,84 @@
                         <div class="modal-content">
                             <div class="modal-header " style="background: #e26a6a; color: white;">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title text-align-center ">Select Supervisor</h4>
+                                <h4 class="modal-title text-align-center ">Enter Address Information</h4>
                             </div>
                             <div class="modal-body">
 
-                                <div class="form-group row text-align-center">
-
-                                    <label>Country</label>
-
-                                    <div class="col-md-5">
-                                       <input type="text" id="Country"/>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Country</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="txtCountry" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">State</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="txtState" class="form-control" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">City</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="txtCity" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Street</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="txtStreet" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Address Line 1</label>
+                                            <div class="col-md-10">
+                                                <textarea id="txtAddressLine1" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Address Line 2</label>
+                                            <div class="col-md-10">
+                                                <textarea id="txtAddressLine2" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Is Primary</label>
+                                            <div class="col-md-10">
+                                                <input type="checkbox" id="chkIsPrimaryAddress" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
 
                             </div>
                             <div class="modal-footer">
@@ -239,83 +309,64 @@
 }
 
 
-
 <script>
-    $(document).ready(function () {
-        @{
-            //if (userPermissionsSet.Contains("AddEmployee"))
-            //{
-                display = "inline";
-                readonly1 = false ;
-          //  }
-           // else
-            //{
-             //   display = "none";
-              //  readonly1 = true ;
-           // }
-        }
+    $(document)
+        .ready(function() {
+            var oTable = $("#supervisorTable").dataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                bFilter: false,
 
-        $(".mustDisplay").css("display", '@display');
-        if('@readonly1' == 'True')
-            $(".mustReadonly").prop("readOnly", true);
-        else
-            $(".mustReadonly").prop("readOnly", false);
-
-
-        var employee = $("#Employee_EmployeeId").val();
-        if (employee != "0") {
-            if (employee != '@Session["EmployeeID"].ToString()') {
-
-                if ('@readonly1' != 'False') {
-                    $(".hideOthersDetail").remove();
-                    //$(".hideOthersDetail").css("display", "none");
-                    $(".readonlyOthersDetail").prop("readOnly", true);
-                    $(".mustDisplay").css("display", "none");
-                    $(".mustReadonly").prop("readOnly", true);
-                }
-
-         } else {
-             $(".hideOthersDetail").show();
-             //$(".hideOthersDetail").css("display", "inline");
-             $(".readonlyOthersDetail").prop("readOnly", false);
-
-             if ('@readonly1' != 'False') {
-                 $(".mustDisplay").css("display", "none");
-                 $(".mustReadonly").prop("readOnly", true);
-             }
-         }
-        }
+            });
+            if ($("#supervisorTable").children("tbody").children("tr").children("td").html() ==
+                    "No data available in table"
+            ) {
+                $("#supervisorTable").children("tbody").children("tr").remove();
+            }
+            $(".remove")
+                .on('click',
+                    function() {
+                        var target_row = $(this).closest("tr").get(0);
+                        var aPos = oTable.fnGetPosition(target_row);
+                        oTable.fnDeleteRow(aPos);
+                    });
+            $(".saveSupervisor").click(function() {
+                var country = $("#txtCountry").val();
+                var city = $("#txtCity").val();
+                var state = $("#txtState").val();
+                var street = $("#txtStreet").val();
+                var addline1 = $("#txtAddressLine1").val();
+                var addline2 = $("#txtAddressLine2").val();
+                var contacttype = $("#chkIsPrimaryAddress").val();
 
 
 
-        var oTable = $("#supervisorTable").dataTable({
-            "paging": false,
-            "ordering": false,
-            "info": false,
-            bFilter: false,
 
-        });
+                    $(this).closest(".modal").modal('hide');
 
-        if ($("#supervisorTable").children("tbody").children("tr").children("td").html() == "No data available in table") {
-            $("#supervisorTable").children("tbody").children("tr").remove();
-        }
-        $(".remove").on('click', function () {
-            var target_row = $(this).closest("tr").get(0);
-            var aPos = oTable.fnGetPosition(target_row);
-            oTable.fnDeleteRow(aPos);
-        });
-        $(".saveSupervisor").click(function () {
-            var supervisorId = $("#SupervisorDDL").val();
+                    @*var supervisorsList = '@Html.Raw(Json.Encode(Model.Employees))';
 
-            $(this).closest(".modal").modal('hide');
+            var parsedSupervisorList = JSON.parse(supervisorsList);*@
 
-            var supervisorsList = '@Html.Raw(Json.Encode(Model.Employees))';
-
-            var parsedSupervisorList = JSON.parse(supervisorsList);
             var rowCount = $('table#supervisorTable tbody tr:last').index() + 1;
 
+            if (country !== "") {
+                supervisorRow = [
+                    "<input name='Addresses.Index' type='hidden' value='" + rowCount + "'/>" + "<input readonly='readonly' name='Addresses[" + rowCount + "].AddressId' type='hidden' style='border:none;background:#f9f9f9;display:none;'/>",
+                    "<input  name='Addresses[" + rowCount + "].Country' id='Addresses_'" + rowCount + "'__Country' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + country + "'/>",
+                    "<input  name='Addresses[" + rowCount + "].State' id='Addresses_'" + rowCount + "'__State' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + state + "'/>",
+                    "<input  name='Addresses[" + rowCount + "].City' id='Addresses_'" + rowCount + "'__City' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + city + "'/>",
+                    "<input  name='Addresses[" + rowCount + "].Street' id='Addresses_'" + rowCount + "'__Street' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + street + "'/>",
+                    "<input  name='Addresses[" + rowCount + "].Address1' id='Addresses_'" + rowCount + "'__Address1' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline1 + "'/>",
+                    "<input  name='Addresses[" + rowCount + "].Address2' id='Addresses_'" + rowCount + "'__Address2' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline2 + "'/>",
+                    "<input  name='Addresses[" + rowCount + "].AddressType' id='Addresses_'" + rowCount + "'__AddressType' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + contacttype + "'/>",
 
-            $.each(parsedSupervisorList, function (key, value) {
+                    "<a class='remove' href='javascript:;'>Remove</a>"
+                ];
+            }
+
+            @*$.each(parsedSupervisorList, function (key, value) {
                 if (value.EmployeeId == parseInt(supervisorId)) {
                     var DesignationsList = '@Html.Raw(Json.Encode(Model.Designation))';
                     var parsedDesignationsList = JSON.parse(DesignationsList);
@@ -325,11 +376,12 @@
                         }
                     });
                 }
-            });
+            });*@
 
 
 
-            oTable.fnAddData(supervisorRow);
+                oTable.fnAddData(supervisorRow);
+
             $(".remove").on('click', function () {
 
                 var target_row = $(this).closest("tr").get(0);

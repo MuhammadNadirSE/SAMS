@@ -16,7 +16,12 @@ namespace TMD.Repository.Repositories
         {
         }
 
-        protected override IDbSet<Notification> DbSet => db.Notification;
+      //  protected override IDbSet<Notification> DbSet => db.Notification;
+
+        protected override IDbSet<Notification> DbSet
+        {
+            get { return db.Notification; }
+        }
         
         public int GetUnreadNotificationsCount(string userId)
         {

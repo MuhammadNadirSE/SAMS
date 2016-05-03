@@ -15,6 +15,12 @@ namespace TMD.Repository.Repositories
         public NotificationRecipientRepository(IUnityContainer container) : base(container)
         {
         }
-        protected override IDbSet<NotificationRecipient> DbSet => db.NotificationRecipient;
+     //   protected override IDbSet<NotificationRecipient> DbSet => db.NotificationRecipient;
+
+           protected override IDbSet<NotificationRecipient> DbSet
+        {
+            get { return db.NotificationRecipient; }
+        }
+       
     }
 }

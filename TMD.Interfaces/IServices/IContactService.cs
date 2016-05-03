@@ -10,6 +10,7 @@ namespace TMD.Interfaces.IServices
         int UpdateCategory(Contact contact);
         IEnumerable<Contact> GetAllContacts();
         Contact GetContactById(int id);
-     //   ProductCategoryResponse GetProductCategoryResponse(int? id);
+      //  ProductCategoryResponse GetProductCategoryResponse(int? id);
+        ContactResponse GetContactResponse(int? id);
     }
 }

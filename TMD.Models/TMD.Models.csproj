@@ -181,6 +181,7 @@
     <Compile Include="RequestModels\TicketRequestModel.cs" />
     <Compile Include="Resources\PayRollGroupByModel.cs" />
     <Compile Include="ResponseModels\BillDetailResponse.cs" />
+    <Compile Include="ResponseModels\ContactResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\AttendanceResponse.cs" />
     <Compile Include="ResponseModels\ProductCategoryResponse.cs" />

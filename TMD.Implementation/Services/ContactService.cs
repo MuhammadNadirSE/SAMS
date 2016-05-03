@@ -47,15 +47,15 @@ namespace TMD.Implementation.Services
             return contactRepository.Find(id);
         }
 
-        //public ProductCategoryResponse GetProductCategoryResponse(int? id)
-        //{
-        //    ProductCategoryResponse prodCateResp = new ProductCategoryResponse();
-        //    if (id != null)
-        //    {
-        //        prodCateResp.ProductCategory = prodCategoryRepository.Find((int)id);
-        //    }
-        //    prodCateResp.ProductCategories = prodCategoryRepository.GetAll();
-        //    return prodCateResp;
-        //}
+        public ContactResponse GetContactResponse(int? id)
+        {
+            ContactResponse contactResp = new ContactResponse();
+            if (id != null)
+            {
+                contactResp.Contact = contactRepository.Find((int)id);
+            }
+           // contactResp.Addresses = contactRepository.GetAll();
+            return contactResp;
+        }
     }
 }
