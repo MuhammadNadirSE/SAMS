@@ -30,6 +30,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<IBillDetailRepository, BillDetailRepository>();
             unityContainer.RegisterType<IProductCategoryRepository, ProductCategoryRepository>();
             unityContainer.RegisterType<IContactRepository, ContactRepository>();
+            unityContainer.RegisterType<IAddressRepository, AddressRepository>();
             unityContainer.RegisterType<INotificationRepository, NotificationRepository>();
             unityContainer.RegisterType<INotificationRecipientRepository, NotificationRecipientRepository>();
 

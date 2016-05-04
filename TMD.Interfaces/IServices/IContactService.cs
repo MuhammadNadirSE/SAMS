@@ -12,5 +12,6 @@ namespace TMD.Interfaces.IServices
         Contact GetContactById(int id);
       //  ProductCategoryResponse GetProductCategoryResponse(int? id);
         ContactResponse GetContactResponse(int? id);
+        bool SaveContact(ContactResponse contactResponse);
     }
 }

@@ -101,6 +101,7 @@
     <Compile Include="BaseDataModels\TicketBaseData.cs" />
     <Compile Include="Common\BillDetailByColumn.cs" />
     <Compile Include="Common\LeaveType.cs" />
+    <Compile Include="Common\OrderByColumnContact.cs" />
     <Compile Include="Common\OrderByColumnPayroll.cs" />
     <Compile Include="Common\OrderByColumnAttendance.cs" />
     <Compile Include="Common\EmployeeAttendanceStatus.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="ReportsModels\PurchaseReport.cs" />
     <Compile Include="ReportsModels\SalesReport.cs" />
     <Compile Include="RequestModels\BillDetailSearchRequest.cs" />
+    <Compile Include="RequestModels\ContactSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\AttendanceSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />

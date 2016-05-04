@@ -3,8 +3,10 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.ResponseModels;
 using TMD.Web.ViewModels.Contact;
 using TMD.Web.ModelMappers;
+using TMD.Models.RequestModels;
 
 namespace TMD.Web.Controllers
 {
@@ -22,6 +24,23 @@ namespace TMD.Web.Controllers
         {
             return View();
         }
+
+        //[HttpPost]
+        //public JsonResult Index(ContactSearchRequest searchRequest)
+        //{
+        //    if (!(User.IsInRole("Admin") || User.IsInRole("HR")))
+        //        searchRequest.EmployeeId = (int)Session["EmployeeID"];
+        //    var payrollResponse = payrollService.GetAllPayrolls(searchRequest);
+        //    var payrollList = payrollResponse.EmployeePayrollGroupBy.ToList().Select(x => x.CreatePayRollFromServerToClient()).ToList();
+        //    var model = new PayrollListViewModel
+        //    {
+        //        data = payrollList,
+        //        recordsFiltered = payrollResponse.FilteredCount,
+        //        recordsTotal = payrollResponse.TotalCount
+        //    };
+        //    //var obj = new {data = model.EmployeePayrolls, model};
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
 
         //
         // GET: /Contact/Details/5
@@ -57,21 +76,21 @@ namespace TMD.Web.Controllers
             {
                 ContactViewModel.Contact.UpdateDate = DateTime.UtcNow;
                 ContactViewModel.Contact.UpdatedBy = User.Identity.GetUserId();
-
-                
-                // TODO: Add insert logic here
-                if (ContactViewModel.Contact.ContactID > 0)
-                {
-                   
-                    contactService.UpdateCategory(ContactViewModel.Contact.MapClientToServer());
-                }
-                else
+                if (ContactViewModel.Contact.ContactID == 0)
                 {
                     ContactViewModel.Contact.CreatedDate = DateTime.UtcNow;
                     ContactViewModel.Contact.CreatedBy = User.Identity.GetUserId();
-               
-                    contactService.AddCategory(ContactViewModel.Contact.MapClientToServer());
                 }
+
+
+                ContactResponse contactResp=new ContactResponse();
+
+             
+                contactResp.Contact = ContactViewModel.Contact.MapClientToServer();
+                if (ContactViewModel.Addresses != null)
+                    contactResp.Addresses = ContactViewModel.Addresses.Select(x => x.MapClientToServer()).ToList();
+
+                contactService.SaveContact(contactResp);
 
                 return RedirectToAction("Create");
             }
