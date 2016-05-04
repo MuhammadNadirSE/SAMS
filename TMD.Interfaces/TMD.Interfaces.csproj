@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\IAddressRepository.cs" />
     <Compile Include="IRepository\IAllowanceTypeRepository.cs" />
     <Compile Include="IRepository\IAttendanceRepository.cs" />
     <Compile Include="IRepository\IAspNetRoleRepository.cs" />
