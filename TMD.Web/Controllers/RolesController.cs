@@ -1,28 +1,23 @@
-﻿using TMD.Implementation.Identity;
-using TMD.Models.DomainModels;
-using TMD.Models.IdentityModels.ViewModels;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Collections.Generic;
-using TMD.Models.MenuModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using TMD.Implementation.Identity;
 using TMD.Interfaces.IServices;
-using TMD.Web.ViewModels.RightsManagement;
+using TMD.Models.MenuModels;
 using TMD.Web.ViewModels.Common;
+using TMD.Web.ViewModels.RightsManagement;
 using TMD.WebBase.Mvc;
 
-namespace IdentitySample.Controllers
+namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class RolesAdminController : Controller
+    public class RolesController : Controller
     {
         private IMenuRightsService menuRightsService;
 
-        public RolesAdminController(IMenuRightsService menuRightsService)
+        public RolesController(IMenuRightsService menuRightsService)
         {
             this.menuRightsService = menuRightsService;
         }

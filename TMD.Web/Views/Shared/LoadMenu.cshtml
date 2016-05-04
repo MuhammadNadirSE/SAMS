@@ -15,35 +15,35 @@
         {
             // get child items with respect to menu header
             IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId && header.Menu.IsMenuItem).OrderBy(c => c.Menu.SortOrder).ToList();
-           
-                if (!menuRightchildList.Any())
-                {
-                     <li>
+
+            if (!menuRightchildList.Any())
+            {
+                <li class=@((Request.Url.ToString().Contains(header.Menu.MenuTargetController) == true)? "active" : "")>
                     <a href="@(Url.Action(header.Menu.MenuFunction, header.Menu.MenuTargetController))" class="@header.Menu.MenuItemClass">
                         <i class="icon-photon @header.Menu.MenuImagePath"></i>
                         <span class="title">@header.Menu.MenuTitle</span>
                         <span class="selected"></span>
                     </a>
-                      </li>
-                }
-                else
-                {
-                     <li class="open">
+                </li>
+            }
+            else
+            {
+                     <li>
                     <a href="javascript:;">
                         <i class="@header.Menu.MenuImagePath"></i>
                         <span class="title">@header.Menu.MenuTitle</span>
                         <span class="arrow"></span>
+                        <span class="selected"></span>
                     </a>
                     <ul class="sub-menu">
                         @{
                             foreach (MenuRight menuRight in menuRightchildList)
                             {
                                 // display childs
-                                <li @*class=@(Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "")*@>
+                                <li class=@(Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController+"/"+menuRight.Menu.MenuFunction) == true ? "innerSelected" : "")>
                                     <a href="@Url.Action(menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController)" class="@menuRight.Menu.MenuItemClass">
                                         <i class="@menuRight.Menu.MenuImagePath"></i>
                                         <span class="title">@menuRight.Menu.MenuTitle</span>
-                                        <span class="selected"></span>
                                     </a>
                                     @*@Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })*@
                                 </li>
@@ -57,3 +57,10 @@
     }
 }
 
+<script>
+    $(document)
+        .ready(function () {
+
+            $('.innerSelected').closest('ul').closest('li').addClass('active open');
+        });
+</script>

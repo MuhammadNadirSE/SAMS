@@ -1,11 +1,11 @@
 ﻿using System.Web.Mvc;
 using TMD.Web.Controllers;
-using TMD.Interfaces.IServices;
+using TMD.Web.ViewModels.Dashboard;
 namespace IdentitySample.Controllers
 
 {
     [AllowAnonymous]
-    public class HomeController : BaseController
+    public class DashboardController : BaseController
     {
         [AllowAnonymous]
         public ActionResult Index()
@@ -14,11 +14,10 @@ namespace IdentitySample.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            else
-            {
-                return RedirectToAction("Home", "Admin");
-            }
+            DashboardViewModel viewModel = new DashboardViewModel();
             
+            return View(viewModel);
+
         }
 
         public ActionResult OneColumn()

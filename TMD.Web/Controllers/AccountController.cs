@@ -174,7 +174,7 @@ namespace IdentitySample.Controllers
             }
             else
             {
-                return RedirectToAction("Home", "Admin");
+                return RedirectToAction("Index", "Dashboard");
             }
 
         }
@@ -243,10 +243,10 @@ namespace IdentitySample.Controllers
                                            var role = user.AspNetRoles.FirstOrDefault();
                             if (role.Id == Utility.MemberRoleId)
                             {
-                                return RedirectToAction("Home", "Admin");
+                                return RedirectToAction("Index", "Dashboard");
                             }
                             if (string.IsNullOrEmpty(returnUrl))
-                                return RedirectToAction("Home", "Admin");
+                                return RedirectToAction("Index", "Dashboard");
                             return RedirectToLocal(returnUrl);
                         }
                     case SignInStatus.LockedOut:
