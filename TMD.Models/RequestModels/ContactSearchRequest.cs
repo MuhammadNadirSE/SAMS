@@ -9,11 +9,11 @@ namespace TMD.Models.RequestModels
         public string CellNo { get; set; }
         public string EmailId { get; set; }
 
-        public OrderByColumnPayroll OrderByColumn
+        public OrderByColumnContact OrderByColumn
         {
             get
             {
-                return (OrderByColumnPayroll)SortBy;
+                return (OrderByColumnContact)SortBy;
             }
             set
             {

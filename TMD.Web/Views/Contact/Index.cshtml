@@ -82,16 +82,14 @@
                                         Contact Name
                                     </th>
                                     <th>
-                                        Email
-                                    </th>
-                                    <th class="">
                                         Cell No
                                     </th>
-                                    <th class="">
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
                                         Company Name
                                     </th>
-                                    
-
                                 </tr>
                             </thead>
                         </table>
@@ -125,22 +123,13 @@
                 "aTargets": [1],
                 "sDefaultContent": "No Data",
                 "mRender": function(data, type, full) {
-                    var element;
-                    var val;
-                    var empId;
-                    var date;
-                    val = full["AllowanceDate"];
-                    empId = full["EmployeeId"];
-                    date = full["AllowanceDate"];
-                    element = '<a href="@Url.Action("Create")?Eid=' + empId + '&M=' + date + '">' + val + '</a>';
+                    var element = '<a href="/Create/' + full["ContactID"] + '">' + full["FirstName"] + " " + full["LastName"] + '</a>';
                     return element;
                 }
             },
-            //{ "data": "AllowanceDate" },
-            { "data": "EmployeeName" },
-            { "data": "BasicSalary" },
-            { "data": "Allowances" },
-            { "data": "Total" }
+            { "data": "CellNo" },
+            { "data": "Email" },
+            { "data": "CompanyName" }
         ];
 
         var attendances = $('#dataTable').dataTable({
@@ -151,12 +140,12 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [3, 4] }
+                { 'bSortable': false, 'aTargets': [3] }
             ],
             "columns": columns,
             "processing": true,
             "serverSide": true,
-            "order": [[0, "desc"]],
+            "order": [[0, "asc"]],
 
             "ajax": {
                 url: siteURL + "/Contact/Index",
@@ -187,9 +176,9 @@
         });
 
         $('#ResetBtn').on('click', function() {
-            $('#txtContactName').select2('val', '');
-            $('#txtCellNo').select2('val', '');
-            $('#txtEmail').select2('val', '');
+            $('#txtContactName').val('');
+            $('#txtCellNo').val('');
+            $('#txtEmail').val('');
 
             //$('#filterByMonth').val("");
            // setCurrentMonth();
