@@ -25,22 +25,21 @@ namespace TMD.Web.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public JsonResult Index(ContactSearchRequest searchRequest)
-        //{
-        //    if (!(User.IsInRole("Admin") || User.IsInRole("HR")))
-        //        searchRequest.EmployeeId = (int)Session["EmployeeID"];
-        //    var payrollResponse = payrollService.GetAllPayrolls(searchRequest);
-        //    var payrollList = payrollResponse.EmployeePayrollGroupBy.ToList().Select(x => x.CreatePayRollFromServerToClient()).ToList();
-        //    var model = new PayrollListViewModel
-        //    {
-        //        data = payrollList,
-        //        recordsFiltered = payrollResponse.FilteredCount,
-        //        recordsTotal = payrollResponse.TotalCount
-        //    };
-        //    //var obj = new {data = model.EmployeePayrolls, model};
-        //    return Json(model, JsonRequestBehavior.AllowGet);
-        //}
+        [HttpPost]
+        public JsonResult Index(ContactSearchRequest searchRequest)
+        {
+           
+            var contactResponse = contactService.GetAllContacts(searchRequest);
+            var contactList = contactResponse.Contacts.ToList().Select(x => x.MapServerToClient()).ToList();
+            var model = new ContactViewModel
+            {
+                data = contactList,
+                recordsFiltered = contactResponse.FilteredCount,
+                recordsTotal = contactResponse.TotalCount
+            };
+            //var obj = new {data = model.EmployeePayrolls, model};
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
 
         //
         // GET: /Contact/Details/5

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 
 namespace TMD.Implementation.Services
@@ -99,6 +100,12 @@ namespace TMD.Implementation.Services
                 }
             }
             addressRepository.SaveChanges();
+        }
+
+        public ContactResponse GetAllContacts(ContactSearchRequest searchRequest)
+        {
+            var contacts = contactRepository.GetAllContacts(searchRequest);
+            return contacts;
         }
     }
 }

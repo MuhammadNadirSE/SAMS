@@ -8,6 +8,8 @@ using TMD.Repository.BaseRepository;
 using TMD.Models.DomainModels;
 using Microsoft.Practices.Unity;
 using System.Data.Entity;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 
 namespace TMD.Repository.Repositories
 {
@@ -23,5 +25,11 @@ namespace TMD.Repository.Repositories
             get { return db.Contact; }
         }
 
+        public ContactResponse GetAllContacts(ContactSearchRequest contactSearchRequest)
+        {
+
+
+            return new ContactResponse();
+        }
     }
 }

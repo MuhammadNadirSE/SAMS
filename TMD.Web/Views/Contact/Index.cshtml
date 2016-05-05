@@ -49,7 +49,14 @@
 
                     </div>
                 
+                <div class="col-md-2">
+                    <label class="control-label">Email</label>
+                </div>
+                <div class="col-md-3 col-md-pull-1">
 
+                    <input id="txtEmail" class="form-control" />
+
+                </div>
 
                 <button class="btn green-seagreen" id="filterBtn">Filter</button>
                 <button class="btn blue-hoki" id="ResetBtn">Reset</button>
@@ -101,17 +108,17 @@
 
 <script type="text/javascript" language="javascript">
     $(document).ready(function() {
-        $('<style type="text/css"> .ui-datepicker-current { display: none; } </style>').appendTo("head");
+        @*$('<style type="text/css"> .ui-datepicker-current { display: none; } </style>').appendTo("head");
         //setCurrentMonth();
         if ('@userPermissionsSet.Contains("ViewAllEmployeesPayroll")' == 'False')
-            $('#PayrollSearchRequest_EmployeeId').addClass('notAllowed');
+            $('#PayrollSearchRequest_EmployeeId').addClass('notAllowed');*@
 
         //$("#PayrollSearchRequest_EmployeeId").select2();
 
         var siteURL = $('#siteURL').val();
-        var start = ('@Model.PayrollSearchRequest.PageNo' - 1) * '@Model.PayrollSearchRequest.PageSize';
-        var isAsc = '@Model.PayrollSearchRequest.IsAsc' == "True" || '@Model.PayrollSearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.PayrollSearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+        var start = ('@Model.ContactSearchRequest.PageNo' - 1) * '@Model.ContactSearchRequest.PageSize';
+        var isAsc = '@Model.ContactSearchRequest.IsAsc' == "True" || '@Model.ContactSearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.ContactSearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
         var columns = [
             {
@@ -152,7 +159,7 @@
             "order": [[0, "desc"]],
 
             "ajax": {
-                url: siteURL + "/Payroll/Index",
+                url: siteURL + "/Contact/Index",
                 type: "POST",
                 dataType: "json",
                 data: function(params) {
@@ -164,8 +171,10 @@
                     params.SortBy = params.order[0].column;
                     params.IsAsc = params.order[0].dir === "asc";
 
-                    params.EmployeeId = $('#PayrollSearchRequest_EmployeeId').val();
-                    params.Date = $('#filterByMonth').val();
+                    params.ContactName = $('#txtContactName').val();
+                    params.CellNo = $('#txtCellNo').val();
+                    params.Email = $('#txtEmail').val();
+
                 },
             }
         });
@@ -178,16 +187,19 @@
         });
 
         $('#ResetBtn').on('click', function() {
-            $('#PayrollSearchRequest_EmployeeId').select2('val', '');
+            $('#txtContactName').select2('val', '');
+            $('#txtCellNo').select2('val', '');
+            $('#txtEmail').select2('val', '');
+
             //$('#filterByMonth').val("");
-            setCurrentMonth();
+           // setCurrentMonth();
             attendances.fnDraw();
         });
 
 
     });
-    function setCurrentMonth() {
-        debugger
-        $('#filterByMonth').datepicker("setDate", new Date());
-    }
+    //function setCurrentMonth() {
+    //    debugger
+    //    $('#filterByMonth').datepicker("setDate", new Date());
+    //}
 </script>
