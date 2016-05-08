@@ -1,0 +1,126 @@
+﻿@model System.Collections.Generic.List<TMD.Web.ViewModels.Employee.EmployeeModel>
+@{
+
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 4;
+
+}
+
+<div class="portlet portletCustomHeight light bg-inverse">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-users font-red-sunglo"></i>
+            <span class="caption-subject font-red-sunglo bold uppercase">Employees</span>
+            <span class="caption-helper">All</span>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Create","Employees")" class="btn blue-madison"><i class="fa fa-plus"> Add New Employee</i></a>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+        <div class="form-body">
+            <div class="row">
+
+                <div class="pull-left col-md-9">
+                    <div class="form-group col-md-1"><label class="control-label">Search</label></div>
+
+                    <div class="form-group col-md-5">
+                        <input class="form-control" type="text" placeholder="Employee Name" id="SearchInput" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="button" class="btn red-sunglo col-md-3" value="Filter" id="btnFltr">
+
+                    <input type="button" class="btn grey col-md-3" value="Reset" id="btnResetFltr">
+
+                </div>
+
+
+            </div>
+
+            <br />
+            <div class="row">
+                <div class="portlet box red-sunglo">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-group"></i>Employee(s)
+                        </div>
+                        <div class="tools">
+
+                            <a href="javascript:;" class="collapse">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed flip-content" id="EmployeeTable">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>
+                                        Full Name
+                                    </th>
+                                    <th>
+                                        Cell #
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Designation
+                                    </th>
+                                    <th class="">
+                                        Role
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in Model)
+                                {
+
+                                    <tr>
+                                        <td><a href="@Url.Action("Create")/@t.EmployeeId">@t.FullName</a></td>
+                                        <td>@t.CellNumber</td>
+                                        <td>@t.Email</td>
+                                        <td>@t.DesignationTitle</td>
+                                        <td>@t.RoleTitle</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!--/span-->
+            <!--/row-->
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        var oTable = $("#EmployeeTable").dataTable({
+            "bPaginate": true,
+        });
+
+        $('#btnFltr').on('click', function (e) {
+            filterEmployees();
+        });
+        $('#btnResetFltr').on('click', function (e) {
+            $('#SearchInput').val('');
+            oTable.fnFilter('');
+        });
+
+        function filterEmployees() {
+            var searchN = $('#SearchInput').val();
+            oTable.fnFilter(searchN);
+        }
+    });
+</script>
+<style type="text/css">
+    .dataTables_filter {
+        display: none !important;
+    }
+</style>

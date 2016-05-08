@@ -1,0 +1,417 @@
+﻿@using System.Linq
+@model  TMD.Web.ViewModels.Employee.EmployeeViewModel
+@{
+    string createUpdate = Model.Employee.EmployeeId > 0 ? "Update" : "Add New";
+    ViewBag.Title = createUpdate + " Employee";
+    Session["MenuKey"] = 4;
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    string display = "";
+    bool readonly1 = true;
+
+
+}
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @onsubmit = "return ValidateFields(this)" }))
+{
+    @*@Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)*@
+    @Html.HiddenFor(x => x.Employee.EmployeeId)
+    @Html.HiddenFor(x => x.Employee.RecCreatedDt)
+    @Html.HiddenFor(x => x.Employee.RecCreatedBy)
+    @Html.HiddenFor(x => x.Employee.UserId)
+    @Html.HiddenFor(x => x.SupervisorIdsToDelete)
+
+    <div class="portlet portletCustomHeight light bg-inverse" style="display: none;">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-user font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Employee</span>
+                <span class="caption-helper">@createUpdate</span>
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="form-body">
+                <h3 class="form-section">Official Details</h3>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.Employee.FullName, new { @class = "control-label col-md-3 requiredLabel" })
+
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.FullName, new { @class = "form-control mustReadonly", placeholder = "Enter Full Name" })
+                                @Html.ValidationMessageFor(model => model.Employee.FullName)
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.DesignationId, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.Employee.DesignationId, new SelectList(Model.Designation, "DesignationId", "Title", Model.Employee.DesignationId), new { @class = "form-control col-md-3 mustReadonly", @id = "DesignationDDL" })
+                                @Html.ValidationMessageFor(model => model.Employee.DesignationId)
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.Email, new { @class = "control-label col-md-3 requiredLabel" })
+
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.Email, new { @class = "form-control mustReadonly", placeholder = "e.g. username@domain.com" })
+                                @Html.ValidationMessageFor(model => model.Employee.Email)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.UserName, new { @class = "control-label col-md-3 requiredLabel" })
+
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.UserName, new { @class = "form-control mustReadonly" })
+                                @Html.ValidationMessageFor(model => model.Employee.UserName)
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6 hideOthersDetail">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.Salary, new { @class = "control-label col-md-3" })
+
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.Salary, new { @class = "form-control mustReadonly", placeholder = "Amount e.g. 10000 (Optional)", onkeypress = "return isNumberKey(this)" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6 mustDisplay hideOthersDetail">
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.Employee.RoleId, new { @class = "control-label col-md-3" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(model => model.Employee.RoleId, new SelectList(Model.Roles, "Id", "Name", Model.Employee.RoleId), new { @class = "form-control col-md-3", @id = "RoleDDL" })
+                            </div>
+                            @Html.LabelFor(model => model.Employee.IsRegistered, new { @class = "control-label col-md-3" })
+                            <div class="col-md-1" style="margin-top: 2%;">
+                                @Html.CheckBoxFor(model => model.Employee.IsRegistered, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                @*<div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-centered">
+
+                            <div class="modal-content">
+                                <div class="modal-header " style="background: #e26a6a; color: white;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title text-align-center ">Select Supervisor</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group row text-align-center">
+                                        @Html.Label("Supervisor", new {@class = "control-label col-md-4"})
+                                        <div class="col-md-5">
+                                            @Html.DropDownList("Supervisor", new SelectList(Model.Employees, "EmployeeId", "FullName"), new {@class = "form-control col-md-2", @id = "SupervisorDDL"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger saveSupervisor">Save</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>*@
+
+                @*<div class="row hideOthersDetail">
+                        <div class="portlet box red-sunglo">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Supervisor(s)
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" data-toggle="modal" data-target="#myModal" class="mustDisplay" style="color: white;">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </a>
+                                    <a href="javascript:;" class="collapse">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body flip-scroll">
+                                <table class="table table-bordered table-striped table-condensed flip-content" id="supervisorTable">
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th style="width: 1% !important">
+
+                                            </th>
+                                            <th width="20%">
+                                                Name
+                                            </th>
+                                            <th>
+                                                Designation
+                                            </th>
+                                            <th class="numeric">
+                                                Email
+                                            </th>
+                                            <th>
+                                                <span class="mustDisplay">Remove</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.EmployeesSupervisors != null)
+                                        {
+                                            for (int i = 0; i < Model.EmployeesSupervisors.Count; i++)
+                                            {
+                                                <tr data-id="@i">
+                                                    <td style="width: 1% !important">
+                                                        <input name='EmployeeSupervisor.Index' type='hidden' value='@i' />
+
+                                                        <input readonly='readonly' name='EmployeeSupervisor[@i].SupervisorId' type='hidden' style='border: none; background: #f9f9f9; display: none;' value='@Model.EmployeesSupervisors[i].EmployeeId' />
+                                                    </td>
+                                                    <td>@Html.ActionLink(Model.EmployeesSupervisors[i].FullName, "Create", new {id = Model.EmployeesSupervisors[i].EmployeeId}) </td>
+                                                    <td>
+                                                        @Model.EmployeesSupervisors[i].DesignationTitle
+                                                    </td>
+                                                    <td>@Model.EmployeesSupervisors[i].Email</td>
+                                                    <td><a class='remove mustDisplay' href='javascript:;'>Remove</a></td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>*@
+
+                <h3 class="form-section">Personal Details</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.CellNumber, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.CellNumber, new { @class = "form-control readonlyOthersDetail", placeholder = "92-3XX-XXXXXXX", @id = "empPhone" })
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6 hideOthersDetail">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.CNIC, new { @class = "control-label col-md-3" })
+
+
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.CNIC, new { @class = "form-control", placeholder = "23421-5342221-1", @id = "empCNIC" })
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row hideOthersDetail">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.Address, new { @class = "control-label col-md-3" })
+
+
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.Employee.Address, new { rows = "2", @class = "form-control", placeholder = "Address", style = "resize: none" })
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.BankName, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.BankName, new { @class = "form-control", placeholder = "Bank Name" })
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+
+                </div>
+                <div class="row hideOthersDetail">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.BankAccountTitle, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.BankAccountTitle, new { @class = "form-control", placeholder = "Bank Title" })
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Employee.BankAccountNumber, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Employee.BankAccountNumber, new { @class = "form-control", placeholder = "Bank #" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+
+            <!--/row-->
+        </div>
+
+        <div class="form-actions">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" class="btn green-seagreen hideOthersDetail" value="Submit" />
+                            <button type="reset" class="btn green-jungle hideOthersDetail">Reset</button>
+                            <a href="~/Employees/Index" class="btn default cancelBtn">Cancel</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<script>
+    $(document).ready(function () {
+        @{
+            if (userPermissionsSet.Contains("AddEmployee"))
+            {
+                display = "inline";
+                readonly1 = false ;
+            }
+            else
+            {
+                display = "none";
+                readonly1 = true ;
+            }
+        }
+
+        $(".mustDisplay").css("display", '@display');
+        if('@readonly1' == 'True')
+            $(".mustReadonly").prop("readOnly", true);
+        else
+            $(".mustReadonly").prop("readOnly", false);
+
+
+        var employee = $("#Employee_EmployeeId").val();
+        if (employee != "0") {
+            if (employee != '@Session["EmployeeID"].ToString()') {
+
+                if ('@readonly1' != 'False') {
+                    $(".hideOthersDetail").remove();
+                    //$(".hideOthersDetail").css("display", "none");
+                    $(".readonlyOthersDetail").prop("readOnly", true);
+                    $(".mustDisplay").css("display", "none");
+                    $(".mustReadonly").prop("readOnly", true);
+                }
+
+         } else {
+             $(".hideOthersDetail").show();
+             //$(".hideOthersDetail").css("display", "inline");
+             $(".readonlyOthersDetail").prop("readOnly", false);
+
+             if ('@readonly1' != 'False') {
+                 $(".mustDisplay").css("display", "none");
+                 $(".mustReadonly").prop("readOnly", true);
+             }
+         }
+        }
+
+
+
+        $("#DesignationDDL").select2();
+        $("#RoleDDL").select2();
+        $("#SupervisorDDL").select2();
+        $("#empCNIC").mask("99999-9999999-9");
+
+        $("#empPhone").mask("99-999-9999999");
+        @*var oTable = $("#supervisorTable").dataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            bFilter: false,
+
+        });
+
+        if ($("#supervisorTable").children("tbody").children("tr").children("td").html() == "No data available in table") {
+            $("#supervisorTable").children("tbody").children("tr").remove();
+        }
+        $(".remove").on('click', function () {
+            var target_row = $(this).closest("tr").get(0);
+            var aPos = oTable.fnGetPosition(target_row);
+            oTable.fnDeleteRow(aPos);
+        });
+        $(".saveSupervisor").click(function () {
+            var supervisorId = $("#SupervisorDDL").val();
+
+            $(this).closest(".modal").modal('hide');
+
+            var supervisorsList = '@Html.Raw(Json.Encode(Model.Employees))';
+
+            var parsedSupervisorList = JSON.parse(supervisorsList);
+            var rowCount = $('table#supervisorTable tbody tr:last').index() + 1;
+
+
+            $.each(parsedSupervisorList, function (key, value) {
+                if (value.EmployeeId == parseInt(supervisorId)) {
+                    var DesignationsList = '@Html.Raw(Json.Encode(Model.Designation))';
+                    var parsedDesignationsList = JSON.parse(DesignationsList);
+                    $.each(parsedDesignationsList, function(key2, value2) {
+                        if (value2.DesignationId == parseInt(value.DesignationId)) {
+                            supervisorRow = ["<input name='EmployeeSupervisor.Index' type='hidden' value='" + rowCount + "'/>" + "<input readonly='readonly' name='EmployeeSupervisor[" + rowCount + "].SupervisorId' type='hidden' style='border:none;background:#f9f9f9;display:none;' value='" + value.EmployeeId + "'/>", "<input readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + value.FullName + "'/>", "<input readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + value2.Title + "'/>", "<input readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + value.Email + "'/>", "<a class='remove' href='javascript:;'>Remove</a>"];
+                        }
+                    });
+                }
+            });
+
+
+
+            oTable.fnAddData(supervisorRow);
+            $(".remove").on('click', function () {
+
+                var target_row = $(this).closest("tr").get(0);
+                var aPos = oTable.fnGetPosition(target_row);
+                oTable.fnDeleteRow(aPos);
+            });
+        });*@
+
+        $('.portletCustomHeight').show();
+
+
+    });
+
+</script>
+<!-- Matter ends -->
