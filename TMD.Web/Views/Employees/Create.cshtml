@@ -1,14 +1,11 @@
 ﻿@using System.Linq
-@using System.Web
-@using System.Web.Helpers
-@using iTextSharp.text.pdf.qrcode
 @model  TMD.Web.ViewModels.Employee.EmployeeViewModel
 @{
-    ViewBag.Title = "Create Employee";
+    string createUpdate = Model.Employee.EmployeeId>0 ? "Update":"Add New";
+    ViewBag.Title = createUpdate +" Employee";
     Session["MenuKey"] = 4;
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-
 
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     string display = "";
@@ -21,7 +18,7 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @onsubmit = "return ValidateFields(this)" }))
 {
     @*@Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)*@
+      @Html.ValidationSummary(true)*@
     @Html.HiddenFor(x=>x.Employee.EmployeeId)
     @Html.HiddenFor(x=>x.Employee.RecCreatedDt)
     @Html.HiddenFor(x=>x.Employee.RecCreatedBy)
@@ -30,18 +27,10 @@
 
     <div class="portlet portletCustomHeight light bg-inverse" style="display: none;">
         <div class="portlet-title">
-            <div class="tools">
-
-                @*<button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event) && validateUserPassword(event));">@btnText</button>
-                    <a href="~/Account/Users">
-                        <button type="button" class="btn btn-circle default">Cancel</button>
-                    </a>*@
-            </div>
-
             <div class="caption">
                 <i class="icon-user font-red-sunglo"></i>
                 <span class="caption-subject font-red-sunglo bold uppercase">Employee</span>
-                <span class="caption-helper">add/update</span>
+                <span class="caption-helper">@createUpdate</span>
             </div>
         </div>
 
@@ -51,78 +40,51 @@
                
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.FullName, new {@class = "control-label col-md-3"})
+                            <div class="form-group ">
+                                @Html.LabelFor(model => model.Employee.FullName, new {@class = "control-label col-md-3 requiredLabel" })
 
                                 <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.FullName, new { @class = "form-control mustReadonly mandatory", placeholder = "Enter Full Name" })
-
+                                    @Html.TextBoxFor(model => model.Employee.FullName, new { @class = "form-control mustReadonly", placeholder = "Enter Full Name" })
+                                    @Html.ValidationMessageFor(model => model.Employee.FullName)
                                 </div>
                             </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.Email, new {@class = "control-label col-md-3"})
-
+                                @Html.LabelFor(model => model.Employee.DesignationId, new { @class = "control-label col-md-3 requiredLabel" })
                                 <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.Email, new {@class = "form-control mustReadonly", placeholder = "email@email.com"})
-                                    @Html.ValidationMessageFor(model => model.Employee.Email)
+                                    @Html.DropDownListFor(model => model.Employee.DesignationId, new SelectList(Model.Designation, "DesignationId", "Title", Model.Employee.DesignationId), new { @class = "form-control col-md-3 mustReadonly", @id = "DesignationDDL" })
+                                    @Html.ValidationMessageFor(model => model.Employee.DesignationId)
                                 </div>
                             </div>
                         </div>
                         <!--/span-->
                     </div>
                     <!--/row-->
-                    <div class="row hideOthersDetail">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.AllowedAnnualPaidLeaves, new {@class = "control-label col-md-3"})
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Employee.Email, new { @class = "control-label col-md-3 requiredLabel" })
 
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.AllowedAnnualPaidLeaves, new { @class = "form-control mustReadonly mandatory", placeholder = "No. of leaves e.g 10" })
-                                    <span class="help-block font-blue"> Remaining Paid Leaves (January - @DateTime.UtcNow.ToString("MMMM")) :<strong> @Model.RemainingPaidLeaves</strong> </span>
-                                </div>
-                            </div>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Employee.Email, new { @class = "form-control mustReadonly", placeholder = "e.g. username@domain.com" })
+                            @Html.ValidationMessageFor(model => model.Employee.Email)
                         </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.AllowedAnnualMedicalLeaves, new {@class = "control-label col-md-3"})
-
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.AllowedAnnualMedicalLeaves, new {@class = "form-control mustReadonly mandatory", placeholder = "No. of leaves e.g 10"})
-                                    <span class="help-block font-blue"> Remaining Medical Leaves (January - @DateTime.UtcNow.ToString("MMMM")) :<strong> @Model.RemainingMedicalLeaves</strong> </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/span-->
                     </div>
-                    <!--row-->
-                    <div class="row">
-                        <div class="col-md-6 hideOthersDetail">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.AllowedAnnualCasualLeaves, new {@class = "control-label col-md-3"})
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Employee.UserName, new { @class = "control-label col-md-3 requiredLabel" })
 
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.AllowedAnnualCasualLeaves, new {@class = "form-control mustReadonly", placeholder = "No. of leaves e.g 10"})
-                                    <span class="help-block font-blue"> Remaining Casual Leaves (January - @DateTime.UtcNow.ToString("MMMM")) :<strong> @Model.RemainingCasualLeaves</strong> </span>
-                                </div>
-                            </div>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Employee.UserName, new {@class = "form-control mustReadonly"})
+                            @Html.ValidationMessageFor(model => model.Employee.UserName)
                         </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.DesignationId, new {@class = "control-label col-md-3"})
-
-                                <div class="col-md-9">
-                                    @Html.DropDownListFor(model => model.Employee.DesignationId, new SelectList(Model.Designation, "DesignationId", "Title", Model.Employee.DesignationId), new {@class = "form-control col-md-3 mustReadonly", @id = "DesignationDDL"})
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--/span-->
                     </div>
+                </div>
+                <!--/span-->
+            </div>
                     <!--/row-->
                     <div class="row">
                         <div class="col-md-6 hideOthersDetail">
@@ -130,7 +92,7 @@
                                 @Html.LabelFor(model => model.Employee.Salary, new {@class = "control-label col-md-3"})
 
                                 <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.Salary, new { @class = "form-control mustReadonly", placeholder = "Amount e.g. 10000", onkeypress = "return isNumberKey(this)" })
+                                    @Html.TextBoxFor(model => model.Employee.Salary, new { @class = "form-control mustReadonly", placeholder = "Amount e.g. 10000 (Optional)", onkeypress = "return isNumberKey(this)" })
 
                                 </div>
                             </div>
@@ -138,18 +100,14 @@
                         <!--/span-->
                         <div class="col-md-6 mustDisplay hideOthersDetail">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Employee.IsRegistered, new {@class = "control-label col-md-3"})
-                                <div class="col-md-1" style="margin-top: 2%;">
-                                    @Html.CheckBoxFor(model => model.Employee.IsRegistered, new {@class = "form-control"})
-
-
-                                </div>
-
-                                @Html.LabelFor(model => model.Employee.RoleId, new {@class = "control-label col-md-3"})
-                                <div class="col-md-3">
+                                
+                                @Html.LabelFor(model => model.Employee.RoleId, new { @class = "control-label col-md-3" })
+                                <div class="col-md-5">
                                     @Html.DropDownListFor(model => model.Employee.RoleId, new SelectList(Model.Roles, "Id", "Name", Model.Employee.RoleId), new {@class = "form-control col-md-3", @id = "RoleDDL"})
-
-
+                                </div>
+                                @Html.LabelFor(model => model.Employee.IsRegistered, new { @class = "control-label col-md-3" })
+                                <div class="col-md-1" style="margin-top: 2%;">
+                                    @Html.CheckBoxFor(model => model.Employee.IsRegistered, new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -157,10 +115,9 @@
                     </div>
                     <!--/row-->
 
-                    <div id="myModal" class="modal fade" role="dialog">
+                    @*<div id="myModal" class="modal fade" role="dialog">
                         <div class="modal-dialog modal-centered">
 
-                            <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header " style="background: #e26a6a; color: white;">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -174,7 +131,6 @@
                                             @Html.DropDownList("Supervisor", new SelectList(Model.Employees, "EmployeeId", "FullName"), new {@class = "form-control col-md-2", @id = "SupervisorDDL"})
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger saveSupervisor">Save</button>
@@ -183,9 +139,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="row hideOthersDetail">
+                    @*<div class="row hideOthersDetail">
                         <div class="portlet box red-sunglo">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -246,7 +202,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>*@
 
                     <h3 class="form-section">Personal Details</h3>
                     <div class="row">
@@ -316,18 +272,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Employee.BankAccountNumber, new {@class = "control-label col-md-3"})
-
-
                                 <div class="col-md-9">
                                     @Html.TextBoxFor(model => model.Employee.BankAccountNumber, new {@class = "form-control", placeholder = "Bank #"})
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--/span-->
-                
             </div>
 
             <!--/row-->
@@ -339,7 +290,7 @@
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
                             <input type="submit" class="btn green-seagreen hideOthersDetail" value="Submit" />
-                            <button type="reset" class="btn green-jungle hideOthersDetail">Clear</button>
+                            <button type="reset" class="btn green-jungle hideOthersDetail">Reset</button>
                             <a href="~/Employees/Index" class="btn default cancelBtn">Cancel</a>
 
                         </div>
@@ -408,7 +359,7 @@
         $("#empCNIC").mask("99999-9999999-9");
 
         $("#empPhone").mask("99-999-9999999");
-        var oTable = $("#supervisorTable").dataTable({
+        @*var oTable = $("#supervisorTable").dataTable({
             "paging": false,
             "ordering": false,
             "info": false,
@@ -456,7 +407,7 @@
                 var aPos = oTable.fnGetPosition(target_row);
                 oTable.fnDeleteRow(aPos);
             });
-        });
+        });*@
 
         $('.portletCustomHeight').show();
 

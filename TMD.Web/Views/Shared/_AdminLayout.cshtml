@@ -52,14 +52,14 @@
         <!-- BEGIN HEADER INNER -->
         <div class="page-header-inner">
             <!-- BEGIN LOGO -->
-            <div class="page-logo">
+            @*<div class="page-logo">
                 <a href="~/Home/Index">
                     <img src="~/Images/Web/logo.png" alt="logo" class="logo-default" style="margin-top: 5px !important; height: 40px;" />
                 </a>
                 <div class="menu-toggler sidebar-toggler hide">
                     <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
                 </div>
-            </div>
+            </div>*@
             <!-- END LOGO -->
             <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
             </a>
@@ -137,78 +137,6 @@
                     </li>
                     <!-- DOC: This is mobile version of the horizontal menu. The desktop version is defined(duplicated) in the header above -->
                     @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
-                    @*<li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "1") ? "active" : "")>
-                                <a href="~/Admin/Home" class="WhiteColor">
-                                    <i class="icon-home"></i>
-                                    <span class="title">Home</span>
-                                    <span class="selected"></span>
-                                </a>
-                            </li>
-                            @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-                            {
-                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
-                                    <a href="~/Account/Profile" class="WhiteColor">
-                                        <i class="icon-user"></i>
-                                        <span class="title">Profile</span>
-                                        <span class="selected"></span>
-                                    </a>
-                                </li>
-                            }
-                            <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "5") ? "active " : "")>
-                                <a href="~/Order/Index" class="WhiteColor">
-                                    <i class="icon-briefcase"></i>
-                                    <span class="title">Orders</span>
-                                    <span class="selected"></span>
-                                </a>
-                            </li>
-
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
-                                    <a href="~/Account/Users" class="WhiteColor">
-                                        <i class="icon-wallet"></i>
-                                        <span class="title">Users</span>
-                                        <span class="selected"></span>
-                                    </a>
-                                </li>
-
-                                <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
-                                    <a href="~/Employee/Index" class="WhiteColor">
-                                        <i class="icon-wallet"></i>
-                                        <span class="title">Employees</span>
-                                        <span class="selected"></span>
-                                    </a>
-                                </li>
-
-
-            <li class="start @( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "6" || Session["MenuKey"].ToString() == "7") ? "active" : "")">
-                <a href="javascript:;">
-                    <i class="icon-home"></i>
-                    <span class="title">Tickets</span>
-                    <span class="arrow"></span>
-                </a>
-
-                <ul class="sub-menu" style="display: block;">
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "6") ? "active" : "")>
-                        <a href="@Url.Action("Index","Ticket")" class="WhiteColor">
-                            <i class="icon-credit-card"></i>
-                            <span class="title">Ticket</span>
-                            <span class="selected"></span>
-                        </a>
-                    </li>
-
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "7") ? "active" : "")>
-                        <a href="@Url.Action("Index","TicketType")" class="WhiteColor">
-                            <i class="icon-credit-card"></i>
-                            <span class="title">Ticket Type</span>
-                            <span class="selected"></span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
-
-                            }*@
                 </ul>
             </div>
             <!-- END HORIZONTAL RESPONSIVE MENU -->
@@ -240,7 +168,7 @@
     <div class="clearfix"></div>
             <div class="page-footer">
                 <div class="page-footer-inner">
-                    @DateTime.Now.Year &copy; HR Management System by <a href="http://www.innostark.com" target="_blank" style="color:white">InnoSTARK &trade;</a>
+                    @DateTime.Now.Year &copy; Zamtas Sales Management System <i>by</i> <a href="http://HATANSolutions.com" target="_blank" style="color:white">HATAN Solutions</a>
                 </div>
                 <div class="page-footer-tools">
                     <span class="go-top">

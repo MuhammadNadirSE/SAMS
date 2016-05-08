@@ -7,7 +7,7 @@ namespace IdentitySample.Controllers
     [AllowAnonymous]
     public class DashboardController : BaseController
     {
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)

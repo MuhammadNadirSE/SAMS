@@ -1,7 +1,7 @@
 ﻿@model System.Collections.Generic.List<TMD.Web.ViewModels.Employee.EmployeeModel>
 @{
 
-    ViewBag.Title = "Employees";
+    ViewBag.Title = "All Employees";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 4;
 
@@ -9,19 +9,13 @@
 
 <div class="portlet portletCustomHeight light bg-inverse">
     <div class="portlet-title">
-        <div class="tools">
-            @*<button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event) && validateUserPassword(event));">@btnText</button>
-                <a href="~/Account/Users">
-                    <button type="button" class="btn btn-circle default">Cancel</button>
-                </a>*@
-        </div>
         <div class="caption">
-            <i class="icon-user font-red-sunglo"></i>
+            <i class="icon-users font-red-sunglo"></i>
             <span class="caption-subject font-red-sunglo bold uppercase">Employees</span>
-            @*<span class="caption-helper">add/update</span>*@
+            <span class="caption-helper">All</span>
         </div>
         <div class="pull-right">
-            <a href="@Url.Action("Create","Employees")" class="btn blue-madison" onclick="return(ValidateFields(event) && validateUserPassword(event));"><i class="fa fa-plus"> Add New</i></a>
+            <a href="@Url.Action("Create","Employees")" class="btn blue-madison"><i class="fa fa-plus"> Add New Employee</i></a>
         </div>
     </div>
 
@@ -51,7 +45,7 @@
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-cogs"></i>Employee(s)
+                            <i class="fa fa-group"></i>Employee(s)
                         </div>
                         <div class="tools">
                             
@@ -110,17 +104,21 @@
 <script>
     $(document).ready(function() {
         var oTable = $("#EmployeeTable").dataTable({
-            //"filter": false,
-            "bPaginate": false,
+            "bPaginate": true,
         });
+
         $('#btnFltr').on('click', function(e) {
-            var searchN = $('#SearchInput').val();
-            oTable.fnFilter(searchN);
+            filterEmployees();
         });
         $('#btnResetFltr').on('click', function(e) {
             $('#SearchInput').val('');
             oTable.fnFilter('');
         });
+
+        function filterEmployees() {
+            var searchN = $('#SearchInput').val();
+            oTable.fnFilter(searchN);
+        }
     });
 </script>
 <style type="text/css">

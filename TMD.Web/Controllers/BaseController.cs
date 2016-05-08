@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ using TMD.Models.Common;
 using TMD.Models.DomainModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using TMD.Models.MenuModels;
 using TMD.WebBase.UnityConfiguration;
 
 namespace TMD.Web.Controllers
@@ -19,9 +21,8 @@ namespace TMD.Web.Controllers
     public class BaseController : Controller
     {
         #region Private
-
-        //private ApplicationUserManager _userManager;
-        private IAttendanceService attendanceService;
+        
+        private IMenuRightsService menuRightService;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace TMD.Web.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            attendanceService = UnityWebActivator.Container.Resolve<IAttendanceService>();
+            menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
 
             if (Session["UserID"] == null || Session["UserID"].ToString() == string.Empty)
                 SetUserDetail();
@@ -61,30 +62,24 @@ namespace TMD.Web.Controllers
             Session["LastName"] = result.LastName;
             Session["EmployeeEmail"] = result.Email;
             Session["UserID"] = result.Id;
-            Session["FullName"] = result.Employees.FirstOrDefault().FullName;
-            Session["EmployeeID"] = result.Employees.FirstOrDefault().EmployeeId;
+            if (result.Employees.Any())
+            {
+                Session["FullName"] = result.Employees.FirstOrDefault().FullName;
+                Session["EmployeeID"] = result.Employees.FirstOrDefault().EmployeeId;
+            }
+            else
+            {
+                Session["FullName"] = result.FirstName;
+            }
             Session["RoleName"] = role;
 
-
-            //var userAttendance = attendanceService.GetAttendanceByEmployeeIdInCurrentDate((int)Session["EmployeeID"]);
-            //if (userAttendance == null)
-            //{
-            //    Session["UserAttendanceStatus"] = EmployeeAttendanceStatus.CheckedOut;
-            //}
-            //else
-            //{
-            //    Session["UserAttendanceStatus"] = (EmployeeAttendanceStatus)userAttendance.Status;
-            //}
-            
-
-            //AspNetUser userResult = UserManager.FindById(User.Identity.GetUserId());
-            //List<AspNetRole> roles = userResult.AspNetRoles.ToList();
+            //Load Menu and Set Permissions
+            IList<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(result.AspNetRoles.ToList()[0].Id).ToList();
+            //Save menu in sessions
+            Session["MenuItemsSet"] = menuItems;
+            //save menu permissions in session
+            Session["UserPermissionSet"] = menuItems.Select(user => user.Menu.PermissionKey).ToArray();
         }
-        //public ApplicationUserManager UserManager
-        //{
-        //    get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-        //    private set { _userManager = value; }
-        //}
 
         #endregion
 

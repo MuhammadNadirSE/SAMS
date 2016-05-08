@@ -190,6 +190,7 @@ namespace IdentitySample.Controllers
                     return View(model);
                 }
                 AspNetUser user = null;
+                //get user login by either email or only username
                 if (model.Email.Contains("@"))
                 {
                     user = await UserManager.FindByEmailAsync(model.Email);
@@ -199,7 +200,7 @@ namespace IdentitySample.Controllers
                     user = await UserManager.FindByNameAsync(model.Email);
                 }
                 
-                 if (user != null)
+                if (user != null)
                 {
                     if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                     {
@@ -295,8 +296,9 @@ namespace IdentitySample.Controllers
         }
 
 
-       //[Authorize(Roles = "Admin")]
-        [SiteAuthorize(PermissionKey = "Users")]
+        //[Authorize(Roles = "Admin")]
+        //[SiteAuthorize(PermissionKey = "Users")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Users()
         {
             //if (Session["UserID"] == null)
@@ -480,26 +482,7 @@ namespace IdentitySample.Controllers
                      UserManager.AddToRole(employeeViewModel.Employee.UserId, roleName);
                      //TempData["message"] = new MessageViewModel { Message = "Role has been updated", IsUpdated = true };
                  }
-                //// Password Reset
-                //if (!String.IsNullOrEmpty(model.AspNetUserModel.Password))
-                //{
-                //    var token = await UserManager.GeneratePasswordResetTokenAsync(model.AspNetUserModel.Id);
-                //    var resetPwdResults = await UserManager.ResetPasswordAsync(model.AspNetUserModel.Id, token, model.AspNetUserModel.Password);
-
-                //    if (resetPwdResults.Succeeded)
-                //    {
-                //        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                //        if (user != null)
-                //        {
-                //            await SignInAsync(user, isPersistent: false);
-                //        }
-                //        TempData["message"] = new MessageViewModel
-                //        {
-                //            Message = TMD.Web.Resources.HR.Account.UpdatePass,
-                //            IsUpdated = true
-                //        };
-                //    }
-                //}
+               
                 // Get user by UserId to Update User
                 AspNetUser userToUpdate = UserManager.FindById(employeeViewModel.Employee.UserId);
                 //if (userToUpdate.Email != model.AspNetUserModel.Email)
@@ -509,6 +492,7 @@ namespace IdentitySample.Controllers
                 {
                     //userToUpdate.UpdateUserTo(model.AspNetUserModel);
                     userToUpdate.Email = employeeViewModel.Employee.Email;
+                    userToUpdate.UserName = employeeViewModel.Employee.UserName;
                     userToUpdate.LockoutEnabled = !employeeViewModel.Employee.IsRegistered;
                     userToUpdate.UserName = employeeViewModel.Employee.Email.Split('@')[0];
                 }
@@ -524,15 +508,15 @@ namespace IdentitySample.Controllers
             }
             #endregion
             // Add new User
-            if (employeeViewModel.Employee.IsRegistered && string.IsNullOrEmpty(employeeViewModel.Employee.UserId))
+            if (string.IsNullOrEmpty(employeeViewModel.Employee.UserId))
             {
                 // TODO:Check # of Users that Admin can create
                 string customPassword = "123456";
                 var user = new AspNetUser
                 {
-
-                    UserName = employeeViewModel.Employee.Email.Split('@')[0],
+                    //UserName = employeeViewModel.Employee.Email.Split('@')[0],
                     Email = employeeViewModel.Employee.Email,
+                    UserName = employeeViewModel.Employee.UserName,
                     LockoutEnabled = false
                 };
                 user.EmailConfirmed = true;
@@ -547,11 +531,11 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(employeeViewModel.Employee.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
 
-                        await SendAccountCredentials(employeeViewModel.Employee.Email,user.UserName, customPassword);
+                        //await SendAccountCredentials(employeeViewModel.Employee.Email,user.UserName, customPassword);
 
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Employee has been created",
+                            Message = "Employee created successfully, and an Email has been sent to "+ employeeViewModel.Employee.Email,
                             IsSaved = true
                         };
                     }
@@ -934,7 +918,7 @@ namespace IdentitySample.Controllers
         #endregion
 
         #region Profile Work
-        [SiteAuthorize(PermissionKey = "Profile")]
+        //[SiteAuthorize(PermissionKey = "Profile")]
         public ActionResult Profile()
         {
             //AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
@@ -956,7 +940,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [Authorize]
         [ValidateInput(false)]
-        [SiteAuthorize(PermissionKey = "Profile")]
+        //[SiteAuthorize(PermissionKey = "Profile")]
         public ActionResult Profile(AspNetUserModel profileViewModel)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());

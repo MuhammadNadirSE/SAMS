@@ -25,7 +25,6 @@ namespace TMD.Web.ModelMappers
              
                 EmployeeId = source.EmployeeId,
                 UserId = source.UserId,
-                IsRegistered = source.AspNetUser!=null,
                 AllowedAnnualCasualLeaves = source.AllowedAnnualCasualLeaves,
                 AllowedAnnualMedicalLeaves = source.AllowedAnnualMedicalLeaves,
                 AllowedAnnualPaidLeaves = source.AllowedAnnualPaidLeaves,
@@ -39,6 +38,7 @@ namespace TMD.Web.ModelMappers
             {
                 var role = source.AspNetUser.AspNetRoles.FirstOrDefault();
                 employee.Email = source.AspNetUser.Email;
+                employee.UserName = source.AspNetUser.UserName;
                 employee.RoleTitle = role.Name;
                 employee.RoleId = role.Id;
                 employee.IsRegistered = !source.AspNetUser.LockoutEnabled;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using iTextSharp.text;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using TMD.Implementation.Identity;
@@ -52,31 +53,43 @@ namespace TMD.Web.Controllers
         public ActionResult LoadMenu()
         {
             MenuViewModel menuVM = new MenuViewModel();
-            string userName = HttpContext.User.Identity.Name;
-            if (!String.IsNullOrEmpty(userName))
+            if (Session["UserPermissionSet"] != null)
             {
-                AspNetUser userResult = UserManager.FindByName(userName);
-                if (userResult != null)
+                IList<MenuRight> menuItems = (List<MenuRight>)Session["MenuItemsSet"];
+                menuVM = new MenuViewModel
                 {
-                    IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
-                    if (roles.Count > 0)
+                    MenuRights = menuItems,
+                    MenuHeaders = menuItems.Where(x => x.Menu.IsRootItem)
+                };
+            }
+            else
+            {
+                string userName = HttpContext.User.Identity.Name;
+                if (!String.IsNullOrEmpty(userName))
+                {
+                    AspNetUser userResult = UserManager.FindByName(userName);
+                    if (userResult != null)
                     {
-                        IList<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
-
-                        
-                        string[] userPermissions = menuItems.Select(user => user.Menu.PermissionKey).ToArray();
-
-                        //save menu permissions in session
-                        Session["UserPermissionSet"] = userPermissions;
-
-                        menuVM = new MenuViewModel
+                        IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
+                        if (roles.Count > 0)
                         {
-                            MenuRights = menuItems,
-                            MenuHeaders = menuItems.Where(x => x.Menu.IsRootItem)
-                        };
+                            IList<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
+                            
+                            //Save menu in sessions
+                            Session["MenuItemsSet"] = menuItems;
+                            //save menu permissions in session
+                            Session["UserPermissionSet"] = menuItems.Select(user => user.Menu.PermissionKey).ToArray();
+
+                            menuVM = new MenuViewModel
+                            {
+                                MenuRights = menuItems,
+                                MenuHeaders = menuItems.Where(x => x.Menu.IsRootItem)
+                            };
+                        }
                     }
                 }
             }
+            
             return View(menuVM);
         }
     }
