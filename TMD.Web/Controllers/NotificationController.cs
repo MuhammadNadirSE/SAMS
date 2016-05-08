@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
-using TMD.Models.DomainModels;
+using TMD.Web.ModelMappers;
+using TMD.Web.ViewModels.Notification;
 
 namespace TMD.Web.Controllers
 {
@@ -20,8 +21,12 @@ namespace TMD.Web.Controllers
         // GET: /Notification/
         public ActionResult Index()
         {
-            List<Notification> Notifications =
-                notificationService.GetAllNotificationsByUserId(User.Identity.GetUserId()).ToList();
+            List<NotificationModel> Notifications =
+                notificationService.GetAllNotificationsByUserId(User.Identity.GetUserId())
+                    .ToList()
+                    .Select(x => x.MapServerToClient()).ToList();
+
+
             return View(Notifications);
         }
 

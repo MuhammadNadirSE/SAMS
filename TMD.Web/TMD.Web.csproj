@@ -323,6 +323,7 @@
     <Compile Include="ModelMappers\AspNetRoleMapper.cs" />
     <Compile Include="ModelMappers\DesignationMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\NotificationMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMappers.cs" />
@@ -404,6 +405,8 @@
     <Compile Include="ViewModels\EmployeeSupervisor\EmployeeSupervisorModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeModel.cs" />
+    <Compile Include="ViewModels\Notification\NotificationModel.cs" />
+    <Compile Include="ViewModels\Notification\NotificationViewModel.cs" />
     <Compile Include="ViewModels\Payroll\EmployeePayrollModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollCreateViewModel.cs" />
