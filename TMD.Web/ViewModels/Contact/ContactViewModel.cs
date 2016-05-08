@@ -14,6 +14,8 @@ namespace TMD.Web.ViewModels.Contact
         public ContactViewModel()
         {
             Addresses = new List<AddressModel>();
+            data=new List<ContactModel>();
+            ContactSearchRequest=new ContactSearchRequest();
         }
         public ContactModel Contact { get; set; }
         public IList<AddressModel> Addresses { get; set; }

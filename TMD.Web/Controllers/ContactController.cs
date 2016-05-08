@@ -22,7 +22,7 @@ namespace TMD.Web.Controllers
         // GET: /Contact/
         public ActionResult Index()
         {
-            return View();
+            return View(new ContactViewModel());
         }
 
         [HttpPost]
