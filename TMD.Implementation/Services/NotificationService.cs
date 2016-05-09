@@ -23,7 +23,7 @@ namespace TMD.Implementation.Services
 
         public IEnumerable<Notification> GetAllNotificationsByUserId(string userId)
         {
-            throw new System.NotImplementedException();
+            return notificationRepository.GetAll();
         }
 
         public int GetUnreadNotificationsCount(string userId)

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
-using TMD.Web.ViewModels.Notification;
+using TMD.Web.Models;
 
 namespace TMD.Web.Controllers
 {

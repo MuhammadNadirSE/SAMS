@@ -39,8 +39,6 @@ namespace TMD.Web.ModelMappers
                 ItemId = source.ItemId,
                 CreatedDate = source.CreatedDate,
                 CreatedBy = source.CreatedBy
-                
-
             };
         }
     }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TMD.Models.DomainModels;
 
-namespace TMD.Web.ViewModels.Notification
+namespace TMD.Web.Models
 {
     public class NotificationModel
     {
@@ -16,8 +15,5 @@ namespace TMD.Web.ViewModels.Notification
         public int ItemId { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
-
-        public virtual AspNetUser CreatedByUser { get; set; }
-        public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
     }
 }

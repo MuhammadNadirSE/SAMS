@@ -344,6 +344,7 @@
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PayRollListWebModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
@@ -405,7 +406,6 @@
     <Compile Include="ViewModels\EmployeeSupervisor\EmployeeSupervisorModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeModel.cs" />
-    <Compile Include="ViewModels\Notification\NotificationModel.cs" />
     <Compile Include="ViewModels\Notification\NotificationViewModel.cs" />
     <Compile Include="ViewModels\Payroll\EmployeePayrollModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollListViewModel.cs" />
