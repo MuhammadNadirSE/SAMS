@@ -6,38 +6,50 @@
     Session["SubMenuKey"] = 2;
 }
 
-<div class="portlet light bg-inverse formBodyRemoveSideSpace formBodyMinHeight">
+<div class="portlet portletCustomHeight light bg-inverse">
     <div class="portlet-title">
         <div class="caption">
             <i class="icon-bulb font-red-sunglo"></i>
-            <span class="caption-subject font-red-sunglo bold uppercase">Notifications</span>
+            <span class="caption-subject font-red-sunglo uppercase">Notifications</span>
         </div>
     </div>
-    <div class="portlet box">
-        <div class="portlet-body flip-scroll">
-            <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
-                <thead class="flip-content">
-                    <tr>
-                        <th class="">Title</th>
-                        <th class="">Description</th>
-                        <th class="">Date</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@(Html.ActionLink(item.Title, "Details"@*, new { id = item.CategoryId }, new { @class = item.MainCategoryId == null ? "" : "padding-left-10percent" })*@))</td>
-                            <td>@item.Description</td>
-                            <td>@item.CreatedDate</td>
-                            <td></td>
-                        </tr>
-                    }
-                </tbody>
+    <div class="portlet-body form">
+        <div class="form-body">
+            <div class="row">
+                <div class="portlet box red-sunglo">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bulb"></i>Notification(s)
+                        </div>
+                    </div>
+                    <div class="portlet-body flip-scroll">
+                        <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th class="">Title</th>
+                                    <th class="">Description</th>
+                                    <th class="">Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(Html.ActionLink(item.Title, "Details"@*, new { id = item.CategoryId }, new { @class = item.MainCategoryId == null ? "" : "padding-left-10percent" })*@))</td>
+                                <td>@item.Description</td>
+                                <td>@item.CreatedDate</td>
+                                <td></td>
+                            </tr>
+                        }
+                            </tbody>
 
-            </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+       
     </div>
 </div>
 

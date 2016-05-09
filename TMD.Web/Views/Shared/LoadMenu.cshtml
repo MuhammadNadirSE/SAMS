@@ -40,7 +40,7 @@
                             foreach (MenuRight menuRight in menuRightchildList)
                             {
                                 // display childs
-                                <li class=@(Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController+"/"+menuRight.Menu.MenuFunction) == true ? "innerSelected" : "")>
+                                <li class=@(Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController) == true ? "innerSelected" : "")>
                                     <a href="@Url.Action(menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController)" class="@menuRight.Menu.MenuItemClass">
                                         <i class="@menuRight.Menu.MenuImagePath"></i>
                                         <span class="title">@menuRight.Menu.MenuTitle</span>

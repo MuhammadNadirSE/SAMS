@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ViewModels.ProductCategory;
 using TMD.Web.ModelMappers;
+using System.Collections.Generic;
 
 namespace TMD.Web.Controllers
 {
@@ -19,7 +20,7 @@ namespace TMD.Web.Controllers
         // GET: /ProductCategory/
         public ActionResult Index()
         {
-            return View();
+            return View(new List<TMD.Web.Models.ProductCategoryModel>());
         }
 
         //
