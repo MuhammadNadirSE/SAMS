@@ -52,15 +52,9 @@ namespace TMD.Implementation.Services
             return contactRepository.Find(id);
         }
 
-        public ContactResponse GetContactResponse(int? id)
+        public Contact GetContactAndAddresses(int contactId)
         {
-            ContactResponse contactResp = new ContactResponse();
-            if (id != null)
-            {
-                contactResp.Contact = contactRepository.Find((int)id);
-            }
-           // contactResp.Addresses = contactRepository.GetAll();
-            return contactResp;
+            return contactRepository.GetContactAndAddresses(contactId);
         }
         public bool SaveContact(ContactResponse contactResp)
         {
