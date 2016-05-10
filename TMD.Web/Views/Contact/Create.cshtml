@@ -161,16 +161,16 @@
                                                     @Html.HiddenFor(model => model.Addresses[i].AddressId)
                                                     @Html.HiddenFor(model => model.Addresses[i].ContactID)
                                                 </td>
-                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Country, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
-                                                <td>@Html.TextBoxFor(model => model.Addresses[i].State, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Country, new { readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].State, new { readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
 
-                                                <td>@Html.TextBoxFor(model => model.Addresses[i].City, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].City, new { readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
 
-                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Street, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Street, new { readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
 
-                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Address1, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Address1, new { readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
 
-                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Address2, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Address2, new { readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
 
                                                 @*<td>
                                                     @Html.HiddenFor(model => model.Addresses[i].AddressType)

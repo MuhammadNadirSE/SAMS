@@ -16,6 +16,10 @@
     width: 100% !important;
     height: 18px !important;
 }
+.xscroll {
+    max-width: 200px;
+    overflow-x: auto;
+}
 .required {
     color: #e02222 !important;
     font-size: 12px;
