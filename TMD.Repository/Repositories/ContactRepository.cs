@@ -60,6 +60,11 @@ namespace TMD.Repository.Repositories
                    .ToList();
             return new ContactResponse { Contacts = contacts.ToList(), TotalCount = DbSet.Count(query), FilteredCount = contacts.Count() };
         }
+
+        public Contact GetContactAndAddresses(int contactId)
+        {
+            return DbSet.Include(x => x.Addresses).FirstOrDefault(x => x.ContactID.Equals(contactId));
+        }
     }
 }
  

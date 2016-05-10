@@ -12,7 +12,7 @@ namespace TMD.Interfaces.IServices
         IEnumerable<Contact> GetAllContacts();
         Contact GetContactById(int id);
       //  ProductCategoryResponse GetProductCategoryResponse(int? id);
-        ContactResponse GetContactResponse(int? id);
+        Contact GetContactAndAddresses(int contactId);
         bool SaveContact(ContactResponse contactResponse);
 
         ContactResponse GetAllContacts(ContactSearchRequest searchRequest);

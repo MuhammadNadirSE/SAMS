@@ -10,6 +10,7 @@ using TMD.Models.RequestModels;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
 
@@ -52,16 +53,21 @@ namespace TMD.Web.Controllers
         // GET: /Contact/Create
         public ActionResult Create(int? id)
         {
-            ContactViewModel contactViewModel = new ContactViewModel();
+            ContactViewModel contactViewModel = new ContactViewModel
+            {
+                Contact = new Models.ContactModel()
+            };
 
-             contactViewModel.Contact = new Models.ContactModel();
             if (id != null)
             {
-                var contact = contactService.GetContactById((int)id);
+                var contact = contactService.GetContactAndAddresses((int)id);
                 if (contact != null)
+                {
                     contactViewModel.Contact = contact.MapServerToClient();
+                    contactViewModel.Addresses = contact.Addresses.ToList().Select(x=>x.MapServerToClient()).ToList();
+                }
+                    
             }
-                
 
              return View(contactViewModel);
         }
