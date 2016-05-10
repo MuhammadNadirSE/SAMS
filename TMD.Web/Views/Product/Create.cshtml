@@ -1,8 +1,8 @@
-﻿@model TMD.Web.ViewModels.ProductViewModel
+﻿@model TMD.Web.ViewModels.Product.ProductViewModel
 @{
     ViewBag.Title = "Create/Update Product";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var isEdit = (Model.ProductModel != null && Model.ProductModel.ProductId > 0);
+    var isEdit = (Model.Product != null && Model.Product.ProductId > 0);
     Session["MenuKey"] = 11;
 }
 
