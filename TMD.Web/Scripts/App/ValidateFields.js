@@ -52,7 +52,7 @@ function ValidateFieldsByClass(ClassName) {
             //}
             missingCounter++;
             $(fields[i]).css('border-color', 'red');
-            inCompleteFields += "<br/>" + ($(fields[i]).attr('id') + (i + 1 == fields.length ? "" : ", "));
+            inCompleteFields += "<br/>" + ($(fields[i]).attr('name') + (i + 1 == fields.length ? "" : ", "));
         }
         else
             $(fields[i]).css('border-color', 'gainsboro');

@@ -21,9 +21,8 @@ namespace TMD.Web.ModelMappers
                 AddressType = source.AddressType,
                 City = source.City??"",
                 State = source.State??"",
-                Street = source.Street??""
-
-
+                Street = source.Street??"",
+                ContactID = source.ContactID
             };
         }
         public static AddressModel MapServerToClient(this Address source)
@@ -37,9 +36,8 @@ namespace TMD.Web.ModelMappers
                 AddressType = source.AddressType,
                 City = source.City,
                 State = source.State,
-                Street = source.Street
-              
-
+                Street = source.Street,
+                ContactID = source.ContactID
             };
         }
     }

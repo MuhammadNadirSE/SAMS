@@ -10,7 +10,12 @@
 .field-validation-error {
     color: #e02222 !important;
 }
-
+.ProductTableColumn {
+    border: 0px;
+    background-color: transparent;
+    width: 100% !important;
+    height: 18px !important;
+}
 .required {
     color: #e02222 !important;
     font-size: 12px;

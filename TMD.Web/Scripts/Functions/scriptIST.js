@@ -1,4 +1,11 @@
-﻿function SendMessage() {
+﻿function clearInputFields(element) {
+    $(element).find('input, select, textarea')
+        .each(function () {
+            $(this).val('');
+        });
+    $(element).find(".select2me").select2("val", "");
+}
+function SendMessage() {
     if (validateContactUsForm()) {
         var serviceUrl = '/Clinic/ContactUs';
         var email = $("#email").val();

@@ -120,61 +120,64 @@
                             </div>
                         </div>
                         <div class="portlet-body flip-scroll">
-                            <table class="table table-bordered table-striped table-condensed flip-content" id="supervisorTable">
+                            <table class="table table-bordered table-striped table-condensed flip-content" id="addressTable">
                                 <thead class="flip-content">
                                     <tr>
-                                        <th style="width: 1% !important">
-
-                                        </th>
-                                        <th width="20%">
+                                        <th style='display:none'></th>
+                                        <th width="10%">
                                             Country
                                         </th>
-                                        <th>
+                                        <th width="10%">
                                             State
                                         </th>
-                                        <th class="numeric">
+                                        <th width="10%">
                                             City
                                         </th>
-                                        <th class="numeric">
+                                        <th width="15%">
                                             Street
                                         </th>
-                                        <th class="numeric">
+                                        <th width="20%">
                                             Address Line 1
                                         </th>
-                                        <th class="numeric">
+                                        <th width="20%">
                                             Address Line 2
                                         </th>
-                                        <th class="numeric">
+                                        @*<th width="10%">
                                             Address Type
-                                        </th>
-                                        <th>
+                                        </th>*@
+                                        <th width="5%">
                                             <span class="mustDisplay">Remove</span>
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="AddressTableBody">
                                     @if (Model.Addresses != null)
                                     {
                                         for (int i = 0; i < Model.Addresses.Count; i++)
                                         {
                                             <tr data-id="@i">
-                                                <td style="width: 1% !important">
+                                                <td style="display:none">
                                                     <input name='Addresses.Index' type='hidden' value='@i' />
+                                                    @Html.HiddenFor(model => model.Addresses[i].AddressId)
+                                                    @Html.HiddenFor(model => model.Addresses[i].ContactID)
+                                                </td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Country, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].State, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
 
-                                                    <input readonly='readonly' name='Addresses[@i].AddressId' type='hidden' style='border: none; background: #f9f9f9; display: none;' value='@Model.Addresses[i].AddressId' />
-                                                </td>
-                                                <td>@Model.Addresses[i].Country</td>
-                                                <td>
-                                                    @Model.Addresses[i].State
-                                                </td>
-                                                <td>@Model.Addresses[i].City</td>
-                                                <td>
-                                                    @Model.Addresses[i].Street
-                                                </td>
-                                                <td>@Model.Addresses[i].Address1</td>
-                                                <td>@Model.Addresses[i].Address2</td>
-                                                <td>@Model.Addresses[i].AddressType</td>
-                                                <td><a class='remove mustDisplay' href='javascript:;'>Remove</a></td>
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].City, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Street, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Address1, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+
+                                                <td>@Html.TextBoxFor(model => model.Addresses[i].Address2, new { @readOnly = "readOnly", @class = "ProductTableColumn", tabindex = "-1" })</td>
+
+                                                @*<td>
+                                                    @Html.HiddenFor(model => model.Addresses[i].AddressType)
+                                                    @Html.TextBoxFor(model => model.Addresses[i].AddressType, new { @readOnly = "readOnly", tabindex = "-1" })
+                                                </td>*@
+
+                                                <td><a href="javascript:;" class="btn default btn-xs red remove" title="Delete"><i class="fa fa-trash-o"></i></a></td>
                                             </tr>
                                         }
                                     }
@@ -223,9 +226,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">Country</label>
+                                            <label class="col-md-3 control-label requiredLabel">Country</label>
                                             <div class="col-md-9">
-                                                <input type="text" id="txtCountry" class="form-control" />
+                                                <input type="text" id="txtCountry" name="Country" class="form-control mandatoryModal" />
                                             </div>
                                         </div>
                                     </div>
@@ -242,9 +245,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">City</label>
+                                            <label class="col-md-3 control-label requiredLabel">City</label>
                                             <div class="col-md-9">
-                                                <input type="text" id="txtCity" class="form-control" />
+                                                <input type="text" id="txtCity" name="City" class="form-control mandatoryModal" />
                                             </div>
                                         </div>
                                     </div>
@@ -261,9 +264,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Address Line 1</label>
+                                            <label class="col-md-2 control-label requiredLabel">Address Line 1</label>
                                             <div class="col-md-10">
-                                                <textarea id="txtAddressLine1" class="form-control"></textarea>
+                                                <textarea id="txtAddressLine1" name="Address Line 1" class="form-control mandatoryModal"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +285,7 @@
 
                                 </div>
 
-                                <div class="row">
+                                @*<div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Is Primary</label>
@@ -292,7 +295,7 @@
                                         </div>
                                     </div>
 
-                                </div>
+                                </div>*@
 
 
                             </div>
@@ -313,70 +316,99 @@
 <script>
     $(document)
         .ready(function() {
-            var oTable = $("#supervisorTable").dataTable({
-                "paging": false,
-                "ordering": false,
-                "info": false,
-                bFilter: false,
-
-            });
-            if ($("#supervisorTable").children("tbody").children("tr").children("td").html() ==
+          
+            if ($("#addressTable").children("tbody").children("tr").children("td").html() ==
                     "No data available in table"
             ) {
-                $("#supervisorTable").children("tbody").children("tr").remove();
+                $("#addressTable").children("tbody").children("tr").remove();
             }
-            $(".remove")
-                .on('click',
-                    function() {
-                        var target_row = $(this).closest("tr").get(0);
-                        var aPos = oTable.fnGetPosition(target_row);
-                        oTable.fnDeleteRow(aPos);
-                    });
-            $(".saveSupervisor").click(function() {
+
+            $('.remove').live("click", function () {
+
+                if (!confirm("Are you sure to delete this address?")) {
+                    return;
+                }
+                $(this).parent().parent().remove();
+            });
+
+            $(".saveSupervisor").click(function () {
+                //validate fields
+                if (!(ValidateFieldsByClass("mandatoryModal"))) {
+                    return false;
+                }
+                var contactId = '@Model.Contact.ContactID';
                 var country = $("#txtCountry").val();
                 var city = $("#txtCity").val();
                 var state = $("#txtState").val();
                 var street = $("#txtStreet").val();
                 var addline1 = $("#txtAddressLine1").val();
                 var addline2 = $("#txtAddressLine2").val();
-                var contacttype = $("#chkIsPrimaryAddress").val();
+                //var addtype = $("#chkIsPrimaryAddress").is(':checked');
 
+                $(this).closest(".modal").modal('hide');
 
-
-
-                    $(this).closest(".modal").modal('hide');
-
-                    @*var supervisorsList = '@Html.Raw(Json.Encode(Model.Employees))';
-
-            var parsedSupervisorList = JSON.parse(supervisorsList);*@
-
-            var rowCount = $('table#supervisorTable tbody tr:last').index() + 1;
+                var index = $('#AddressTableBody tr:last').index() + 1;
 
             if (country !== "") {
-                supervisorRow = [
-                    "<input name='Addresses.Index' type='hidden' value='" + rowCount + "'/>" + "<input readonly='readonly' name='Addresses[" + rowCount + "].AddressId' type='hidden' style='border:none;background:#f9f9f9;display:none;'/>",
-                    "<input  name='Addresses[" + rowCount + "].Country' id='Addresses_'" + rowCount + "'__Country' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + country + "'/>",
-                    "<input  name='Addresses[" + rowCount + "].State' id='Addresses_'" + rowCount + "'__State' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + state + "'/>",
-                    "<input  name='Addresses[" + rowCount + "].City' id='Addresses_'" + rowCount + "'__City' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + city + "'/>",
-                    "<input  name='Addresses[" + rowCount + "].Street' id='Addresses_'" + rowCount + "'__Street' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + street + "'/>",
-                    "<input  name='Addresses[" + rowCount + "].Address1' id='Addresses_'" + rowCount + "'__Address1' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline1 + "'/>",
-                    "<input  name='Addresses[" + rowCount + "].Address2' id='Addresses_'" + rowCount + "'__Address2' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline2 + "'/>",
-                    "<input  name='Addresses[" + rowCount + "].AddressType' id='Addresses_'" + rowCount + "'__AddressType' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + contacttype + "'/>",
+                //supervisorRow = [
+                //    "<input name='Addresses.Index' type='hidden' value='" + rowCount + "'/>" + "<input readonly='readonly' name='Addresses[" + rowCount + "].AddressId' type='hidden' style='border:none;background:#f9f9f9;display:none;'/>",
+                //    "<input  name='Addresses[" + rowCount + "].Country' id='Addresses_'" + rowCount + "'__Country' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + country + "'/>",
+                //    "<input  name='Addresses[" + rowCount + "].State' id='Addresses_'" + rowCount + "'__State' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + state + "'/>",
+                //    "<input  name='Addresses[" + rowCount + "].City' id='Addresses_'" + rowCount + "'__City' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + city + "'/>",
+                //    "<input  name='Addresses[" + rowCount + "].Street' id='Addresses_'" + rowCount + "'__Street' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + street + "'/>",
+                //    "<input  name='Addresses[" + rowCount + "].Address1' id='Addresses_'" + rowCount + "'__Address1' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline1 + "'/>",
+                //    "<input  name='Addresses[" + rowCount + "].Address2' id='Addresses_'" + rowCount + "'__Address2' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline2 + "'/>",
+                //    "<input  name='Addresses[" + rowCount + "].AddressType' id='Addresses_'" + rowCount + "'__AddressType' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addtype + "'/>",
 
-                    "<a class='remove' href='javascript:;'>Remove</a>"
-                ];
+                //    "<a class='remove' href='javascript:;'>Remove</a>"
+                //];
+
+                var indexCell = "<td style='display:none'>" +
+                                "<input name='Addresses.Index' type='hidden' value='" + index + "' />" +
+                                "<input name='Addresses[" + index + "].ContactID' id='Addresses_" + index + "__ContactID' type='hidden'  value='" + contactId + "'/>" +
+                                "<input name='Addresses[" + index + "].AddressId' id='Addresses_" + index + "__AddressId' type='hidden' />" +
+                                "</td>";
+
+                //Addresses
+                var html = ' <tr data-id=' + index + '>' +
+                    indexCell +
+                    '<td>' +
+                    '<input id="Addresses_' + index + '__Country" name="Addresses[' + index + '].Country" value="' + country + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
+                    '</td>' +
+                    '<td>' +
+                    '<input id="Addresses_' + index + '__State" name="Addresses[' + index + '].State" value="' + state + '" type="text" class="ProductTableColumn" readOnly = "readOnly"/>' +
+                    '</td>' +
+                     '<td>' +
+                    '<input id="Addresses_' + index + '__City" name="Addresses[' + index + '].City" value="' + city + '" type="text" class="ProductTableColumn" readOnly = "readOnly"/>' +
+                    '</td>' +
+                     '<td>' +
+                    '<input id="Addresses_' + index + '__Street" name="Addresses[' + index + '].Street" value="' + street + '" type="text" class="ProductTableColumn" readOnly = "readOnly"/>' +
+                    '</td>' +
+                    '<td>' +
+                    '<input id="Addresses_' + index + '__Address1" name="Addresses[' + index + '].Address1" value="' + addline1 + '" type="text"  class="ProductTableColumn" readOnly = "readOnly"/>' +
+                    '</td>' +
+                    '<td>' +
+                    '<input id="Addresses_' + index + '__Address2" name="Addresses[' + index + '].Address2" value="' + addline2 + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
+                    '</td>' +
+                    //'<td>' +
+                    //'<input id="Addresses_' + index + '__AddressType" name="Addresses[' + index + '].AddressType" value="' + addtype + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
+                    //'</td>' +
+                    '<td>' +
+                    '<a href="javascript:;" class="btn default btn-xs red remove" title="Delete"><i class="fa fa-trash-o"></i></a>' +
+                    '</td>' +
+                    '</tr>';
+                $('#AddressTableBody').append(html);
             }
-                oTable.fnAddData(supervisorRow);
+            clearInputFields("#myModal");
+            //$(".remove").on('click', function () {
 
-            $(".remove").on('click', function () {
-
-                var target_row = $(this).closest("tr").get(0);
-                var aPos = oTable.fnGetPosition(target_row);
-                oTable.fnDeleteRow(aPos);
-            });
+            //    var target_row = $(this).closest("tr").get(0);
+            //    var aPos = oTable.fnGetPosition(target_row);
+            //    oTable.fnDeleteRow(aPos);
+            //});
         });
 
-        $('.portletCustomHeight').show();
+        //$('.portletCustomHeight').show();
 
 
     });
