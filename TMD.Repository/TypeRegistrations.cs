@@ -33,6 +33,8 @@ namespace TMD.Repository
             unityContainer.RegisterType<IAddressRepository, AddressRepository>();
             unityContainer.RegisterType<INotificationRepository, NotificationRepository>();
             unityContainer.RegisterType<INotificationRecipientRepository, NotificationRecipientRepository>();
+            unityContainer.RegisterType<IProductRepository, ProductRepository>();
+
 
         }
     }
