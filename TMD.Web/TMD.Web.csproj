@@ -1734,6 +1734,7 @@
       <DependentUpon>ReportsDS.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\InnoSTARKSystem.pubxml" />
+    <None Include="Properties\PublishProfiles\ZAMTAS.pubxml" />
     <None Include="ReportsDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
