@@ -20,7 +20,13 @@ namespace TMD.Web.Controllers
         // GET: /ProductCategory/
         public ActionResult Index()
         {
-            return View(new List<TMD.Web.Models.ProductCategoryModel>());
+            List<TMD.Web.Models.ProductCategoryModel> productCategories =
+                productCategoryService.GetAllCategories()
+                    .ToList()
+                    .Select(x => x.MapServerToClient()).ToList();
+
+            return View(productCategories);
+          
         }
 
         //

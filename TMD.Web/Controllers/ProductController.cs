@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Product;
 using TMD.Web.ViewModels.ProductCategory;
@@ -23,7 +24,12 @@ namespace TMD.Web.Controllers
         // GET: /Product/
         public ActionResult Index()
         {
-            return View();
+            List<TMD.Web.Models.ProductModel> Products =
+                productService.GetAllProducts()
+                    .ToList()
+                    .Select(x => x.MapServerToClient()).ToList();
+
+            return View(Products);
         }
 
         //
@@ -64,7 +70,7 @@ namespace TMD.Web.Controllers
                 productViewModel.Product.UpdatedDate = DateTime.UtcNow;
                 productViewModel.Product.UpdatedBy = User.Identity.GetUserId();
                 // TODO: Add insert logic here
-                if (productViewModel.Product.ProductCategoryID > 0)
+                if (productViewModel.Product.ProductID > 0)
                 {
                     productService.UpdateProduct(productViewModel.Product.MapClientToServer());
                 }

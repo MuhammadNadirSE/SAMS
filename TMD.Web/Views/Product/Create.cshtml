@@ -1,147 +1,92 @@
 ﻿@model TMD.Web.ViewModels.Product.ProductViewModel
 @{
-    ViewBag.Title = "Create/Update Product";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var isEdit = (Model.Product != null && Model.Product.ProductId > 0);
-    Session["MenuKey"] = 11;
+    Session["MenuKey"] = 8;
+    Session["ParentMenu"] = 1;
 }
 
 
-@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+
+    @Html.HiddenFor(x => x.Product.CreatedDate);
+    @Html.HiddenFor(x => x.Product.CreatedBy);
+
+
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
-
             <div class="tools">
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event)) ;">Save</button> @*&& ValidateSalePrice()*@
-                @*<button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event));">Save & Add New</button>*@
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>@*&& ValidateDropDown()*@
                 <a href="~/Product/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
             </div>
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update Product
+                <i class="fa fa-male"></i>Create/Update Product 
             </div>
         </div>
 
         <div class="portlet-body form formMinHeight500">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.ProductModel.ProductId)
-                @Html.HiddenFor(m => m.ProductModel.RecCreatedBy)
-                @Html.HiddenFor(m => m.ProductModel.RecCreatedDate)
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
+                @*@Html.HiddenFor(m => m.ProductCategoryModel.CategoryId)
+                    @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedBy)
+                    @Html.HiddenFor(m => m.ProductCategoryModel.RecCreatedDate)*@
+
+
+
+                <div class="form-group  margin-top-20 ">
+                    @Html.LabelFor(m => m.Product.ProductName, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory", @autofocus = "autofocus", @id = "ProductName" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.Name)
+                        @Html.TextBoxFor(m => m.Product.ProductName, new { @class = "form-control input-circle mandatory", placeholder = "Product Name" })
+                        @Html.ValidationMessageFor(x => x.Product.ProductName)
+
                     </div>
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductCode, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.Product.ShortDescription, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory", @id = "ProductCode" })
+                        @Html.TextAreaFor(m => m.Product.ShortDescription, new { @class = "form-control input-circle mandatory", placeholder = "Short Description" })
+                        @Html.ValidationMessageFor(x => x.Product.ShortDescription)
                     </div>
                 </div>
-                
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.Product.DetailDescription, new {@class = "col-md-3 control-label requiredLabel"})
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
+                        @Html.TextAreaFor(m => m.Product.DetailDescription, new {@class = "form-control input-circle mandatory", placeholder = "Detail Description"})
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Product.Price, new {@class = "col-md-3 control-label requiredLabel"})
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Product.Price, new {@class = "form-control input-circle mandatory", placeholder = "Price"})
+                        @Html.ValidationMessageFor(x => x.Product.Price)
+                    </div>
+                </div>
+                <div class="form-group  margin-top-20 ">
+                    <label class="col-md-3 control-label requiredLabel">Product Category</label>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(x => x.Product.ProductCategoryID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.Product.ProductCategoryID), "--Please Select--", new { @class = "form-control  input-circle " })
                     </div>
                 </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.Label("Product Price", new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "ProductPrice" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
-                    </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CurrencyId, new SelectList(Model.Currencies, "CurrencyId", "CurrencyCode"), "Select Currency", new { @class = "form-control input-circle mandatory", @id = "Currency" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
-                    </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.VATRate, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.VATRate, new { @class = "form-control input-circle mandatory"})
-                        @Html.ValidationMessageFor(model => model.ProductModel.VATRate)
-                    </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.SizeId, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.SizeId, new SelectList(Model.Sizes, "SizeId", "SizeTitle"), "Select Size", new { @class = "form-control input-circle mandatory", @id = "ProductSize" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
-                    </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ColorId, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.ColorId, new SelectList(Model.Colors, "ColorId", "ColorTitle"), "Select Color", new { @class = "form-control input-circle mandatory", @id = "ProductColor" })
-                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
-                    </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductDefaultImage, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductDefaultImage, new { @class = "form-control input-circle", type = "file", accept = "image/jpg,image/jpeg,image/png,image/gif" })
-                        @Html.ValidationMessageFor(model => model.ProductDefaultImage)
-                    </div>
-                </div>
-                @if (Model.ProductModel!=null && !string.IsNullOrEmpty(Model.ProductModel.ProductDefaultImageId))
-                {
-                    @Html.HiddenFor(m=>m.ProductModel.ProductDefaultImageId)
-                    <div class="form-group margin-top-20">
-                        @Html.Label("Product Image", new { @class = "col-md-3 control-label" })
-                        <div class="col-md-4">
-                            <img src="~/Product/ProductImage?imageId=@Model.ProductModel.ProductDefaultImageId" width="100%"/>
-                        </div>
-                    </div>
-                }
+
+
             </div>
 
         </div>
+        <script>
+            function ValidateDropDown() {
+                var value = $('#ProductCategoryModel_MainCategoryId option:selected').val();
+                if (value == "" || value < 0)
+                    return false;
+                return true;
+            }
+        </script>
     </div>
 }
 
-<script src="~/Scripts/InventoryScripts.js"></script>
-<script>
-    jQuery(document).on('keydown', '.searchBarcode', function (ev) {
-        if (ev.which === 13) {
-            LoadProductByCode(this);
-            // Avoid form submit
-            return false;
-        }
-    });
-    $(document).ready(function () {
-        if ('@isEdit') {
-            ShowProfit();
-        }
-    });
-    function SetMinSalePrice() {
-        $("#MinSalePriceAllowed").val($("#SalePrice").val());
-    }
-    function ValidateSalePrice() {
-        var Cost = parseInt($('#PurchasePrice').val());
-        var Sale = parseInt($('#SalePrice').val());
-
-        if (Cost < Sale)
-            return true;
-        toastr.error("Sale Price should be greater than Purchase Price");
-        return false;
-
-
-    }
-</script>
