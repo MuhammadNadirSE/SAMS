@@ -1,0 +1,84 @@
+﻿@model TMD.Web.ViewModels.Product.TechnicalSpecsViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 8;
+    Session["ParentMenu"] = 1;
+
+   
+}
+
+
+
+@using (Html.BeginForm("Create", "TechnicalSpecs", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    @Html.HiddenFor(x => x.TechnicalSpec.CreatedDate);
+    @Html.HiddenFor(x => x.TechnicalSpec.CreatedBy);
+    @Html.HiddenFor(x => x.TechnicalSpec.TechnicalSpecId);
+     @Html.AntiForgeryToken()
+               <div class="portlet portletCustomHeight light bg-inverse">
+        <div class="portlet-title">
+            <div class="tools">
+            </div>
+            <div class="caption">
+                <i class="icon-credit-card font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Tehncial Specifications</span>
+                <span class="caption-helper">Create/Update</span>
+
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+
+
+                
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.TechnicalSpec.SpecName, new { @class = "col-md-3 control-label requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.TechnicalSpec.SpecName, new { @class = "form-control mandatory", placeholder = "Specification Name", rows = 5, @style = "resize:none" })
+                                @Html.ValidationMessageFor(x => x.TechnicalSpec.SpecName)
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-6">
+                                    <button type="submit" class="btn green-seagreen">Save</button>
+                                    <button type="button" class="btn blue-steel" onclick="clearFields()">Clear</button>
+                                    <a href="@Url.Action("Index", "TechnicalSpecs")" class="btn red-sunglo">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        
+       
+    </div>
+}
+
+<script>
+    function clearFields() {
+        $('#TechnicalSpec_SpecName').val('');
+
+    }
+   
+    $(document)
+        .ready(function () {
+           
+        });
+</script>

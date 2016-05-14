@@ -304,6 +304,7 @@
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TechnicalSpecsController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TicketTypeController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMappers.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
+    <Compile Include="ModelMappers\TechnicalSpecsMapper.cs" />
     <Compile Include="ModelMappers\TicketMapper.cs" />
     <Compile Include="ModelMappers\TicketTypeMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -351,6 +353,7 @@
     <Compile Include="Models\PayRollListWebModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\TechnicalSpecsModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Models\TicketTypeModel.cs" />
     <Compile Include="PayPal\NVPAPICaller.cs" />
@@ -415,6 +418,7 @@
     <Compile Include="ViewModels\Payroll\PayrollCreateViewModel.cs" />
     <Compile Include="ViewModels\ProductCategory\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\TechnicalSpecsViewModel.cs" />
     <Compile Include="ViewModels\Ticket\TicketReplyViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\UserRoles\AspNetRoleModel.cs" />
@@ -1797,6 +1801,8 @@
     <Content Include="Views\Ticket\Create.cshtml" />
     <Content Include="Views\TicketType\Index.cshtml" />
     <Content Include="Views\TicketType\Create.cshtml" />
+    <Content Include="Views\TechnicalSpecs\Create.cshtml" />
+    <Content Include="Views\TechnicalSpecs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\images\bg01.jpg" />
