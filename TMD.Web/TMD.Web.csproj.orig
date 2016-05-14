@@ -1799,9 +1799,12 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\Create.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Product\ModelSpecs.cshtml" />
+=======
     <Content Include="Views\Inquiry\Create.cshtml" />
     <Content Include="Views\Inquiry\Index.cshtml" />
+>>>>>>> 59e05e5d2ee98e112ce2834c48923541ca92c62b
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

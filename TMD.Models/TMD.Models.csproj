@@ -184,6 +184,7 @@
     <Compile Include="Resources\PayRollGroupByModel.cs" />
     <Compile Include="ResponseModels\BillDetailResponse.cs" />
     <Compile Include="ResponseModels\ContactResponse.cs" />
+    <Compile Include="ResponseModels\InquiryResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\AttendanceResponse.cs" />
     <Compile Include="ResponseModels\PorductResponse.cs" />
