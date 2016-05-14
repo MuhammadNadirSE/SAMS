@@ -35,6 +35,8 @@ namespace TMD.Repository
             unityContainer.RegisterType<INotificationRecipientRepository, NotificationRecipientRepository>();
             unityContainer.RegisterType<IProductRepository, ProductRepository>();
             unityContainer.RegisterType<ITechnicalSpecsRepository, TechnicalSpecsRepository>();
+            unityContainer.RegisterType<IInquiryRepository, InquiryRepository>();
+
 
 
 

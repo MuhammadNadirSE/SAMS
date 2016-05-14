@@ -37,6 +37,8 @@ namespace TMD.Implementation
             unityContainer.RegisterType<INotificationService, NotificationService>();
             unityContainer.RegisterType<IProductService, ProductService>();
             unityContainer.RegisterType<ITechnicalSpecsService, TechnicalSpecsService>();
+            unityContainer.RegisterType<IInquiryService, InquiryService>();
+
 
 
             

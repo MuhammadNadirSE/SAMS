@@ -298,6 +298,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\InquiryController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="ModelMappers\AspNetRoleMapper.cs" />
     <Compile Include="ModelMappers\DesignationMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\InquiryMapper.cs" />
     <Compile Include="ModelMappers\NotificationMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
@@ -348,6 +350,7 @@
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\InquiryModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PayRollListWebModel.cs" />
@@ -412,6 +415,7 @@
     <Compile Include="ViewModels\EmployeeSupervisor\EmployeeSupervisorModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeModel.cs" />
+    <Compile Include="ViewModels\Inquiry\InquiryViewModel.cs" />
     <Compile Include="ViewModels\Notification\NotificationViewModel.cs" />
     <Compile Include="ViewModels\Payroll\EmployeePayrollModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollListViewModel.cs" />
@@ -1793,6 +1797,8 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\Create.cshtml" />
+    <Content Include="Views\Inquiry\Create.cshtml" />
+    <Content Include="Views\Inquiry\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
