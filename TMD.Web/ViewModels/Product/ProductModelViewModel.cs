@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Models=TMD.Web.Models;
 
 namespace TMD.Web.ViewModels.Product
 {
-    public class ProductViewModel
+    public class ProductModelViewModel
     {
-        public ProductViewModel()
+        public ProductModelViewModel()
         {
             ProductCategories = new List<Models.ProductCategoryModel>();
         }

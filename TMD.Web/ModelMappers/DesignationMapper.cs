@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using TMD.Models.DomainModels;
+﻿using TMD.Models.DomainModels;
 using TMD.Web.ViewModels.Designation;
-using TMD.Web.ViewModels.Employee;
 
 namespace TMD.Web.ModelMappers
 {

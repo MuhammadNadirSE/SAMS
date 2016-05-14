@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
-using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Product;
-using TMD.Web.ViewModels.ProductCategory;
 
 namespace TMD.Web.Controllers
 {
@@ -19,27 +16,18 @@ namespace TMD.Web.Controllers
         {
             this.productService = productService;
         }
-
-        //
+        
         // GET: /Product/
         public ActionResult Index()
         {
-            List<TMD.Web.Models.ProductModel> Products =
+            List<TMD.Web.Models.Product> Products =
                 productService.GetAllProducts()
                     .ToList()
                     .Select(x => x.MapServerToClient()).ToList();
 
             return View(Products);
         }
-
-        //
-        // GET: /Product/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
+        
         // GET: /Product/Create
         public ActionResult Create(int ?ID)
         {
@@ -52,15 +40,14 @@ namespace TMD.Web.Controllers
             }
             else
             {
-                productViewModel.Product = new Models.ProductModel();
+                productViewModel.Product = new Models.Product();
             }
 
             productViewModel.ProductCategories = prodResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
 
             return View(productViewModel);
         }
-
-        //
+        
         // POST: /Product/Create
         [HttpPost]
         public ActionResult Create(ProductViewModel productViewModel)
@@ -89,39 +76,60 @@ namespace TMD.Web.Controllers
                 return View();
             }
         }
-
-        //
-        // GET: /Product/Edit/5
-        public ActionResult Edit(int id)
+        
+        public ActionResult ModelSpecs(int? ID)
         {
-            return View();
-        }
+            ProductViewModel productViewModel = new ProductViewModel();
 
-        //
-        // POST: /Product/Edit/5
+            var prodResp = productService.GetProductResponse(ID);
+            if (prodResp.Product != null)
+            {
+                productViewModel.Product = prodResp.Product.MapServerToClient();
+            }
+            else
+            {
+                productViewModel.Product = new Models.Product();
+            }
+
+            productViewModel.ProductCategories = prodResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
+
+            return View(productViewModel);
+        }
+        
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult ModelSpecs(ProductViewModel productViewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                productViewModel.Product.UpdatedDate = DateTime.UtcNow;
+                productViewModel.Product.UpdatedBy = User.Identity.GetUserId();
+                // TODO: Add insert logic here
+                if (productViewModel.Product.ProductID > 0)
+                {
+                    productService.UpdateProduct(productViewModel.Product.MapClientToServer());
+                }
+                else
+                {
+                    productViewModel.Product.CreatedDate = DateTime.UtcNow;
+                    productViewModel.Product.CreatedBy = User.Identity.GetUserId();
 
-                return RedirectToAction("Index");
+                    productService.AddProduct(productViewModel.Product.MapClientToServer());
+                }
+
+                return RedirectToAction("Create");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
         }
-
-        //
+        
         // GET: /Product/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
-        //
+        
         // POST: /Product/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

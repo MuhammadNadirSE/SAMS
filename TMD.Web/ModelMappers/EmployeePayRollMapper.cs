@@ -2,9 +2,7 @@
 using TMD.Models.DomainModels;
 using TMD.Models.Resources;
 using TMD.Web.Models;
-using TMD.Web.Resources.HR;
 using TMD.Web.ViewModels.Payroll;
-using Employee = TMD.Models.DomainModels.Employee;
 
 namespace TMD.Web.ModelMappers
 {
@@ -22,7 +20,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                RecLastUpdatedDate = source.RecLastUpdatedDate
             };
             if (string.IsNullOrEmpty(source.RecCreatedBy))
             {
@@ -48,7 +46,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                EmployeeName = source.Employee.FullName,
+                EmployeeName = source.Employee.FullName
             };
         }
         public static EmployeePayrollModel MappPayrollFromServerToClient(this EmployeePayroll source)
@@ -65,7 +63,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                EmployeeName = source.Employee.FullName,
+                EmployeeName = source.Employee.FullName
             };
         }
 

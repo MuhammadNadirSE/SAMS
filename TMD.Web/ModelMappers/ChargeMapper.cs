@@ -1,13 +1,12 @@
-﻿using TMD.Models.DomainModels;
-using TMD.Web.Models;
+﻿using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
 {
     public static class ChargeMapper
     {
-        public static Models.Charge CreateFromServerToClient(this Charge source)
+        public static Charge CreateFromServerToClient(this Charge source)
         {
-            return new Models.Charge
+            return new Charge
             {
                 ChargeId = source.ChargeId,
                 CaseId = source.CaseId,
@@ -18,7 +17,7 @@ namespace TMD.Web.ModelMappers
             };
         }
 
-        public static Charge CreateFromClientToServer(this Models.Charge source)
+        public static Charge CreateFromClientToServer(this Charge source)
         {
             return new Charge
             {

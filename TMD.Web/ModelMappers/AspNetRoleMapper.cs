@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using TMD.Models.DomainModels;
-using TMD.Web.ViewModels.Employee;
+﻿using TMD.Models.DomainModels;
 using TMD.Web.ViewModels.UserRoles;
 
 namespace TMD.Web.ModelMappers
@@ -13,7 +11,7 @@ namespace TMD.Web.ModelMappers
             return new AspNetRoleModel
             {
                 Id = source.Id,
-                Name = source.Name,
+                Name = source.Name
             };
         }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using TMD.Web.Models;
 
 namespace TMD.Web.ViewModels.Product
@@ -14,6 +11,5 @@ namespace TMD.Web.ViewModels.Product
         }
         public TechnicalSpecsModel TechnicalSpec { get; set; }
         public IList<TechnicalSpecsModel> TechnicalSpecs { get; set; }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.util;
 using TMD.Models.DomainModels;
 using TMD.Web.Models;
 
@@ -25,7 +24,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                EmployeeName = source.AttendeeEmployee.FullName,//to show on edit page
+                EmployeeName = source.AttendeeEmployee.FullName//to show on edit page
             };
             if (source.CheckOutTime != null)
             {

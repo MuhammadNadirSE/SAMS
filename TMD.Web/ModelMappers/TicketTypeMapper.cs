@@ -37,7 +37,7 @@ namespace TMD.Web.ModelMappers
                 TicketDescription = source.TicketDescription,
                 TicketTypeId = source.TicketTypeId,
                 IsLeave = source.IsLeave,
-                LeaveType = source.LeaveType,
+                LeaveType = source.LeaveType
                 
             };
 

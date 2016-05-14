@@ -11,7 +11,7 @@ namespace TMD.Web.ModelMappers
             {
                 EmployeeId = source.EmployeeId,
                 SupervisorId = source.SupervisorId,
-                Comment = source.Comment,
+                Comment = source.Comment
                 
                 
             };
@@ -23,7 +23,7 @@ namespace TMD.Web.ModelMappers
             {
                 EmployeeId = source.EmployeeId,
                 SupervisorId = source.SupervisorId,
-                Comment = source.Comment,
+                Comment = source.Comment
             };
         }
  

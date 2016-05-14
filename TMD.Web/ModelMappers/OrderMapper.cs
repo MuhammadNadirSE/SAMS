@@ -1,13 +1,12 @@
-﻿using TMD.Models.DomainModels;
-using TMD.Web.Models;
+﻿using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
 {
     public static class OrderMapper
     {
-        public static Models.Order CreateFromServerToClient(this Order source)
+        public static Order CreateFromServerToClient(this Order source)
         {
-            return new Models.Order
+            return new Order
             {
                 OrderId = source.OrderId,
                 LastName = source.LastName,
@@ -27,7 +26,7 @@ namespace TMD.Web.ModelMappers
             };
         }
 
-        public static Order CreateFromClientToServer(this Models.Order source)
+        public static Order CreateFromClientToServer(this Order source)
         {
             return new Order
             {
@@ -41,7 +40,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
     }

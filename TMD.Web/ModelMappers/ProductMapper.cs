@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using TMD.Models.DomainModels;
-using TMD.Web.Models;
-
+﻿using TMD.Models.DomainModels;
 
 namespace TMD.Web.ModelMappers
 {
     public static class ProductMappers
     {
-        public static Product MapClientToServer(this TMD.Web.Models.ProductModel source)
+        public static Product MapClientToServer(this Models.Product source)
         {
             return new Product
             {
@@ -27,9 +21,9 @@ namespace TMD.Web.ModelMappers
 
             };
         }
-        public static TMD.Web.Models.ProductModel MapServerToClient(this Product source)
+        public static Models.Product MapServerToClient(this Product source)
         {
-            return new TMD.Web.Models.ProductModel
+            return new Models.Product
             {
 
                 ProductID = source.ProductID,

@@ -2,7 +2,7 @@
 @{
     int productID = Model.Product.ProductID > 0 ? Model.Product.ProductID : 0;
     string createUpdate = Model.Product.ProductID > 0 ? "Update" : "Add New";
-    ViewBag.Title = createUpdate + " Product";
+    ViewBag.Title = createUpdate + " Product Model";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 8;
     Session["ParentMenu"] = 1;
@@ -24,7 +24,7 @@
                         1 -
                     </span>
                     <span class="desc">
-                        <i class='@(productID > 0 ? "fa fa-check" : "")'></i> Product basic detail
+                        <i class="fa fa-check"></i> Product basic detail
                     </span>
                 </a>
             </li>
@@ -34,7 +34,7 @@
                         2 -
                     </span>
                     <span class="desc">
-                        Product model and Technical specs.
+                        <i class='@(productID > 0 ? "fa fa-check" : "")'></i> Product model and Technical specs.
                     </span>
                 </a>
             </li>
@@ -54,6 +54,14 @@
                 @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, int>>)(m => (int)m.Product.ProductID))
                 @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, DateTime>>)(m => (DateTime)m.Product.CreatedDate))
                 @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.CreatedBy))
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">
