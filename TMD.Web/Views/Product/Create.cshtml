@@ -1,5 +1,8 @@
 ﻿@model TMD.Web.ViewModels.Product.ProductViewModel
 @{
+    int productID = Model.Product.ProductID > 0 ? Model.Product.ProductID : 0;
+    string createUpdate = Model.Product.ProductID > 0 ? "Update" : "Add New";
+    ViewBag.Title = createUpdate + " Product";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 8;
     Session["ParentMenu"] = 1;
@@ -13,69 +16,104 @@
     @Html.HiddenFor(x => x.Product.CreatedBy);
 
 
-    <div class="portlet box blue-hoki">
-        <div class="portlet-title">
-            <div class="tools">
-                @*<a href="javascript:;" class="collapse">
-                    </a>*@
-
-                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>@*&& ValidateDropDown()*@
-                <a href="~/Product/Index">
-                    <button type="button" class="btn btn-circle default">Cancel</button>
+    <div class="portlet portletCustomHeight light bg-inverse">
+        <ul class="nav nav-pills nav-justified steps">
+            <li class="active">
+                <a href='@Url.Action("Create", "Product", productID)' class="step">
+                    <span class="number">
+                        1 -
+                    </span>
+                    <span class="desc">
+                        <i class='@(productID > 0 ? "fa fa-check" : "")'></i> Product basic detail
+                    </span>
                 </a>
-            </div>
+            </li>
+            <li>
+                <a href='@Url.Action("ModelSpecs", "Product", productID)' class="step">
+                    <span class="number">
+                        2 -
+                    </span>
+                    <span class="desc">
+                        Product model and Technical specs.
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update Product 
+                <i class="icon-handbag font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Product</span>
+                <span class="caption-helper">@createUpdate</span>
             </div>
         </div>
 
-        <div class="portlet-body form formMinHeight500">
-            <div class="container-fluid">
+        <div class="portlet-body form">
+            <div class="form-body">
+
                 @Html.AntiForgeryToken()
-                    @Html.HiddenFor(m => m.Product.ProductID)
-                    @Html.HiddenFor(m => m.Product.CreatedDate)
-                    @Html.HiddenFor(m => m.Product.CreatedBy)
+                @Html.HiddenFor(m => m.Product.ProductID)
+                @Html.HiddenFor(m => m.Product.CreatedDate)
+                @Html.HiddenFor(m => m.Product.CreatedBy)
 
 
-
-                <div class="form-group  margin-top-20 ">
-                    @Html.LabelFor(m => m.Product.ProductName, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.Product.ProductName, new { @class = "form-control input-circle mandatory", placeholder = "Product Name" })
-                        @Html.ValidationMessageFor(x => x.Product.ProductName)
-
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
                     </div>
                 </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.Product.ShortDescription, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.Product.ShortDescription, new { @class = "form-control input-circle mandatory", placeholder = "Short Description" })
-                        @Html.ValidationMessageFor(x => x.Product.ShortDescription)
-                    </div>
-                </div>
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.Product.DetailDescription, new {@class = "col-md-3 control-label requiredLabel"})
-                    <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.Product.DetailDescription, new {@class = "form-control input-circle mandatory", placeholder = "Detail Description"})
-                    </div>
-                </div>
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.Product.Price, new {@class = "col-md-3 control-label requiredLabel"})
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.Product.Price, new {@class = "form-control input-circle mandatory", placeholder = "Price"})
-                        @Html.ValidationMessageFor(x => x.Product.Price)
-                    </div>
-                </div>
-                <div class="form-group  margin-top-20 ">
-                    <label class="col-md-3 control-label requiredLabel">Product Category</label>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(x => x.Product.ProductCategoryID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.Product.ProductCategoryID), "--Please Select--", new { @class = "form-control  input-circle " })
-                    </div>
-                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Product.ProductName, new {@class = "col-md-4 control-label requiredLabel"})
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Product.ProductName, new {@class = "form-control mandatory", placeholder = "Product Name"})
+                                @Html.ValidationMessageFor(x => x.Product.ProductName)
 
-
-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label requiredLabel">Category</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(x => x.Product.ProductCategoryID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.Product.ProductCategoryID), "--Please Select--", new {@class = "form-control  "})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Product.Price, new {@class = "col-md-4 control-label requiredLabel"})
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Product.Price, new {@class = "form-control mandatory", placeholder = "Price"})
+                                @Html.ValidationMessageFor(x => x.Product.Price)
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Product.ShortDescription, new { @class = "col-md-4 control-label requiredLabel" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.Product.ShortDescription, new { @class = "form-control mandatory", placeholder = "Short Description" })
+                                @Html.ValidationMessageFor(x => x.Product.ShortDescription)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Product.DetailDescription, new {@class = "col-md-4 control-label requiredLabel"})
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.Product.DetailDescription, new {@class = "form-control mandatory", placeholder = "Detail Description"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -86,6 +124,10 @@
                     return false;
                 return true;
             }
+
+            jQuery(document)
+                .ready(function() {
+                });
         </script>
     </div>
 }
