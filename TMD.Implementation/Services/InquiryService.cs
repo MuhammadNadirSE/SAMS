@@ -15,11 +15,13 @@ namespace TMD.Implementation.Services
     {
         private readonly IInquiryRepository inquiryRepository;
         private readonly IContactRepository contactRepository;
+        private readonly IProductRepository productRepository;
 
-        public InquiryService(IInquiryRepository inquiryRepository, IContactRepository contactRepository)
+        public InquiryService(IInquiryRepository inquiryRepository, IContactRepository contactRepository, IProductRepository productRepository)
         {
             this.inquiryRepository = inquiryRepository;
             this.contactRepository = contactRepository;
+            this.productRepository = productRepository;
 
         }
         public int AddInquiry(Models.DomainModels.Inquiry inquiry)
@@ -59,6 +61,7 @@ namespace TMD.Implementation.Services
                 inquiryResponse.Inquiry = inquiryRepository.Find((int)id);
             }
             inquiryResponse.Contacts = contactRepository.GetAll();
+            inquiryResponse.Products = productRepository.GetAll();
             return inquiryResponse;
         }
     }
