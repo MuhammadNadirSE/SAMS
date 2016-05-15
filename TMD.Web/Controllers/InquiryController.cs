@@ -54,6 +54,8 @@ namespace TMD.Web.Controllers
             }
 
             inquiryViewModel.Contacts = prodResp.Contacts.Select(x => x.MapServerToClient()).ToList();
+            inquiryViewModel.Products = prodResp.Products.Select(x => x.MapServerToClient()).ToList();
+
 
             return View(inquiryViewModel);
         }

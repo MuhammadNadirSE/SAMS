@@ -39,28 +39,49 @@
                 <h3 class="form-section">Official Details</h3>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            @Html.LabelFor(model => model.InquiryModel.CompanyName, new { @class = "control-label col-md-3 requiredLabel" })
 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-3 requiredLabel"})
                             <div class="col-md-9">
-                                @Html.TextBoxFor(model => model.InquiryModel.CompanyName, new { @class = "form-control mustReadonly", placeholder = "Enter Full Name" })
-                                @Html.ValidationMessageFor(model => model.InquiryModel.CompanyName)
+                                @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new {@class = "form-control  input-circle "})
+                                @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
                             </div>
                         </div>
                     </div>
-                    <!--/span-->
+
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.ContactID, new { @class = "control-label col-md-3 requiredLabel" })
+                            @Html.LabelFor(model => model.InquiryModel.UserId, new {@class = "control-label col-md-3 requiredLabel"})
                             <div class="col-md-9">
-                                @Html.DropDownListFor(model => model.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "Title", Model.InquiryModel), new { @class = "form-control col-md-3 mustReadonly", @id = "DesignationDDL" })
-                                @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
+                                @Html.DropDownListFor(x => x.InquiryModel.UserId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.UserId), "--Please Select--", new {@class = "form-control  input-circle "})
+                                @Html.ValidationMessageFor(model => model.InquiryModel.UserId)
                             </div>
                         </div>
                     </div>
                     <!--/span-->
                 </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                           @* @Html.LabelFor(model => model.InquiryModel.InquiryDate, new {@class = "control-label col-md-3 requiredLabel"})*@
+                            <div class="col-md-9">
+                              @*  @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, new { @class = "form-control input-circle mandatory", placeholder = "Inquiry Date" })*@
+
+                                
+                            @*    @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)*@
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <!--/span-->
+                </div>
+
+
             </div>
         </div>
                
