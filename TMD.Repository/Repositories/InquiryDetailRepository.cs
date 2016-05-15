@@ -11,22 +11,21 @@ using System.Data.Entity;
 
 namespace TMD.Repository.Repositories
 {
-    public class InquiryRepository : BaseRepository<Inquiry>, IInquiryRepository
+    public class InquiryDetailRepository : BaseRepository<InquiryDetail>, IInquiryDetailRepository
     {
-        public InquiryRepository(IUnityContainer container)
+        public InquiryDetailRepository(IUnityContainer container)
             : base(container)
         {
 
         }
-        protected override IDbSet<Inquiry> DbSet
+        protected override IDbSet<InquiryDetail> DbSet
         {
-            get { return db.Inquiry; }
+            get { return db.InuiryDetail; }
         }
 
-        public Inquiry GetInquiryAndInquiryDetail(int inquiryid)
+        public IEnumerable<InquiryDetail> GetInquiryDailByByInquiryId(int id)
         {
-            return DbSet.Include(x => x.InquiryDetails).FirstOrDefault(x => x.InquiryID.Equals(inquiryid));
+            return DbSet.Where(x => x.InquiryID == id);
         }
-
     }
 }

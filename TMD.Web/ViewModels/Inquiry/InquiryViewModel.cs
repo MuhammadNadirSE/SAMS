@@ -12,11 +12,13 @@ namespace TMD.Web.ViewModels.Inquiry
         {
             Contacts = new List<ContactModel>();
             Products=new List<ProductModel>();
+            InquiryDetail= new List<InquiryDetailModel>();
         }
         public InquiryModel InquiryModel { get; set; }
         public IList<ContactModel> Contacts { get; set; }
         public IList<ProductModel> Products { get; set; }
 
+        public IList<InquiryDetailModel> InquiryDetail { get; set; }
 
     }
 }
