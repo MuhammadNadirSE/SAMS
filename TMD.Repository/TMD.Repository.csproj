@@ -152,7 +152,9 @@
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />
+    <Compile Include="Repositories\ProductModelRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ProductTechnicalSpecsRepository.cs" />
     <Compile Include="Repositories\TechnicalSpecsRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="Repositories\TicketTypeRepository.cs" />

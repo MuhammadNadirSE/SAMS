@@ -1,10 +1,11 @@
-﻿function clearInputFields(element) {
-    $(element).find('input, select, textarea')
+﻿function clearInputFields(form) {
+    $(form).find('input, select, textarea')
         .each(function () {
             $(this).val('');
         });
-    $(element).find(".select2me").select2("val", "");
+    $(form).find(".select2me").select2("val", "");
 }
+
 function SendMessage() {
     if (validateContactUsForm()) {
         var serviceUrl = '/Clinic/ContactUs';

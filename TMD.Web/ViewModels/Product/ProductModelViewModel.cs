@@ -6,10 +6,10 @@ namespace TMD.Web.ViewModels.Product
     {
         public ProductModelViewModel()
         {
-            ProductCategories = new List<Models.ProductCategoryModel>();
+            TechnicalSpecs = new List<Models.TechnicalSpecsModel>();
         }
-        public Models.Product Product { get; set; }
-        public IList<Models.ProductCategoryModel> ProductCategories { get; set; }
+        public Models.ProductModel ProductModel { get; set; }
+        public IList<Models.TechnicalSpecsModel> TechnicalSpecs { get; set; }
 
     }
 }

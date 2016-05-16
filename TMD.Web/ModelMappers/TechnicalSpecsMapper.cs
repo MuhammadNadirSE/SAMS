@@ -30,8 +30,15 @@ namespace TMD.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
                 UpdatedBy = source.UpdatedBy,
-                UpdatedDate = source.UpdatedDate       
-
+                UpdatedDate = source.UpdatedDate
+            };
+        }
+        public static TechnicalSpecsModel CreateDropDownList(this TechnicalSpec source)
+        {
+            return new TechnicalSpecsModel
+            {
+                TechnicalSpecId = source.TechnicalSpecId,
+                SpecName = source.SpecName
             };
         }
     }

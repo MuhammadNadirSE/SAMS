@@ -37,11 +37,8 @@ namespace TMD.Repository
             unityContainer.RegisterType<ITechnicalSpecsRepository, TechnicalSpecsRepository>();
             unityContainer.RegisterType<IInquiryRepository, InquiryRepository>();
             unityContainer.RegisterType<IInquiryDetailRepository, InquiryDetailRepository>();
-
-
-
-
-
+            unityContainer.RegisterType<IProductModelRepository, ProductModelRepository>();
+            unityContainer.RegisterType<IProductTechnicalSpecsRepository, ProductTechnicalSpecsRepository>();
         }
     }
 }

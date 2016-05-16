@@ -332,6 +332,7 @@
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMappers.cs" />
+    <Compile Include="ModelMappers\ProductModelMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\TechnicalSpecsMapper.cs" />
     <Compile Include="ModelMappers\TicketMapper.cs" />

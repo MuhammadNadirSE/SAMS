@@ -39,12 +39,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ITechnicalSpecsService, TechnicalSpecsService>();
             unityContainer.RegisterType<IInquiryService, InquiryService>();
             unityContainer.RegisterType<IInquiryDetailService, InquiryDetailService>();
-
-
-
-
-            
-
+            unityContainer.RegisterType<IProductModelService, ProductModelService>();
         } 
     }
 }

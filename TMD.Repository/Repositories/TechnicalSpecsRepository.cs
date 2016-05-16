@@ -23,6 +23,5 @@ namespace TMD.Repository.Repositories
         {
             get { return db.TechnicalSpec; }
         }
-       
     }
 }

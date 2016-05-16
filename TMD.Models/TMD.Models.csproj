@@ -187,6 +187,7 @@
     <Compile Include="ResponseModels\InquiryResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\AttendanceResponse.cs" />
+    <Compile Include="ResponseModels\PorductModelResponse.cs" />
     <Compile Include="ResponseModels\PorductResponse.cs" />
     <Compile Include="ResponseModels\ProductCategoryResponse.cs" />
     <Compile Include="ResponseModels\TicketReplyResponse.cs" />

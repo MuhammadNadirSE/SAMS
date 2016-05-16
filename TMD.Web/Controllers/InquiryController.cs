@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
-using TMD.Web.Models;
 using TMD.Web.ViewModels.Inquiry;
 
 namespace TMD.Web.Controllers
@@ -43,9 +41,6 @@ namespace TMD.Web.Controllers
         // GET: /Inquiry/Create
         public ActionResult Create(int? ID)
         {
-        
-           
-
             InquiryViewModel InquiryViewModel = new InquiryViewModel
             {
                 InquiryModel = new Models.InquiryModel()

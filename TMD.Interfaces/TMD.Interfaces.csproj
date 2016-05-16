@@ -75,7 +75,9 @@
     <Compile Include="IRepository\IMenuRepository.cs" />
     <Compile Include="IRepository\IMenuRightRepository.cs" />
     <Compile Include="IRepository\IProductCategoryRepository.cs" />
+    <Compile Include="IRepository\IProductModelRepository.cs" />
     <Compile Include="IRepository\IProductRepository.cs" />
+    <Compile Include="IRepository\IProductTechnicalSpecsRepository.cs" />
     <Compile Include="IRepository\ITechnicalSpecsRepository.cs" />
     <Compile Include="IRepository\ITicketRepository.cs" />
     <Compile Include="IRepository\ITicketTypeRepository.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="IServices\IMenuRightsService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
     <Compile Include="IServices\IProductCategoryService.cs" />
+    <Compile Include="IServices\IProductModelService.cs" />
     <Compile Include="IServices\IProductService.cs" />
     <Compile Include="IServices\ITechnicalSpecsService.cs" />
     <Compile Include="IServices\ITicketService.cs" />

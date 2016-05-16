@@ -12,11 +12,14 @@ namespace TMD.Web.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService productService;
-        public ProductController(IProductService productService)
+        private readonly IProductModelService productModelService;
+
+        public ProductController(IProductService productService, IProductModelService productModelService)
         {
             this.productService = productService;
+            this.productModelService = productModelService;
         }
-        
+
         // GET: /Product/
         public ActionResult Index()
         {
@@ -69,7 +72,7 @@ namespace TMD.Web.Controllers
                     productService.AddProduct(productViewModel.Product.MapClientToServer());
                 }
 
-                return RedirectToAction("Create");
+                return RedirectToAction("ModelSpecs");
             }
             catch (Exception ex)
             {
@@ -77,23 +80,23 @@ namespace TMD.Web.Controllers
             }
         }
         
-        public ActionResult ModelSpecs(int? ID)
+        public ActionResult ModelSpecs(int? id)
         {
-            ProductViewModel productViewModel = new ProductViewModel();
+            ProductModelViewModel viewModel = new ProductModelViewModel();
 
-            var prodResp = productService.GetProductResponse(ID);
-            if (prodResp.Product != null)
+            var prodResp = productModelService.GetProductModelResponse(id);
+            if (prodResp.ProductModel != null)
             {
-                productViewModel.Product = prodResp.Product.MapServerToClient();
+                viewModel.ProductModel = prodResp.ProductModel.MapServerToClient();
             }
             else
             {
-                productViewModel.Product = new Models.Product();
+                viewModel.ProductModel = new Models.ProductModel();
             }
 
-            productViewModel.ProductCategories = prodResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
+            viewModel.TechnicalSpecs = prodResp.TechnicalSpec.Select(x => x.CreateDropDownList()).ToList();
 
-            return View(productViewModel);
+            return View(viewModel);
         }
         
         [HttpPost]
