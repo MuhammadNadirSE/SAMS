@@ -12,10 +12,10 @@
 @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
 
-    @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, DateTime>>)(x => (DateTime)x.Product.CreatedDate));
-    @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(x => (string)x.Product.CreatedBy));
-
-
+   @Html.AntiForgeryToken()
+    @Html.HiddenFor((m => m.Product.ProductID))
+    @Html.HiddenFor((m => m.Product.CreatedDate))
+    @Html.HiddenFor((m => m.Product.CreatedBy))
     <div class="portlet portletCustomHeight light bg-inverse">
         <ul class="nav nav-pills nav-justified steps">
             <li class="active">
@@ -49,19 +49,13 @@
 
         <div class="portlet-body form">
             <div class="form-body">
-
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, int>>)(m => (int)m.Product.ProductID))
-                @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, DateTime>>)(m => (DateTime)m.Product.CreatedDate))
-                @Html.HiddenFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.CreatedBy))
-
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.ProductName), new {@class = "col-md-4 control-label requiredLabel"})
+                            @Html.LabelFor((m => m.Product.ProductName), new {@class = "col-md-4 control-label requiredLabel"})
                             <div class="col-md-8">
-                                @Html.TextBoxFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.ProductName), new {@class = "form-control mandatory", placeholder = "Product Name"})
-                                @Html.ValidationMessageFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(x => (string)x.Product.ProductName))
+                                @Html.TextBoxFor((m => m.Product.ProductName), new {@class = "form-control mandatory", placeholder = "Product Name"})
+                                @Html.ValidationMessageFor((x => x.Product.ProductName))
 
                             </div>
                         </div>
@@ -70,7 +64,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label requiredLabel">Category</label>
                             <div class="col-md-8">
-                                @Html.DropDownListFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, int>>)(x => (int)x.Product.ProductCategoryID), new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", (object)Model.Product.ProductCategoryID), "--Please Select--", new {@class = "form-control  "})
+                                @Html.DropDownListFor((x => x.Product.ProductCategoryID), new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", (object)Model.Product.ProductCategoryID), "--Please Select--", new {@class = "form-control  "})
                             </div>
                         </div>
                     </div>
@@ -78,10 +72,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, decimal>>)(m => (decimal)m.Product.Price), new {@class = "col-md-4 control-label requiredLabel"})
+                            @Html.LabelFor((m => m.Product.Price), new {@class = "col-md-4 control-label requiredLabel"})
                             <div class="col-md-8">
-                                @Html.TextBoxFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, decimal>>)(m => (decimal)m.Product.Price), new {@class = "form-control mandatory", placeholder = "Price"})
-                                @Html.ValidationMessageFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, decimal>>)(x => (decimal)x.Product.Price))
+                                @Html.TextBoxFor((m => m.Product.Price), new {@class = "form-control mandatory", placeholder = "Price"})
+                                @Html.ValidationMessageFor((x => x.Product.Price))
                             </div>
                         </div>
                     </div>
@@ -90,18 +84,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.ShortDescription), new { @class = "col-md-4 control-label requiredLabel" })
+                            @Html.LabelFor((m => m.Product.ShortDescription), new { @class = "col-md-4 control-label requiredLabel" })
                             <div class="col-md-8">
-                                @Html.TextAreaFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.ShortDescription), new { @class = "form-control mandatory", placeholder = "Short Description" })
-                                @Html.ValidationMessageFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(x => (string)x.Product.ShortDescription))
+                                @Html.TextAreaFor((m => m.Product.ShortDescription), new { @class = "form-control mandatory", placeholder = "Short Description" })
+                                @Html.ValidationMessageFor((x => x.Product.ShortDescription))
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.DetailDescription), new {@class = "col-md-4 control-label requiredLabel"})
+                            @Html.LabelFor((m => m.Product.DetailDescription), new {@class = "col-md-4 control-label requiredLabel"})
                             <div class="col-md-8">
-                                @Html.TextAreaFor((System.Linq.Expressions.Expression<Func<TMD.Web.ViewModels.Product.ProductViewModel, string>>)(m => (string)m.Product.DetailDescription), new {@class = "form-control mandatory", placeholder = "Detail Description"})
+                                @Html.TextAreaFor((m => m.Product.DetailDescription), new {@class = "form-control mandatory", placeholder = "Detail Description"})
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using TMD.Web.Models;
+﻿using System.Collections.Generic;
+using Models=TMD.Web.Models;
 
 namespace TMD.Web.ViewModels.Inquiry
 {
@@ -10,13 +7,11 @@ namespace TMD.Web.ViewModels.Inquiry
     {
         public InquiryViewModel()
         {
-            Contacts = new List<ContactModel>();
-            Products=new List<ProductModel>();
+            Contacts = new List<Models.ContactModel>();
+            Products=new List<Models.Product>();
         }
-        public InquiryModel InquiryModel { get; set; }
-        public IList<ContactModel> Contacts { get; set; }
-        public IList<ProductModel> Products { get; set; }
-
-
+        public Models.InquiryModel InquiryModel { get; set; }
+        public IList<Models.ContactModel> Contacts { get; set; }
+        public IList<Models.Product> Products { get; set; }
     }
 }
