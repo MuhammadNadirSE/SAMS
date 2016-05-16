@@ -97,6 +97,7 @@ namespace TMD.Repository.BaseRepository
         public DbSet<Address> Address { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Inquiry> Inquiry { get; set; }
+        public DbSet<InquiryDetail> InuiryDetail { get; set; }
         public DbSet<TechnicalSpec> TechnicalSpec { get; set; }
         
 

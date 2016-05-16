@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
+using TMD.Web.Models;
 using TMD.Web.ViewModels.Inquiry;
 
 namespace TMD.Web.Controllers
@@ -41,50 +43,92 @@ namespace TMD.Web.Controllers
         // GET: /Inquiry/Create
         public ActionResult Create(int? ID)
         {
-            InquiryViewModel inquiryViewModel = new InquiryViewModel();
+        
+           
 
-            var prodResp = inquiryService.GetInquiryResponse(ID);
-            if (prodResp.Inquiry != null)
+            InquiryViewModel InquiryViewModel = new InquiryViewModel
             {
-                inquiryViewModel.InquiryModel = prodResp.Inquiry.MapServerToClient();
-            }
-            else
+                InquiryModel = new Models.InquiryModel()
+            };
+
+           
+            if (ID != null)
             {
-                inquiryViewModel.InquiryModel = new Models.InquiryModel();
+
+                var inquiry = inquiryService.GetInquiryResponse((int)ID);
+                if (inquiry != null)
+                {
+                    InquiryViewModel.InquiryModel = inquiry.Inquiry.MapServerToClient();
+                    InquiryViewModel.InquiryDetail = inquiry.InquiryDetails.ToList().Select(x => x.MapServerToClient()).ToList();
+                }
+
+                InquiryViewModel.Contacts = inquiry.Contacts.Select(x => x.MapServerToClient()).ToList();
+                InquiryViewModel.Products = inquiry.Products.Select(x => x.MapServerToClient()).ToList();
+
             }
+          
 
-            inquiryViewModel.Contacts = prodResp.Contacts.Select(x => x.MapServerToClient()).ToList();
-            inquiryViewModel.Products = prodResp.Products.Select(x => x.MapServerToClient()).ToList();
+           
+
+            return View(InquiryViewModel);
 
 
-            return View(inquiryViewModel);
         }
 
         //
         // POST: /Inquiry/Create
         [HttpPost]
-        public ActionResult Create(InquiryViewModel productViewModel)
+        public ActionResult Create(InquiryViewModel ContactViewModel )
         {
+            //try
+            //{
+            //    productViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
+            //    productViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
+            //    // TODO: Add insert logic here
+            //    if (productViewModel.InquiryModel.InquiryID > 0)
+            //    {
+            //        inquiryService.UpdateInquiry(productViewModel.InquiryModel.MapClientToServer());
+            //    }
+            //    else
+            //    {
+            //        productViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
+            //        productViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
+
+            //        inquiryService.AddInquiry(productViewModel.InquiryModel.MapClientToServer());
+            //    }
+
+            //    return RedirectToAction("Create");
+            //}
+            //catch (Exception ex)
+            //{
+            //    return View();
+            //}
+
             try
             {
-                productViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
-                productViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
-                // TODO: Add insert logic here
-                if (productViewModel.InquiryModel.InquiryID > 0)
+                ContactViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
+                ContactViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
+                if (ContactViewModel.InquiryModel.ContactID == 0)
                 {
-                    inquiryService.UpdateInquiry(productViewModel.InquiryModel.MapClientToServer());
-                }
-                else
-                {
-                    productViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
-                    productViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
+                    ContactViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
+                    ContactViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
+                    ContactViewModel.InquiryModel.UserId = User.Identity.GetUserId();
 
-                    inquiryService.AddInquiry(productViewModel.InquiryModel.MapClientToServer());
                 }
+
+
+                InquiryResponse inquiryResp = new InquiryResponse();
+
+
+                inquiryResp.Inquiry = ContactViewModel.InquiryModel.MapClientToServer();
+                if (ContactViewModel.InquiryDetail != null)
+                    inquiryResp.InquiryDetails = ContactViewModel.InquiryDetail.Select(x => x.MapClientToServer()).ToList();
+
+                inquiryService.SaveInquiry(inquiryResp);
 
                 return RedirectToAction("Create");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return View();
             }

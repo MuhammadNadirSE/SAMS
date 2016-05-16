@@ -60,6 +60,7 @@
     <Compile Include="IRepository\IAttendanceRepository.cs" />
     <Compile Include="IRepository\IAspNetRoleRepository.cs" />
     <Compile Include="IRepository\IBillDetailRepository.cs" />
+    <Compile Include="IRepository\IInquiryDetailRepository.cs" />
     <Compile Include="IRepository\IInquiryRepository.cs" />
     <Compile Include="IRepository\INotificationRecipientRepository.cs" />
     <Compile Include="IRepository\INotificationRepository.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="IServices\IEmployeeSupervisorService.cs" />
     <Compile Include="IServices\IDesignationService.cs" />
     <Compile Include="IServices\IEnumberable.cs" />
+    <Compile Include="IServices\IInquiryDetailService.cs" />
     <Compile Include="IServices\IInquiryService.cs" />
     <Compile Include="IServices\INotificationService.cs" />
     <Compile Include="IServices\ILeaveService.cs" />

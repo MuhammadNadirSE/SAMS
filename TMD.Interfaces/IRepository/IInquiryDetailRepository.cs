@@ -7,9 +7,9 @@ using TMD.Models.DomainModels;
 
 namespace TMD.Interfaces.IRepository
 {
-    public interface IInquiryRepository : IBaseRepository<Inquiry, int>
+    public interface IInquiryDetailRepository : IBaseRepository<InquiryDetail, int>
     {
+        IEnumerable<InquiryDetail> GetInquiryDailByByInquiryId(int id);
 
-        Inquiry GetInquiryAndInquiryDetail(int inquiryId);
     }
 }

@@ -12,5 +12,8 @@ namespace TMD.Interfaces.IServices
         Inquiry GeInquiryById(int id);
         InquiryResponse GetInquiryResponse(int? id);
 
+        Inquiry GetInquiryAndInquiryDetail(int inquiryID);
+        bool SaveInquiry(InquiryResponse inquiryResponse);
+
     }
 }

@@ -12,6 +12,8 @@ namespace TMD.Models.ResponseModels
         public Inquiry Inquiry { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
         public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<InquiryDetail> InquiryDetails { get; set; }
+
 
 
     }

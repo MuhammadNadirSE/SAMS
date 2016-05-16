@@ -326,6 +326,7 @@
     <Compile Include="ModelMappers\AspNetRoleMapper.cs" />
     <Compile Include="ModelMappers\DesignationMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\InquiryDetailMapper.cs" />
     <Compile Include="ModelMappers\InquiryMapper.cs" />
     <Compile Include="ModelMappers\NotificationMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
@@ -350,6 +351,7 @@
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\InquiryDetailModel.cs" />
     <Compile Include="Models\InquiryModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\Order.cs" />

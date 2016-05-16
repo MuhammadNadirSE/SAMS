@@ -36,7 +36,7 @@
 
         <div class="portlet-body form">
             <div class="form-body">
-                <h3 class="form-section">Official Details</h3>
+                <h3 class="form-section">Inquiry</h3>
 
                 <div class="row">
 
@@ -67,17 +67,69 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                           @* @Html.LabelFor(model => model.InquiryModel.InquiryDate, new {@class = "control-label col-md-3 requiredLabel"})*@
+                            @Html.LabelFor(model => model.InquiryModel.InquiryDate, new {@class = "control-label col-md-3 requiredLabel"})
                             <div class="col-md-9">
-                              @*  @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, new { @class = "form-control input-circle mandatory", placeholder = "Inquiry Date" })*@
+                                @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, new {@class = "datepicker form-control  mandatory", placeholder = "Inquiry Date"})
 
-                                
-                            @*    @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)*@
+
+                                @Html.ValidationMessageFor(model => model.InquiryModel.InquiryDate)
                             </div>
                         </div>
                     </div>
 
-                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.InquiryModel.Priority, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.InquiryModel.Priority, new { @class = "form-control  mandatory", placeholder = "Priority" })
+
+
+                                @Html.ValidationMessageFor(model => model.InquiryModel.Priority)
+                            </div>
+                        </div>
+                    </div>
+
+
+                   
+
+
+                    <!--/span-->
+                </div>
+                <div class="row">
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.InquiryModel.ContactResponse, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.InquiryModel.ContactResponse, new { @class = "form-control mandatory", placeholder = "Contact response" })
+
+
+                                @Html.ValidationMessageFor(model => model.InquiryModel.ContactResponse)
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--/span-->
+                </div>
+
+                <div class="row">
+
+                 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.InquiryModel.UserComments, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(m => m.InquiryModel.UserComments, new { @class = "form-control mandatory", placeholder = "User Comments" })
+
+
+                                @Html.ValidationMessageFor(model => model.InquiryModel.UserComments)
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!--/span-->
                 </div>
 
