@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Inquiry;
@@ -22,13 +23,30 @@ namespace TMD.Web.Controllers
         // GET: /Inquiry/
         public ActionResult Index()
         {
-            List<TMD.Web.Models.InquiryModel> Inquiries =
-                inquiryService.GetAllInquiries()
-                    .ToList()
-                    .Select(x => x.MapServerToClient()).ToList();
+            //List<TMD.Web.Models.InquiryModel> Inquiries =
+            //    inquiryService.GetAllInquiries()
+            //        .ToList()
+            //        .Select(x => x.MapServerToClient()).ToList();
 
-            return View(Inquiries);
+            return View(new InquiryViewModel());
         }
+
+        [HttpPost]
+        public JsonResult Index(InquirySearchRequest searchRequest)
+        {
+
+            var contactResponse = inquiryService.GetAllInquiries(searchRequest);
+            var inquiryList = contactResponse.Inquiries.ToList().Select(x => x.MapServerToClient()).ToList();
+            var model = new InquiryViewModel()
+            {
+                data = inquiryList,
+                recordsFiltered = contactResponse.FilteredCount,
+                recordsTotal = contactResponse.TotalCount
+            };
+            //var obj = new {data = model.EmployeePayrolls, model};
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
 
         //
         // GET: /Inquiry/Details/5

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 using TMD.Repository.Repositories;
 
@@ -114,6 +115,12 @@ namespace TMD.Implementation.Services
                 }
             }
             inquiryDetailRepository.SaveChanges();
+        }
+
+        public InquiryResponse GetAllInquiries(InquirySearchRequest searchRequest)
+        {
+            var inquiries = inquiryRepository.GetAllInquiries(searchRequest);
+            return inquiries;
         }
     }
 }
