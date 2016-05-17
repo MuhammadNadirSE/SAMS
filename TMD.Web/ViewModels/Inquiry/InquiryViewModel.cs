@@ -12,7 +12,7 @@ namespace TMD.Web.ViewModels.Inquiry
             Products=new List<Models.Product>();
             InquiryDetail= new List<Models.InquiryDetailModel>();
             data = new List<Models.InquiryModel>();
-
+            InquirySearchRequest=new InquirySearchRequest();
         }
         public Models.InquiryModel InquiryModel { get; set; }
         public IList<Models.ContactModel> Contacts { get; set; }

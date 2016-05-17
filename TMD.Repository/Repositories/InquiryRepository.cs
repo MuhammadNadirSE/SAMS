@@ -38,34 +38,33 @@ namespace TMD.Repository.Repositories
             {
                 {OrderByColumnInquiry.ContactName, c => c.ContactID},
                 {OrderByColumnInquiry.Priority, c => c.Priority},
-                {OrderByColumnInquiry.CreatedBy, c => c.CreatedByUser}
+                {OrderByColumnInquiry.CreatedBy, c => c.CreatedByUser.FirstName}
             };
         public InquiryResponse GetAllInquiries(InquirySearchRequest searchRequest)
         {
-            //int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
-            //int toRow = searchRequest.PageSize;
+            int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
+            int toRow = searchRequest.PageSize;
 
-            //Expression<Func<Inquiry, bool>> query =
-            //    s =>
-            //        (
-            //        (string.IsNullOrEmpty(searchRequest.ContactName) || (s.Contact.FirstName + " " + s.Contact.LastName).Contains(searchRequest.ContactName)) &&
-            //        (string.IsNullOrEmpty(searchRequest.Priority) || Convert.ToInt32(s.Priority)==Convert.ToInt32(searchRequest.Priority)) &&
-            //        (string.IsNullOrEmpty(searchRequest.CreatedBy) || (s.CreatedByUser.FirstName+" "+s.CreatedByUser.LastName).Contains(searchRequest.CreatedBy))
-            //        );
+            Expression<Func<Inquiry, bool>> query =
+                s =>
+                    (
+                    (string.IsNullOrEmpty(searchRequest.ContactName) || (s.Contact.FirstName + " " + s.Contact.LastName).Contains(searchRequest.ContactName)) &&
+                    (searchRequest.Priority==0 || (s.Priority) == searchRequest.Priority) &&
+                    (string.IsNullOrEmpty(searchRequest.CreatedBy) || (s.CreatedByUser.FirstName + " " + s.CreatedByUser.LastName).Contains(searchRequest.CreatedBy))
+                    );
 
-            //IEnumerable<Inquiry> inquiries = searchRequest.IsAsc
-            //   ? DbSet
-            //       .Where(query
-            //       .OrderBy(sortClause[searchRequest.OrderByColumn]).Skip(fromRow)
-            //       .Take(toRow)
-            //       .ToList())
-            //   : DbSet
-            //       .Where(query)
-            //       .OrderByDescending(sortClause[searchRequest.OrderByColumn]).Skip(fromRow)
-            //       .Take(toRow)
-            //       .ToList();
-            //return new InquiryResponse { Inquiries = inquiries.ToList(), TotalCount = DbSet.Count(query), FilteredCount = inquiries.Count() };
-            return null;
+            IEnumerable<Inquiry> inquiries = searchRequest.IsAsc
+               ? DbSet
+                   .Where(query)
+                   .OrderBy(sortClause[searchRequest.OrderByColumn]).Skip(fromRow)
+                   .Take(toRow)
+                   .ToList()
+               : DbSet
+                   .Where(query)
+                   .OrderByDescending(sortClause[searchRequest.OrderByColumn]).Skip(fromRow)
+                   .Take(toRow)
+                   .ToList();
+            return new InquiryResponse { Inquiries = inquiries.ToList(), TotalCount = DbSet.Count(query), FilteredCount = inquiries.Count() };
         }
 
     }

@@ -2902,6 +2902,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TMD.Common\TMD.Common.csproj">
+      <Project>{777eb540-a05d-4f6a-a320-52e3035c7abb}</Project>
+      <Name>TMD.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TMD.Implementation\TMD.Implementation.csproj">
       <Project>{42d2e6c0-74f1-46fb-b7ba-43251156275d}</Project>
       <Name>TMD.Implementation</Name>

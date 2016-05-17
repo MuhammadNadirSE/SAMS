@@ -63,10 +63,10 @@ namespace TMD.Implementation.Services
             if (id != null)
             {
                 inquiryResponse.Inquiry = inquiryRepository.Find((int)id);
-                inquiryResponse.InquiryDetails = inquiryDetailRepository.GetInquiryDailByByInquiryId((int)id);
+                inquiryResponse.InquiryDetails = inquiryDetailRepository.GetInquiryDailByByInquiryId((int)id).ToList();
             }
-            inquiryResponse.Contacts = contactRepository.GetAll();
-            inquiryResponse.Products = productRepository.GetAll();
+            inquiryResponse.Contacts = contactRepository.GetAll().ToList();
+            inquiryResponse.Products = productRepository.GetAll().ToList();
             
 
             return inquiryResponse;

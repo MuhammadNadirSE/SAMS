@@ -17,4 +17,11 @@ namespace TMD.Common
         PrimaryAddress =1,
         SecondaryAddress=2
     }
+
+    public enum Priority
+    {
+        Low=1,
+        Medium=2,
+        High=3
+    }
 }

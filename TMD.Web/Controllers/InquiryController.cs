@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
@@ -11,6 +12,7 @@ using TMD.Web.ViewModels.Inquiry;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize]
     public class InquiryController : Controller
     {
 
@@ -61,24 +63,23 @@ namespace TMD.Web.Controllers
         {
             InquiryViewModel InquiryViewModel = new InquiryViewModel
             {
-                InquiryModel = new Models.InquiryModel()
+                InquiryModel = new Models.InquiryModel { InquiryDate = DateTime.UtcNow}
             };
 
            
-            if (ID != null)
-            {
+          
 
-                var inquiry = inquiryService.GetInquiryResponse((int)ID);
-                if (inquiry != null)
+                var inquiryResponse = inquiryService.GetInquiryResponse(ID);
+                if (inquiryResponse.Inquiry != null)
                 {
-                    InquiryViewModel.InquiryModel = inquiry.Inquiry.MapServerToClient();
-                    InquiryViewModel.InquiryDetail = inquiry.InquiryDetails.ToList().Select(x => x.MapServerToClient()).ToList();
+                    InquiryViewModel.InquiryModel = inquiryResponse.Inquiry.MapServerToClient();
+                    InquiryViewModel.InquiryModel.InquiryProductId = inquiryResponse.InquiryDetails.FirstOrDefault().ProductID;
                 }
 
-                InquiryViewModel.Contacts = inquiry.Contacts.Select(x => x.MapServerToClient()).ToList();
-                InquiryViewModel.Products = inquiry.Products.Select(x => x.MapServerToClient()).ToList();
+                InquiryViewModel.Contacts = inquiryResponse.Contacts.Select(x => x.CreateDDL()).ToList();
+                InquiryViewModel.Products = inquiryResponse.Products.Select(x => x.MapServerToClient()).ToList();
 
-            }
+            
           
 
            
@@ -121,7 +122,7 @@ namespace TMD.Web.Controllers
             {
                 ContactViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
                 ContactViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
-                if (ContactViewModel.InquiryModel.ContactID == 0)
+                if (ContactViewModel.InquiryModel.InquiryID == 0)
                 {
                     ContactViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
                     ContactViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
@@ -134,8 +135,14 @@ namespace TMD.Web.Controllers
 
 
                 inquiryResp.Inquiry = ContactViewModel.InquiryModel.MapClientToServer();
-                if (ContactViewModel.InquiryDetail != null)
-                    inquiryResp.InquiryDetails = ContactViewModel.InquiryDetail.Select(x => x.MapClientToServer()).ToList();
+                //if (ContactViewModel.InquiryDetail != null)
+                inquiryResp.InquiryDetails = new List<InquiryDetail>
+                    {
+                        new InquiryDetail
+                        {
+                            ProductID = ContactViewModel.InquiryModel.InquiryProductId
+                        }
+                    };
 
                 inquiryService.SaveInquiry(inquiryResp);
 

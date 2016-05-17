@@ -35,7 +35,7 @@ namespace TMD.Web.ModelMappers
             {
 
                 ContactID = source.ContactID,
-                FirstName = source.FirstName,
+                FirstName = source.FirstName ,
                 MiddleName = source.MiddleName,
                 LastName = source.LastName,
                 Email = source.Email,
@@ -51,6 +51,15 @@ namespace TMD.Web.ModelMappers
                 UpdateDate = source.UpdateDate,
                 UpdatedBy = source.UpdatedBy
 
+            };
+        }
+        public static ContactModel CreateDDL(this Contact source)
+        {
+            return new ContactModel
+            {
+
+                ContactID = source.ContactID,
+                FirstName = source.FirstName + " " + source.LastName,
             };
         }
     }
