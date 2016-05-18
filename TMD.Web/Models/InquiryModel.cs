@@ -9,6 +9,9 @@ namespace TMD.Web.Models
     public class InquiryModel
     {
         public int InquiryID { get; set; }
+        [Display(Name = "Product")]
+        [Required(ErrorMessage = "Product is required.")]
+        public int InquiryProductId { get; set; }
         public string UserId { get; set; }
 
         [Display(Name = "Company Name")]
@@ -24,6 +27,7 @@ namespace TMD.Web.Models
 
 
         public int Priority { get; set; }
+        public TMD.Common.Priority PriorityName { get; set; }
 
         [Display(Name = "Contact Response")]
         public string ContactResponse { get; set; }
@@ -31,8 +35,11 @@ namespace TMD.Web.Models
         [Display(Name = "Comments")]
         public string UserComments { get; set; }
         public string CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public System.DateTime UpdateDate { get; set; }
+
+        public string ContactName { get; set; }
     }
 }

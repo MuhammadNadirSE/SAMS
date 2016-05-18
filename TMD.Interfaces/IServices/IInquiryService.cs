@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 
 namespace TMD.Interfaces.IServices
@@ -12,8 +13,9 @@ namespace TMD.Interfaces.IServices
         Inquiry GeInquiryById(int id);
         InquiryResponse GetInquiryResponse(int? id);
 
-        Inquiry GetInquiryAndInquiryDetail(int inquiryID);
+        Inquiry GetInquiryAndInquiryDetail(int inquiryId);
         bool SaveInquiry(InquiryResponse inquiryResponse);
 
+        InquiryResponse GetAllInquiries(InquirySearchRequest searchRequest);
     }
 }

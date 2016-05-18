@@ -16,7 +16,7 @@ namespace TMD.Web.ModelMappers
             {
                 InquiryID = source.InquiryID,
                 ContactID = source.ContactID,
-                CompanyName = source.CompanyName,
+                CompanyName = "???",
                 UserComments = source.UserComments,
                 ContactResponse = source.ContactResponse,
                 CreatedDate = source.CreatedDate,
@@ -26,10 +26,6 @@ namespace TMD.Web.ModelMappers
                 UserId = source.UserId,
                 InquiryDate = source.InquiryDate,
                 Priority = source.Priority
-        
-
-
-
             };
         }
         public static TMD.Web.Models.InquiryModel MapServerToClient(this Inquiry source)
@@ -44,13 +40,14 @@ namespace TMD.Web.ModelMappers
                 ContactResponse = source.ContactResponse,
                 CreatedDate = source.CreatedDate,
                 CreatedBy = source.CreatedBy,
+                CreatedByName = source.CreatedByUser.FirstName,
                 UpdateDate = source.UpdateDate,
                 UpdatedBy = source.UpdatedBy,
                 UserId = source.UserId,
                 InquiryDate = source.InquiryDate,
-                Priority = source.Priority
-          
-
+                Priority = source.Priority,
+                PriorityName=(TMD.Common.Priority)source.Priority,
+                ContactName = source.Contact.FirstName
             };
         }
     }

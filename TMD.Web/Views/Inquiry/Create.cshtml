@@ -1,4 +1,4 @@
-﻿@using System.Linq
+﻿@using System.Web.UI.WebControls
 @model  TMD.Web.ViewModels.Inquiry.InquiryViewModel
 @{
     string createUpdate = Model.InquiryModel.InquiryID > 0 ? "Update" : "Add New";
@@ -23,8 +23,27 @@
     @Html.HiddenFor(x => x.InquiryModel.CreatedDate)
     @Html.HiddenFor(x => x.InquiryModel.CreatedBy)
     @Html.HiddenFor(x => x.InquiryModel.UserId)
-   
+    
+    
+   @functions {
 
+    public SelectList GetAllPriorities()
+     {
+        SelectList Priorities = new SelectList(new[]
+             {
+                new { Id = "1", Name = "Low" },
+                new { Id = "2", Name = "Medium" },
+                new { Id = "3", Name = "High" },
+    
+             }, "Id", "Name",Model.InquiryModel.Priority);
+
+        return Priorities;
+     }
+   }
+    
+    
+   
+   
     <div class="portlet portletCustomHeight light bg-inverse" style="display: none;">
         <div class="portlet-title">
             <div class="caption">
@@ -36,15 +55,13 @@
 
         <div class="portlet-body form">
             <div class="form-body">
-                <h3 class="form-section">Inquiry</h3>
-
                 <div class="row">
 
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-9">
-                                @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new {@class = "form-control  input-circle "})
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new { @class = "form-control select2me" })
                                 @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
                             </div>
                         </div>
@@ -52,10 +69,10 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.UserId, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-9">
-                                @Html.DropDownListFor(x => x.InquiryModel.UserId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.UserId), "--Please Select--", new {@class = "form-control  input-circle "})
-                                @Html.ValidationMessageFor(model => model.InquiryModel.UserId)
+                            @Html.LabelFor(model => model.InquiryModel.InquiryProductId, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new { @class = "form-control select2me" })
+                                @Html.ValidationMessageFor(model => model.InquiryModel.InquiryProductId)
                             </div>
                         </div>
                     </div>
@@ -69,7 +86,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.InquiryDate, new {@class = "control-label col-md-3 requiredLabel"})
                             <div class="col-md-9">
-                                @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, new {@class = "datepicker form-control  mandatory", placeholder = "Inquiry Date"})
+                                @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, "{0:d}", new { @class = "datepicker form-control  mandatory cursorHand", placeholder = "Inquiry Date", @readonly = "readonly" })
 
 
                                 @Html.ValidationMessageFor(model => model.InquiryModel.InquiryDate)
@@ -80,11 +97,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.Priority, new { @class = "control-label col-md-3 requiredLabel" })
-                            <div class="col-md-9">
-                                @Html.TextBoxFor(m => m.InquiryModel.Priority, new { @class = "form-control  mandatory", placeholder = "Priority" })
-
-
-                                @Html.ValidationMessageFor(model => model.InquiryModel.Priority)
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.InquiryModel.Priority, GetAllPriorities(), "--Please Select--", new { @class = "form-control select2me" })
+                                 @Html.ValidationMessageFor(model => model.InquiryModel.Priority)
                             </div>
                         </div>
                     </div>
