@@ -360,6 +360,7 @@
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProductTechnicalSpec.cs" />
     <Compile Include="Models\TechnicalSpecsModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Models\TicketTypeModel.cs" />

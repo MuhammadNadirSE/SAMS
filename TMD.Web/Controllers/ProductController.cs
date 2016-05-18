@@ -6,9 +6,11 @@ using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Product;
+using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductService productService;
@@ -20,18 +22,18 @@ namespace TMD.Web.Controllers
             this.productModelService = productModelService;
         }
 
-        // GET: /Product/
+        [SiteAuthorize(PermissionKey = "ProductsList")]
         public ActionResult Index()
         {
-            List<TMD.Web.Models.Product> Products =
+            List<Models.Product> Products =
                 productService.GetAllProducts()
                     .ToList()
                     .Select(x => x.MapServerToClient()).ToList();
 
             return View(Products);
         }
-        
-        // GET: /Product/Create
+
+        [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
         public ActionResult Create(int ?ID)
         {
             ProductViewModel productViewModel = new ProductViewModel();
@@ -50,8 +52,8 @@ namespace TMD.Web.Controllers
 
             return View(productViewModel);
         }
-        
-        // POST: /Product/Create
+
+        [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
         [HttpPost]
         public ActionResult Create(ProductViewModel productViewModel)
         {
@@ -62,62 +64,65 @@ namespace TMD.Web.Controllers
                 // TODO: Add insert logic here
                 if (productViewModel.Product.ProductID > 0)
                 {
-                    productService.UpdateProduct(productViewModel.Product.MapClientToServer());
+                    TempData["ProductId"] = productService.UpdateProduct(productViewModel.Product.MapClientToServer());
                 }
                 else
                 {
                     productViewModel.Product.CreatedDate = DateTime.UtcNow;
                     productViewModel.Product.CreatedBy = User.Identity.GetUserId();
 
-                    productService.AddProduct(productViewModel.Product.MapClientToServer());
+                    TempData["ProductId"] = productService.AddProduct(productViewModel.Product.MapClientToServer());
                 }
-
-                return RedirectToAction("ModelSpecs");
+                
+                return RedirectToAction("ModelSpecs",new { product = (int)TempData["ProductId"] });
             }
             catch (Exception ex)
             {
                 return View();
             }
         }
-        
-        public ActionResult ModelSpecs(int? id)
+        [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
+        public ActionResult ModelSpecs(int product,int? model)
         {
             ProductModelViewModel viewModel = new ProductModelViewModel();
 
-            var prodResp = productModelService.GetProductModelResponse(id);
+            var prodResp = productModelService.GetProductModelResponse(model);
             if (prodResp.ProductModel != null)
             {
                 viewModel.ProductModel = prodResp.ProductModel.MapServerToClient();
             }
             else
             {
-                viewModel.ProductModel = new Models.ProductModel();
+                viewModel.ProductModel = new Models.ProductModel
+                {
+                    ProductId= product
+                };
             }
 
             viewModel.TechnicalSpecs = prodResp.TechnicalSpec.Select(x => x.CreateDropDownList()).ToList();
 
             return View(viewModel);
         }
-        
+        [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
         [HttpPost]
-        public ActionResult ModelSpecs(ProductViewModel productViewModel)
+        public ActionResult ModelSpecs(ProductModelViewModel viewModel)
         {
             try
             {
-                productViewModel.Product.UpdatedDate = DateTime.UtcNow;
-                productViewModel.Product.UpdatedBy = User.Identity.GetUserId();
-                // TODO: Add insert logic here
-                if (productViewModel.Product.ProductID > 0)
-                {
-                    productService.UpdateProduct(productViewModel.Product.MapClientToServer());
-                }
-                else
-                {
-                    productViewModel.Product.CreatedDate = DateTime.UtcNow;
-                    productViewModel.Product.CreatedBy = User.Identity.GetUserId();
+                //productViewModel.Product.UpdatedDate = DateTime.UtcNow;
+                //productViewModel.Product.UpdatedBy = User.Identity.GetUserId();
+                //// TODO: Add insert logic here
+                //if (productViewModel.Product.ProductID > 0)
+                //{
+                //    productService.UpdateProduct(productViewModel.Product.MapClientToServer());
+                //}
+                //else
+                //{
+                //    productViewModel.Product.CreatedDate = DateTime.UtcNow;
+                //    productViewModel.Product.CreatedBy = User.Identity.GetUserId();
 
-                    productService.AddProduct(productViewModel.Product.MapClientToServer());
-                }
+                //    productService.AddProduct(productViewModel.Product.MapClientToServer());
+                //}
 
                 return RedirectToAction("Create");
             }
