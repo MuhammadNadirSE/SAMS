@@ -7,7 +7,7 @@
 
 }
 
-@using (Html.BeginForm("Create", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" , id="ticketForm"}))
+@using (Html.BeginForm("Create", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
 {
     @*@Html.AntiForgeryToken()
         @Html.ValidationSummary(true)*@
@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-md-offset-4 col-md-6">
                                         <button type="submit" class="btn green-seagreen" onclick="return (ValidateFields(event) && ValidateWorkingDays() && ValidateDateRange());">Save</button>
-                                        <button type="button" class="btn blue-steel" onclick="clearFields()">Clear</button>
+                                        <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
                                         <a href="@Url.Action("Index","Ticket")" class="btn red-sunglo">Cancel</a>
                                     </div>
                                 </div>

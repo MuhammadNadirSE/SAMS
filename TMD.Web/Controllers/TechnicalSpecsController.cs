@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
+using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Product;
 
 namespace TMD.Web.Controllers
@@ -25,7 +26,7 @@ namespace TMD.Web.Controllers
                technicalSpecsService.GetAllTechnicalSpecs()
                    .ToList()
                    .Select(x => x.MapServerToClient()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(TechnicalSpecs);
         }
 
@@ -56,7 +57,7 @@ namespace TMD.Web.Controllers
             }
 
             technicalSpecsView.TechnicalSpecs = technicalSpecsService.GetAllTechnicalSpecs().Select(x => x.MapServerToClient()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(technicalSpecsView);
         }
 
@@ -81,7 +82,11 @@ namespace TMD.Web.Controllers
 
                     technicalSpecsService.AddTechnicalSpecs(technicalSpecsViewModel.TechnicalSpec.MapClientToServer());
                 }
-
+                TempData["message"] = new MessageViewModel
+                {
+                    IsSaved = true,
+                    Message = "Your data has been saved successfully!"
+                };
                 return RedirectToAction("Create");
             }
             catch (Exception ex)

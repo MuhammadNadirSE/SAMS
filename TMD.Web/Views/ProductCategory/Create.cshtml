@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "ProductCategory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "ProductCategory", FormMethod.Post, new { @class = "form-horizontal", role = "form", id="createForm" }))
 {
 
     @Html.HiddenFor(x => x.ProductCategory.CreatedDate);
@@ -30,11 +30,11 @@
   
 
            <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-8">
                    <div class="form-group">
                        <div class="col-md-3 control-label ">Parent Category</div>
-                       <div class="col-md-9">
-                           @Html.DropDownListFor(x => x.ProductCategory.ParentCatID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.ProductCategory.ParentCatID), "--Please Select--", new { @class = "form-control  " })
+                       <div class="col-md-6">
+                           @Html.DropDownListFor(x => x.ProductCategory.ParentCatID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.ProductCategory.ParentCatID), "Select Parent Category", new { @class = "form-control select2me" })
 
 
                        </div>
@@ -47,10 +47,10 @@
           
 
            <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-8">
                    <div class="form-group">
                        @Html.LabelFor(x => x.ProductCategory.CatName, new { @class = "col-md-3 control-label requiredLabel" })
-                       <div class="col-md-9">
+                       <div class="col-md-8">
                            @Html.TextBoxFor(x => x.ProductCategory.CatName, new { @class = "form-control mandatory", placeholder = "Category Name", rows = 5, @style = "resize:none" })
                            @Html.ValidationMessageFor(x => x.ProductCategory.CatName)
                        </div>
@@ -62,10 +62,10 @@
 
 
            <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-8">
                    <div class="form-group">
                        @Html.LabelFor(m => m.ProductCategory.ShortDescription, new { @class = "col-md-3 control-label requiredLabel" })
-                       <div class="col-md-9">
+                       <div class="col-md-8">
                            @Html.TextAreaFor(m => m.ProductCategory.ShortDescription, new { @class = "form-control", placeholder = "Description" })
                            @Html.ValidationMessageFor(x => x.ProductCategory.ShortDescription)
                        </div>
@@ -77,12 +77,12 @@
           
 
            <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-8">
                    <div class="form-group">
                        @Html.LabelFor(m => m.ProductCategory.DetailDescription, new { @class = "col-md-3 control-label" })
 
                       
-                       <div class="col-md-9">
+                       <div class="col-md-8">
                            @Html.TextAreaFor(m => m.ProductCategory.DetailDescription, new { @class = "form-control", placeholder = "Description" })
 
 
@@ -99,7 +99,7 @@
                        <div class="row">
                            <div class="col-md-offset-4 col-md-6">
                                <button type="submit" class="btn green-seagreen">Save</button>
-                               <button type="button" class="btn blue-steel" onclick="clearFields()">Clear</button>
+                               <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
                                <a href="@Url.Action("Index", "ProductCategory")" class="btn red-sunglo">Cancel</a>
                            </div>
                        </div>

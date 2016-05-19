@@ -6,6 +6,7 @@ using TMD.Interfaces.IServices;
 using TMD.Web.ViewModels.ProductCategory;
 using TMD.Web.ModelMappers;
 using System.Collections.Generic;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
@@ -24,7 +25,7 @@ namespace TMD.Web.Controllers
                 productCategoryService.GetAllCategories()
                     .ToList()
                     .Select(x => x.MapServerToClient()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(productCategories);
           
         }
@@ -43,18 +44,11 @@ namespace TMD.Web.Controllers
             ProductCategoryViewModel productCategoryViewModel = new ProductCategoryViewModel();
            
                 var prodCatResp=productCategoryService.GetProductCategoryResponse(id);
-                if (prodCatResp.ProductCategory != null)
-                {
-                    productCategoryViewModel.ProductCategory = prodCatResp.ProductCategory.MapServerToClient();
-                }
-                else
-                {
-                    productCategoryViewModel.ProductCategory = new Models.ProductCategoryModel();
-                }
+                productCategoryViewModel.ProductCategory = prodCatResp.ProductCategory != null ? prodCatResp.ProductCategory.MapServerToClient() : new Models.ProductCategoryModel();
 
                 productCategoryViewModel.ProductCategories = prodCatResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
-
-                return View(productCategoryViewModel);
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(productCategoryViewModel);
         }
 
         //
@@ -78,7 +72,11 @@ namespace TMD.Web.Controllers
 
                     productCategoryService.AddCategory(productCategoryViewModel.ProductCategory.MapClientToServer());
                 }
-                
+                TempData["message"] = new MessageViewModel
+                {
+                    IsSaved = true,
+                    Message = "Your data has been saved successfully!"
+                };
                 return RedirectToAction("Create");
             }
             catch(Exception ex)

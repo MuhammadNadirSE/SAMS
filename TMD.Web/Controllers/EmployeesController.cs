@@ -25,7 +25,8 @@ namespace TMD.Web.Controllers
 
         [SiteAuthorize(PermissionKey = "EmployeeIndex")]
         public ActionResult Index()
-        {   
+        {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             string[] userPermissionsSet = (string[])System.Web.HttpContext.Current.Session["UserPermissionSet"];
             if (userPermissionsSet.Contains("ViewEmployees"))
             {
@@ -79,6 +80,11 @@ namespace TMD.Web.Controllers
                 //    employeeData.EmployeeSupervisors = employeeViewModel.EmployeeSupervisor.Select(x => x.CreateFromClientToServer()).ToList();
                 employeeService.SaveEmployee(employeeData);
             }
+            TempData["message"] = new MessageViewModel
+            {
+                IsSaved = true,
+                Message = "Your data has been saved successfully!"
+            };
             return RedirectToAction("Index");
         }
 

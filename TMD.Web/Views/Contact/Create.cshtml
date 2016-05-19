@@ -10,7 +10,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Contact", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "ContactForm" }))
+@using (Html.BeginForm("Create", "Contact", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
 {
     @Html.AntiForgeryToken();
     @Html.HiddenFor(x=>x.Contact.ContactID);
@@ -205,7 +205,7 @@
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-6">
                                     <button type="submit" class="btn green-seagreen">Save</button>
-                                    <button type="button" class="btn blue-steel" onclick="clearFields()">Clear</button>
+                                    <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
                                     <a href="@Url.Action("Index", "Contact")" class="btn red-sunglo">Cancel</a>
                                 </div>
                             </div>

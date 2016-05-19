@@ -6,7 +6,7 @@
     Session["MenuKey"] = 7;
 }
 
-@using (Html.BeginForm("Create", "TicketType", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "ticketForm" }))
+@using (Html.BeginForm("Create", "TicketType", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
 {
     @Html.HiddenFor(x=>x.TicketTypeId)
     @Html.HiddenFor(x=>x.RecCreatedBy)
@@ -106,7 +106,7 @@
                                     <button type="submit" class="btn green-seagreen" onclick="return(ValidateFields(event) && validateUserPassword(event));">Save</button>
                                     @if (Model.TicketTypeId == 0)
                                     {
-                                        <button type="button" class="btn blue-steel" onclick="clearFields()">Clear</button>
+                                        <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
                                     }
                                     <a href="@Url.Action("Index","TicketType")" class="btn red-sunglo">Cancel</a>
                                 </div>

@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
+using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Product;
 using TMD.WebBase.Mvc;
 
@@ -30,7 +31,7 @@ namespace TMD.Web.Controllers
                 productService.GetAllProducts()
                     .ToList()
                     .Select(x => x.MapServerToClient()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(Products);
         }
 
@@ -50,7 +51,7 @@ namespace TMD.Web.Controllers
             }
 
             productViewModel.ProductCategories = prodResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(productViewModel);
         }
 
@@ -74,7 +75,11 @@ namespace TMD.Web.Controllers
 
                     TempData["ProductId"] = productService.AddProduct(productViewModel.Product.MapClientToServer());
                 }
-                
+                TempData["message"] = new MessageViewModel
+                {
+                    IsSaved = true,
+                    Message = "Your data has been saved successfully!"
+                };
                 return RedirectToAction("ModelSpecs",new { product = (int)TempData["ProductId"] });
             }
             catch (Exception ex)
@@ -109,7 +114,7 @@ namespace TMD.Web.Controllers
             }
 
             viewModel.TechnicalSpecs = prodResp.TechnicalSpec.Select(x => x.CreateDropDownList()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
         [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
@@ -125,7 +130,11 @@ namespace TMD.Web.Controllers
                     contactResp.ProductModelTechnicalSpec = viewModel.ProductTechnicalSpec.Select(x => x.MapClientToServer()).ToList();
 
                 productModelService.SaveProductModel(contactResp);
-
+                TempData["message"] = new MessageViewModel
+                {
+                    IsSaved = true,
+                    Message = "Your data has been saved successfully!"
+                };
                 return RedirectToAction("ModelSpecs",new {product= viewModel.ProductModel .ProductId});
             }
             catch (Exception ex)

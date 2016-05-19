@@ -22,6 +22,10 @@ namespace TMD.Repository.Repositories
         {
             get { return db.ProductCategory; }
         }
-       
+
+        public IEnumerable<ProductCategory> GetAllLeafCategories()
+        {
+            return DbSet.Where(x => x.SubProductCategories.Count == 0);
+        }
     }
 }

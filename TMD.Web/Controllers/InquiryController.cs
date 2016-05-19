@@ -8,6 +8,7 @@ using TMD.Models.DomainModels;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
+using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Inquiry;
 
 namespace TMD.Web.Controllers
@@ -29,7 +30,7 @@ namespace TMD.Web.Controllers
             //    inquiryService.GetAllInquiries()
             //        .ToList()
             //        .Select(x => x.MapServerToClient()).ToList();
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new InquiryViewModel());
         }
 
@@ -144,8 +145,22 @@ namespace TMD.Web.Controllers
                         }
                     };
 
-                inquiryService.SaveInquiry(inquiryResp);
-
+                if (inquiryService.SaveInquiry(inquiryResp))
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        IsSaved = true,
+                        Message = "Your data has been saved successfully!"
+                    };
+                }
+                else
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        IsError = true,
+                        Message = "There is some problem, please try again!"
+                    };
+                }
                 return RedirectToAction("Create");
             }
             catch (Exception e)

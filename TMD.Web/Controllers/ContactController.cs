@@ -7,6 +7,7 @@ using TMD.Models.ResponseModels;
 using TMD.Web.ViewModels.Contact;
 using TMD.Web.ModelMappers;
 using TMD.Models.RequestModels;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace TMD.Web.Controllers
         // GET: /Contact/
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new ContactViewModel());
         }
 
@@ -68,8 +70,8 @@ namespace TMD.Web.Controllers
                 }
                     
             }
-
-             return View(contactViewModel);
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(contactViewModel);
         }
 
         //d
@@ -96,7 +98,11 @@ namespace TMD.Web.Controllers
                     contactResp.Addresses = ContactViewModel.Addresses.Select(x => x.MapClientToServer()).ToList();
 
                 contactService.SaveContact(contactResp);
-
+                TempData["message"] = new MessageViewModel
+                {
+                    IsSaved = true,
+                    Message = "Your data has been saved successfully!"
+                };
                 return RedirectToAction("Create");
             }
             catch(Exception e)
