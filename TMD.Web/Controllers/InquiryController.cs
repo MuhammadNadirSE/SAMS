@@ -39,7 +39,7 @@ namespace TMD.Web.Controllers
         {
 
             var contactResponse = inquiryService.GetAllInquiries(searchRequest);
-            var inquiryList = contactResponse.Inquiries.ToList().Select(x => x.MapServerToClient()).ToList();
+            var inquiryList = contactResponse.Inquiries.ToList().Select(x => x.MapServerToClientSearch()).ToList();
             var model = new InquiryViewModel()
             {
                 data = inquiryList,

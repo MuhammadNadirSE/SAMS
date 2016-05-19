@@ -14,8 +14,8 @@ namespace TMD.Web.Models
         public int InquiryProductId { get; set; }
         public string UserId { get; set; }
 
-        [Display(Name = "Company Name")]
-        [Required(ErrorMessage = "Company Name is required.")]
+        [Display(Name = "Title")]
+        [Required(ErrorMessage = "Inquiry Title is required.")]
         public string CompanyName { get; set; }
 
         [Display(Name = "Contact")]
@@ -25,14 +25,17 @@ namespace TMD.Web.Models
         [Display(Name = "Contact Date")]
         public System.DateTime InquiryDate { get; set; }
 
-
+        [Display(Name = "Priority")]
+        [Required(ErrorMessage = "Please select priority.")]
         public int Priority { get; set; }
         public TMD.Common.Priority PriorityName { get; set; }
 
         [Display(Name = "Contact Response")]
+        [Required(ErrorMessage = "Contact response is required.")]
         public string ContactResponse { get; set; }
 
         [Display(Name = "Comments")]
+        [Required(ErrorMessage = "Comments are required.")]
         public string UserComments { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedByName { get; set; }
