@@ -46,7 +46,7 @@ namespace TMD.Web.ModelMappers
                 UserId = source.UserId,
                 InquiryDate = source.InquiryDate,
                 Priority = source.Priority,
-                PriorityName=(TMD.Common.Priority)source.Priority,
+                PriorityName= PriorityValue(source.Priority),
                 ContactName = source.Contact.FirstName
             };
         }
@@ -69,9 +69,25 @@ namespace TMD.Web.ModelMappers
                 UserId = source.UserId,
                 InquiryDate = source.InquiryDate,
                 Priority = source.Priority,
-                PriorityName = (TMD.Common.Priority)source.Priority ,
+                PriorityName = PriorityValue(source.Priority),
                 ContactName = source.Contact.FirstName + " " + source.Contact.LastName
             };
+        }
+
+        private static string PriorityValue(int priority)
+        {
+            switch (priority)
+            {
+                case (int)Common.Priority.Low:
+                    return "Low";
+                case (int)Common.Priority.Medium:
+                    return "Medium";
+                case (int)Common.Priority.High:
+                    return "High";
+                default:
+                    return "";
+            }
+                
         }
     }
 }

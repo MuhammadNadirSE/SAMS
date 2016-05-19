@@ -28,7 +28,7 @@ namespace TMD.Web.Models
         [Display(Name = "Priority")]
         [Required(ErrorMessage = "Please select priority.")]
         public int Priority { get; set; }
-        public TMD.Common.Priority PriorityName { get; set; }
+        public string PriorityName { get; set; }
 
         [Display(Name = "Contact Response")]
         [Required(ErrorMessage = "Contact response is required.")]

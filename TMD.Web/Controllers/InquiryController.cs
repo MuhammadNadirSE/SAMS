@@ -49,15 +49,7 @@ namespace TMD.Web.Controllers
             //var obj = new {data = model.EmployeePayrolls, model};
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-
-
-        //
-        // GET: /Inquiry/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        
         [SiteAuthorize(PermissionKey = "CreateUpdateInquiry")]
         public ActionResult Create(int? ID)
         {
@@ -65,10 +57,7 @@ namespace TMD.Web.Controllers
             {
                 InquiryModel = new Models.InquiryModel { InquiryDate = DateTime.UtcNow}
             };
-
-           
-          
-
+            
                 var inquiryResponse = inquiryService.GetInquiryResponse(ID);
                 if (inquiryResponse.Inquiry != null)
                 {
@@ -78,12 +67,7 @@ namespace TMD.Web.Controllers
 
                 InquiryViewModel.Contacts = inquiryResponse.Contacts.Select(x => x.CreateDDL()).ToList();
                 InquiryViewModel.Products = inquiryResponse.Products.Select(x => x.MapServerToClient()).ToList();
-
-            
-          
-
-           
-
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(InquiryViewModel);
 
 

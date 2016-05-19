@@ -1691,6 +1691,7 @@
     <Content Include="Content\global\plugins\bootstrap-hover-dropdown\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="Images\Web\mainlogo.jpg" />
     <Content Include="Scripts\App\jquery.comiseo.daterangepicker.js" />
     <Content Include="Scripts\App\jquery.dataTables.js" />
     <Content Include="Scripts\App\moment.min.js" />
