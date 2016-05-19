@@ -10,6 +10,7 @@ namespace TMD.Web.Models
         [Required(ErrorMessage = "Product Model Name is required.")]
         public string ModelName { get; set; }
         [Display(Name = "Description")]
+        [Required(ErrorMessage = "Product Model Description is required.")]
         public string ModelDescription { get; set; }
     }
 }

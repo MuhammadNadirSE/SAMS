@@ -10,7 +10,8 @@
 
 @using (Html.BeginForm("ModelSpecs", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-
+    @Html.HiddenFor(x=>x.ProductModel.ProductModelId)
+    @Html.HiddenFor(x=>x.ProductModel.ProductId)
     @Html.AntiForgeryToken()
     <div class="portlet light bg-inverse">
         <ul class="nav nav-pills nav-justified steps">
@@ -25,7 +26,7 @@
                 </a>
             </li>
             <li class="active">
-                <a href='@Url.Action("ModelSpecs", "Product",new {id=productModelId})' class="step">
+                <a href='@Url.Action("ModelSpecs", "Product",new {product=productId,model=productModelId})' class="step">
                     <span class="number">
                         2 -
                     </span>
@@ -35,16 +36,58 @@
                 </a>
             </li>
         </ul>
-        <div class="portlet-title">
+        @*<div class="portlet-title">
             <div class="caption">
                 <i class="icon-handbag font-red-sunglo"></i>
                 <span class="caption-subject font-red-sunglo bold uppercase">Product Model</span>
-                <span class="caption-helper">@ViewBag.Title and Technical Specs.</span>
             </div>
-        </div>
+        </div>*@
 
         <div class="portlet-body form">
             <div class="form-body">
+                <div class="row">
+                    <div class="portlet box red-sunglo">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>All Models (@Model.ProductModels.Count)
+                            </div>
+                            <div class="tools">
+                                Click to expand
+                                <a href="javascript:;" class="expand"></a>
+                            </div>
+                        </div>
+                        <div class="portlet-body flip-scroll" style="display: none;">
+                            <table class="table table-bordered table-striped table-condensed flip-content" id="modelsTable">
+                                <thead class="flip-content">
+                                <tr>
+                                    <th width="20%">
+                                        Model Name
+                                    </th>
+                                    <th width="80%">
+                                        Description
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="modelsTableBody">
+                                @foreach (var promodel in Model.ProductModels)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(promodel.ModelName, "ModelSpecs", new {product=productId,model= promodel.ProductModelId})
+                                        </td>
+                                        <td>
+                                            @promodel.ModelDescription
+                                        </td>
+                                    </tr>
+                                }
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <h3 class="form-section">Product Model <span style="font-size: small;"> @ViewBag.Title and Technical Specs.</span></h3>
                 <div class="row">
                     <!--/span-->
                     <div class="col-md-6">
@@ -61,6 +104,7 @@
                             @Html.LabelFor(model => model.ProductModel.ModelDescription, new {@class = "control-label col-md-3 requiredLabel"})
                             <div class="col-md-9">
                                 @Html.TextAreaFor(model => model.ProductModel.ModelDescription, new {@class = "form-control", placeholder = "Enter product model description"})
+                                @Html.ValidationMessageFor((x => x.ProductModel.ModelDescription))
                             </div>
                         </div>
                     </div>
@@ -69,16 +113,25 @@
                 <h3 class="form-section">Technical Specs.</h3>
                 <div class="row">
                     <!--/span-->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label class="control-label col-md-3">Technical Spec.</label>
+                            <label class="control-label col-md-5">Technical Spec.</label>
                             <div class="col-md-7">
                                 @Html.DropDownList("Specs", new SelectList(Model.TechnicalSpecs, "TechnicalSpecId", "SpecName"), "Select Technical Specification", new {@class = "form-control select2me mandatoryModal", id = "TechSpecId"})
                             </div>
-                            
+
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-7">
+                                @Html.TextBox("Specs", null, new {@class = "form-control mandatoryModal", id = "TechSpecValue", placeholder = "Technical Spec. value"})
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <div class="col-md-2">
                                 <button type="button" class="btn green-meadow prominent" id="TechnicalSpecAddBtn" title="Add Technical Spec.">
@@ -93,7 +146,7 @@
                 <div class="row hideOthersDetail">
                     <div class="portlet box">
                         <div class="portlet-body flip-scroll">
-                            <table class="table table-bordered table-striped table-condensed flip-content" id="supervisorTable">
+                            <table class="table table-bordered table-striped table-condensed flip-content" id="ProductTechnicalSpecTable">
                                 <thead class="flip-content">
                                 <tr>
                                     <th style="display: none"></th>
@@ -118,12 +171,17 @@
                                                 <input name='ProductTechnicalSpec.Index' type='hidden' value='@i'/>
                                                 <input name='ProductTechnicalSpec[@i].ProductTechSpecsId' type='hidden' value='@Model.ProductTechnicalSpec[i].ProductTechSpecsId'/>
                                                 <input name='ProductTechnicalSpec[@i].ProductModelId' type='hidden' value='@Model.ProductTechnicalSpec[i].ProductModelId'/>
+                                                <input name='ProductTechnicalSpec[@i].TechSpecId' type='hidden' value='@Model.ProductTechnicalSpec[i].TechSpecId'/>
                                             </td>
-                                            <td>
-                                                @Model.ProductTechnicalSpec[i].TechSpecName
+                                            <td width="40%">
+                                                <input name='ProductTechnicalSpec[@i].TechSpecName' tabindex="-1" type='text' class="ProductTableColumn" readonly="readonly" value='@Model.ProductTechnicalSpec[i].TechSpecName'/>
                                             </td>
-                                            <td>@Model.ProductTechnicalSpec[i].SpecValue</td>
-                                            <td><a class='remove mustDisplay' href='javascript:;'>Remove</a></td>
+                                            <td width="40%">
+                                                <input name='ProductTechnicalSpec[@i].SpecValue' type='text' value='@Model.ProductTechnicalSpec[i].SpecValue'/>
+                                            </td>
+                                            <td width="20%">
+                                                <a href="javascript:;" class="btn default btn-xs red remove" tabindex="-1" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                            </td>
                                         </tr>
                                     }
                                 }
@@ -146,7 +204,7 @@
                         <div class="col-md-offset-3 col-md-9">
                             <input type="submit" class="btn green-seagreen hideOthersDetail" value="Submit"/>
                             <button type="reset" class="btn green-jungle hideOthersDetail">Reset</button>
-                            <a href="~/Employees/Index" class="btn default cancelBtn">Cancel</a>
+                            <a href="~/Product/Create/@productId" class="btn default cancelBtn">Cancel</a>
 
                         </div>
                     </div>
@@ -158,54 +216,52 @@
     </div>
 }
 <script>
+    $(document).ready(function() {
+        $('.remove').live("click", function () {
+
+            if (!confirm("Are you sure to delete this specification?")) {
+                return;
+            }
+            $(this).parent().parent().remove();
+        });
+        });
+    
+
     $('#TechnicalSpecAddBtn').on("click", function () {
+        var index = $("#techspecBody").children("tr").length;
+        var productId = '@productModelId';
+        var theId = $("#TechSpecId").select2('data').id;
+        var theSelection = $("#TechSpecId").select2('data').text;
+        var theValue = $("#TechSpecValue").val();
+
         //validate fields
-        if (!(ValidateFieldsByClass("mandatoryModal"))) {
+        if (theId === "" || theValue==="") {
             return false;
         }
 
-        var selectedTechSpecId = $("#TechSpecId option:selected").text().toLowerCase().indexOf("select") >= 0 ? "" : $("#TechSpecId option:selected").text();
+        if ($("#techspecBody").children("tr").children("td").html() == "No data available in table") {
+            index = index - 1;
+            $("#techspecBody").children("tr").remove();
+        }
+        var indexCell = "<td style='display:none'>" +
+            "<input name='ProductTechnicalSpec.Index' type='hidden' value='" + index + "' />" +
+            "<input name='ProductTechnicalSpec[" + index + "].ProductModelId'  type='hidden'  value='" + productId + "'/>" +
+            "<input name='ProductTechnicalSpec[" + index + "].TechSpecId' type='hidden'  value='" + theId + "'/>" +
+            "</td>";
 
-        var itemRowIndex = "";
-        var index = $("#techspecBody").children("tr").length;
-        var productId = $("#ProductModel_ProductId").val();
-        if (itemRowIndex === "") {
-            //    //add new row
-
-            if ($("#techspecBody").children("tr").children("td").html() == "No data available in table") {
-                index = index - 1;
-                $("#techspecBody").children("tr").remove();
-            }
-            var indexCell = "<td style='display:none'>" +
-                "<input name='ProductTechnicalSpec.Index' type='hidden' value='" + index + "' />" +
-                "<input name='ProductTechnicalSpec[" + index + "].ProductModelId'  type='hidden'  value='" + productId + "'/>" +
-                "<input name='ProductTechnicalSpec[" + index + "].ProductTechSpecsId' type='hidden' />" +
-                "</td>";
-
-            //ProductTechnicalSpec
-            var html = ' <tr data-id=' + index + '>' +
-                indexCell +
-                '<td>' +
-                '<input id="ProductTechnicalSpec_' + index + '__Barcode" name="ProductTechnicalSpec[' + index + '].Barcode" value="' + itemBarcode + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
-                '</td>' +
-                '<td>' +
-                '<input id="ProductTechnicalSpec_' + index + '__UnitId" name="ProductTechnicalSpec[' + index + '].UnitId" value="' + itemUnitId + '" type="hidden"/><input type="text" id="ProductTechnicalSpec_' + index + '__UnitTitle" class="ProductTableColumn" value="' + itemUnitTitle + '"/>' +
-                '</td>' +
-                '<td>' +
-                '<input id="ProductTechnicalSpec_' + index + '__ShelfId" name="ProductTechnicalSpec[' + index + '].ShelfId" value="' + itemShelfId + '" type="hidden"/><input type="text" id="ProductTechnicalSpec_' + index + '__ShelfTitle" class="ProductTableColumn" value="' + itemShelfTitle + '"/>' +
-                '</td>' +
-                '<td>' +
-                '<input id="ProductTechnicalSpec_' + index + '__MinimumStockLimit" name="ProductTechnicalSpec[' + index + '].MinimumStockLimit" value="' + itemMinStockLevel + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
-                '</td>' +
-                '<td>' +
-                '<input id="ProductTechnicalSpec_' + index + '__ProductVariantDescription" name="ProductTechnicalSpec[' + index + '].ProductVariantDescription" value="' + itemDescription + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
-                '</td>' +
-                '<td>' +
-                '<a href="javascript:;" class="btn default btn-xs blue editRow" title="Edit"><i class="fa fa-pencil"></i></a>' +
-                '&nbsp;<a href="javascript:;" class="btn default btn-xs red deleteRow" title="Delete"><i class="fa fa-trash-o"></i></a>' +
-                '</td>' +
-                '</tr>';
-            $('#techspecBody').append(html);
-        } 
+        //ProductTechnicalSpec
+        var html = ' <tr data-id=' + index + '>' +
+            indexCell +
+            '<td>' +
+            '<input name="ProductTechnicalSpec[' + index + '].TechSpecName" tabindex="-1" value="' + theSelection + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
+            '</td>' +
+            '<td>' +
+            '<input name="ProductTechnicalSpec[' + index + '].SpecValue" type="text" value="' + theValue + '"/>' +
+            '</td>' +
+            '<td>' +
+            '<a href="javascript:;" class="btn default btn-xs red remove" tabindex="-1" title="Delete"><i class="fa fa-trash-o"></i></a>' +
+            '</td>' +
+            '</tr>';
+        $('#techspecBody').append(html);
     });
 </script>

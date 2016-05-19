@@ -23,7 +23,7 @@ namespace TMD.Repository.Repositories
 
         public IEnumerable<ProductTechSpec> LoadTechnicalSpecsByModelId(int productModelId)
         {
-            return DbSet.Where(x => x.ProductModelId.Equals(productModelId));
+            return DbSet.Include(x=>x.TechnicalSpec).Where(x => x.ProductModelId.Equals(productModelId)).OrderBy(s=>s.TechnicalSpec.SpecName);
         }
     }
 }

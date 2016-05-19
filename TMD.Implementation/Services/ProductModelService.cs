@@ -21,24 +21,63 @@ namespace TMD.Implementation.Services
             this.productTechnicalSpecsRepository = productTechnicalSpecsRepository;
         }
 
-        public int SaveProductModel(ProductModel productModel)
+        public int SaveProductModel(ProductModelResponse productModel)
         {
-            throw new NotImplementedException();
+            if (productModel.ProductModel.ProductModelID > 0)
+            {
+                productModelRepository.Update(productModel.ProductModel);
+            }
+            else
+            {
+                productModelRepository.Add(productModel.ProductModel);
+            }
+            productModelRepository.SaveChanges();
+
+            SaveTechSpecs(productModel);
+
+            return productModel.ProductModel.ProductModelID;
         }
 
-        public IEnumerable<ProductModel> GetAllProductModelsByProductId(int productId)
+        private void SaveTechSpecs(ProductModelResponse productModel)
         {
-            throw new NotImplementedException();
+            if (productModel.ProductModel.ProductModelID > 0)
+            {
+                var specs = productTechnicalSpecsRepository.LoadTechnicalSpecsByModelId(productModel.ProductModel.ProductModelID).ToList();
+
+                foreach (var spec in specs)
+                {
+                    productTechnicalSpecsRepository.Delete(spec);
+                }
+            }
+            if (productModel.ProductModelTechnicalSpec != null && productModel.ProductModelTechnicalSpec.Any())
+            {
+                foreach (var spec in productModel.ProductModelTechnicalSpec)
+                {
+                    spec.ProductModelId = productModel.ProductModel.ProductModelID;
+
+                    productTechnicalSpecsRepository.Add(spec);
+                }
+            }
+            productTechnicalSpecsRepository.SaveChanges();
         }
 
-        public Product GetProductModelById(int id)
+        public List<ProductModel> GetAllProductModelsByProductId(int productId)
         {
-            throw new NotImplementedException();
+            return productModelRepository.LoadProductModelsByProductId(productId).ToList();
         }
 
-        public ProductModelResponse GetProductModelResponse(int? modelId)
+        public ProductModel GetProductModelById(int id)
+        {
+            return productModelRepository.Find(id);
+        }
+
+        public ProductModelResponse GetProductModelResponse(int? productId, int? modelId)
         {
             ProductModelResponse productModelResponse=new ProductModelResponse();
+            if (productId != null)
+            {
+                productModelResponse.ProductModels = productModelRepository.LoadProductModelsByProductId((int) productId);
+            }
             if (modelId != null)
             {
                 productModelResponse.ProductModel = productModelRepository.Find((int) modelId);

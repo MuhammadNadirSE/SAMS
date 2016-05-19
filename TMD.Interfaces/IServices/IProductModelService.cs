@@ -6,9 +6,9 @@ namespace TMD.Interfaces.IServices
 {
     public interface IProductModelService
     {
-        int SaveProductModel(ProductModel productModel);
-        IEnumerable<ProductModel> GetAllProductModelsByProductId(int productId);
-        Product GetProductModelById(int id);
-        ProductModelResponse GetProductModelResponse(int? modelId);
+        int SaveProductModel(ProductModelResponse productModel);
+        List<ProductModel> GetAllProductModelsByProductId(int productId);
+        ProductModel GetProductModelById(int id);
+        ProductModelResponse GetProductModelResponse(int? productId, int? modelId);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
+using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Product;
 using TMD.WebBase.Mvc;
@@ -82,20 +83,28 @@ namespace TMD.Web.Controllers
             }
         }
         [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
-        public ActionResult ModelSpecs(int product,int? model)
+        public ActionResult ModelSpecs(int? product,int? model)
         {
+            if(product==null || product<1 )
+                return RedirectToAction("Create");
+
             ProductModelViewModel viewModel = new ProductModelViewModel();
 
-            var prodResp = productModelService.GetProductModelResponse(model);
+            var prodResp = productModelService.GetProductModelResponse(product,model);
+            if (prodResp.ProductModels.Any())
+            {
+                viewModel.ProductModels = prodResp.ProductModels.ToList().Select(x => x.MapServerToClient()).ToList();
+            }
             if (prodResp.ProductModel != null)
             {
                 viewModel.ProductModel = prodResp.ProductModel.MapServerToClient();
+                viewModel.ProductTechnicalSpec = prodResp.ProductModelTechnicalSpec.ToList().Select(x=>x.MapServerToClient()).ToList();
             }
             else
             {
                 viewModel.ProductModel = new Models.ProductModel
                 {
-                    ProductId= product
+                    ProductId= (int)product
                 };
             }
 
@@ -109,26 +118,19 @@ namespace TMD.Web.Controllers
         {
             try
             {
-                //productViewModel.Product.UpdatedDate = DateTime.UtcNow;
-                //productViewModel.Product.UpdatedBy = User.Identity.GetUserId();
-                //// TODO: Add insert logic here
-                //if (productViewModel.Product.ProductID > 0)
-                //{
-                //    productService.UpdateProduct(productViewModel.Product.MapClientToServer());
-                //}
-                //else
-                //{
-                //    productViewModel.Product.CreatedDate = DateTime.UtcNow;
-                //    productViewModel.Product.CreatedBy = User.Identity.GetUserId();
+                ProductModelResponse contactResp = new ProductModelResponse();
 
-                //    productService.AddProduct(productViewModel.Product.MapClientToServer());
-                //}
+                contactResp.ProductModel = viewModel.ProductModel.MapClientToServer();
+                if (viewModel.TechnicalSpecs != null)
+                    contactResp.ProductModelTechnicalSpec = viewModel.ProductTechnicalSpec.Select(x => x.MapClientToServer()).ToList();
 
-                return RedirectToAction("Create");
+                productModelService.SaveProductModel(contactResp);
+
+                return RedirectToAction("ModelSpecs",new {product= viewModel.ProductModel .ProductId});
             }
             catch (Exception ex)
             {
-                return View();
+                return View(viewModel);
             }
         }
         

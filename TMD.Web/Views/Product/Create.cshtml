@@ -1,7 +1,8 @@
 ﻿@model TMD.Web.ViewModels.Product.ProductViewModel
 @{
     int productID = Model.Product.ProductID > 0 ? Model.Product.ProductID : 0;
-    string createUpdate = Model.Product.ProductID > 0 ? "Update" : "Create";
+    string productModelsURL = Model.Product.ProductID > 0 ? Url.Action("ModelSpecs", "Product", new {product=productID}) : "javascript:;";
+    string createUpdate = Model.Product.ProductID > 0 ? "Update": "Create";
     ViewBag.Title = createUpdate + " Product";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 8;
@@ -29,7 +30,7 @@
                 </a>
             </li>
             <li>
-                <a href='@Url.Action("ModelSpecs", "Product", productID)' class="step">
+                <a href='@productModelsURL' class="step">
                     <span class="number">
                         2 -
                     </span>
@@ -63,7 +64,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-md-4 control-label requiredLabel">Category</label>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 @Html.DropDownListFor((x => x.Product.ProductCategoryID), new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", (object)Model.Product.ProductCategoryID), "--Please Select--", new {@class = "form-control select2me", @id= "ProductCategoryID" })
                             </div>
                         </div>
