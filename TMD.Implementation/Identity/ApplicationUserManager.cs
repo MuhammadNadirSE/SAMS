@@ -53,7 +53,7 @@ namespace TMD.Implementation.Identity
                 
                 
             };
-            oEmail.Bcc.Add(bcc);
+            //oEmail.Bcc.Add(bcc);
             oEmail.To.Add(email);
             string smtpServer = ConfigurationManager.AppSettings["SMTPServer"];
             string smtpPort = ConfigurationManager.AppSettings["SMTPPort"];

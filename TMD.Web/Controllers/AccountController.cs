@@ -531,7 +531,9 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(employeeViewModel.Employee.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
 
-                        //await SendAccountCredentials(employeeViewModel.Employee.Email,user.UserName, customPassword);
+                        Session["callbackUrl"] =    "<br/>Username: " + user.UserName +
+                                                    "<br/>Password: " + customPassword;
+                        //await SendAccountCredentials(employeeViewModel.Employee.Email, user.UserName, customPassword);
 
                         TempData["message"] = new MessageViewModel
                         {

@@ -58,7 +58,7 @@ namespace TMD.Implementation.Services
             {
                 prodResp.Product = prodRepository.Find((int)id);
             }
-            prodResp.ProductCategories = productCategoryRepository.GetAll();
+            prodResp.ProductCategories = productCategoryRepository.GetAllLeafCategories();
             return prodResp;
         }
     }

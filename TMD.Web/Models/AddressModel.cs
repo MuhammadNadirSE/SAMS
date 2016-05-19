@@ -10,11 +10,9 @@ namespace TMD.Web.Models
         public string Country { get; set; }
 
         [Display(Name = "State")]
-        [Required(ErrorMessage = "Enter Country")]
         public string State { get; set; }
 
         [Display(Name = "City")]
-        [Required(ErrorMessage = "Enter City")]
         public string City { get; set; }
 
         public string Street { get; set; }

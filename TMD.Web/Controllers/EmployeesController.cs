@@ -27,6 +27,8 @@ namespace TMD.Web.Controllers
         public ActionResult Index()
         {
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            ViewBag.CallBackURL = Session["callbackUrl"];
+            Session["callbackUrl"] = null;
             string[] userPermissionsSet = (string[])System.Web.HttpContext.Current.Session["UserPermissionSet"];
             if (userPermissionsSet.Contains("ViewEmployees"))
             {
