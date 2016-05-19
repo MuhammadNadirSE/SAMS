@@ -10,6 +10,7 @@ using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Inquiry;
+using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers
 {
@@ -22,8 +23,7 @@ namespace TMD.Web.Controllers
         {
             this.inquiryService = inquiryService;
         }
-        //
-        // GET: /Inquiry/
+        [SiteAuthorize(PermissionKey = "InquiriesList")]
         public ActionResult Index()
         {
             //List<TMD.Web.Models.InquiryModel> Inquiries =
@@ -58,8 +58,7 @@ namespace TMD.Web.Controllers
             return View();
         }
 
-        //
-        // GET: /Inquiry/Create
+        [SiteAuthorize(PermissionKey = "CreateUpdateInquiry")]
         public ActionResult Create(int? ID)
         {
             InquiryViewModel InquiryViewModel = new InquiryViewModel
@@ -90,8 +89,7 @@ namespace TMD.Web.Controllers
 
         }
 
-        //
-        // POST: /Inquiry/Create
+        [SiteAuthorize(PermissionKey = "CreateUpdateInquiry")]
         [HttpPost]
         public ActionResult Create(InquiryViewModel ContactViewModel )
         {

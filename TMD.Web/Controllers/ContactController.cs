@@ -8,6 +8,7 @@ using TMD.Web.ViewModels.Contact;
 using TMD.Web.ModelMappers;
 using TMD.Models.RequestModels;
 using TMD.Web.ViewModels.Common;
+using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers
 {
@@ -20,8 +21,7 @@ namespace TMD.Web.Controllers
         {
             this.contactService = contactService;
         }
-        //
-        // GET: /Contact/
+        [SiteAuthorize(PermissionKey = "ContactsList")]
         public ActionResult Index()
         {
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -44,15 +44,7 @@ namespace TMD.Web.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        //
-        // GET: /Contact/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Contact/Create
+        [SiteAuthorize(PermissionKey = "CreateUpdateContact")]
         public ActionResult Create(int? id)
         {
             ContactViewModel contactViewModel = new ContactViewModel
@@ -74,8 +66,7 @@ namespace TMD.Web.Controllers
             return View(contactViewModel);
         }
 
-        //d
-        // POST: /Contact/Create
+        [SiteAuthorize(PermissionKey = "CreateUpdateContact")]
         [HttpPost]
         public ActionResult Create(ContactViewModel ContactViewModel)
         {
@@ -106,54 +97,6 @@ namespace TMD.Web.Controllers
                 return RedirectToAction("Create");
             }
             catch(Exception e)
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Contact/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Contact/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Contact/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Contact/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
             {
                 return View();
             }
