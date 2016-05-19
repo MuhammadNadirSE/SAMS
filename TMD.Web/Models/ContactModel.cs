@@ -34,6 +34,7 @@ namespace TMD.Web.Models
         public string Fax { get; set; }
 
         [Display(Name = "Cell No.")]
+        [Required(ErrorMessage = "Cell No. is required.")]
         public string CellNo { get; set; }
 
         [Display(Name = "Contact Type")]
