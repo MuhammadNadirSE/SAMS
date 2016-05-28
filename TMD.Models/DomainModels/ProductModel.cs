@@ -22,7 +22,7 @@ namespace TMD.Models.DomainModels
         public virtual Product Product { get; set; }
         
         public virtual ICollection<ProductTechSpec> ProductTechSpecs { get; set; }
-        
-        public virtual ICollection<Quote> Quotes { get; set; }
+
+        public virtual ICollection<QuoteDetail> QuoteDetails { get; set; }
     }
 }

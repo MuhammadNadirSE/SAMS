@@ -50,10 +50,6 @@ namespace TMD.Models.DomainModels
         
         public virtual ICollection<Inquiry> UpdatedInquiries { get; set; }
         
-        public virtual ICollection<Quote> CreatedQuotes { get; set; }
-        
-        public virtual ICollection<Quote> UpdatedQuotes { get; set; }
-        
         public virtual ICollection<TechnicalSpec> UpdatedTechnicalSpecs { get; set; }
         
         public virtual ICollection<TechnicalSpec> CreatedTechnicalSpecs { get; set; }
@@ -67,5 +63,9 @@ namespace TMD.Models.DomainModels
         public virtual ICollection<ProductCategory> UpdatedProductCategories { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
+        public virtual ICollection<Exclusion> CreatedExclusions { get; set; }
+        public virtual ICollection<Exclusion> UpdatedExclusions { get; set; }
+        public virtual ICollection<Quote> CreatedQuotes { get; set; }
+        public virtual ICollection<Quote> UpdatedQuotes { get; set; }
     }
 }

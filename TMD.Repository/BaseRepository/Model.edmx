@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -155,6 +155,15 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="DocumentId" />
+          </Key>
+          <Property Name="DocumentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefrenceType" Type="int" Nullable="false" />
+          <Property Name="RefrenceId" Type="int" Nullable="false" />
+          <Property Name="DocumentData" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -200,6 +209,17 @@
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="SupervisorId" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Exclusions">
+          <Key>
+            <PropertyRef Name="ExclusionId" />
+          </Key>
+          <Property Name="ExclusionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Inquiry">
           <Key>
@@ -335,13 +355,33 @@
           <Property Name="FreeServiceTerms" Type="varchar(max)" Nullable="false" />
           <Property Name="WarrantyTerms" Type="varchar(max)" Nullable="false" />
           <Property Name="ValidityTerms" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="Make" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="ModelId" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="InquiryId" Type="int" />
+          <Property Name="ContactId" Type="int" />
+        </EntityType>
+        <EntityType Name="QuoteDetails">
+          <Key>
+            <PropertyRef Name="QuoteDetailId" />
+          </Key>
+          <Property Name="QuoteDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuoteId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Make" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ModelId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuoteExclusions">
+          <Key>
+            <PropertyRef Name="QuoteExclusionId" />
+          </Key>
+          <Property Name="QuoteExclusionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuoteId" Type="int" Nullable="false" />
+          <Property Name="ExclusionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Seeds">
           <Key>
@@ -645,6 +685,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Exclusions_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Exclusions" Type="Self.Exclusions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exclusions">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exclusions_CreatdBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Exclusions" Type="Self.Exclusions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exclusions">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Inquiry">
           <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="1" />
           <End Role="InquiryDetail" Type="Self.InquiryDetail" Multiplicity="*" />
@@ -885,27 +949,87 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quote_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+        <Association Name="FK_Quote_Contact">
+          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
           <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_Inquiry">
+          <End Role="Inquiry" Type="Self.Inquiry" Multiplicity="0..1" />
+          <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inquiry">
+              <PropertyRef Name="InquiryID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="InquiryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteDetails_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="QuoteDetails" Type="Self.QuoteDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="Quote">
+            <Dependent Role="QuoteDetails">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quote_ProductModel">
+        <Association Name="FK_QuoteDetails_ProductModel">
           <End Role="ProductModel" Type="Self.ProductModel" Multiplicity="1" />
-          <End Role="Quote" Type="Self.Quote" Multiplicity="*" />
+          <End Role="QuoteDetails" Type="Self.QuoteDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductModel">
               <PropertyRef Name="ProductModelID" />
             </Principal>
-            <Dependent Role="Quote">
+            <Dependent Role="QuoteDetails">
               <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteDetails_Quote">
+          <End Role="Quote" Type="Self.Quote" Multiplicity="1" />
+          <End Role="QuoteDetails" Type="Self.QuoteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quote">
+              <PropertyRef Name="QuoteID" />
+            </Principal>
+            <Dependent Role="QuoteDetails">
+              <PropertyRef Name="QuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteExclusions_Exclusions">
+          <End Role="Exclusions" Type="Self.Exclusions" Multiplicity="1" />
+          <End Role="QuoteExclusions" Type="Self.QuoteExclusions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exclusions">
+              <PropertyRef Name="ExclusionId" />
+            </Principal>
+            <Dependent Role="QuoteExclusions">
+              <PropertyRef Name="ExclusionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteExclusions_Quote">
+          <End Role="Quote" Type="Self.Quote" Multiplicity="1" />
+          <End Role="QuoteExclusions" Type="Self.QuoteExclusions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quote">
+              <PropertyRef Name="QuoteID" />
+            </Principal>
+            <Dependent Role="QuoteExclusions">
+              <PropertyRef Name="QuoteId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -994,9 +1118,11 @@
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeePayroll" EntityType="Self.EmployeePayroll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeSupervisors" EntityType="Self.EmployeeSupervisors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exclusions" EntityType="Self.Exclusions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inquiry" EntityType="Self.Inquiry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InquiryDetail" EntityType="Self.InquiryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
@@ -1008,6 +1134,8 @@
           <EntitySet Name="ProductModel" EntityType="Self.ProductModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTechSpecs" EntityType="Self.ProductTechSpecs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quote" EntityType="Self.Quote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuoteDetails" EntityType="Self.QuoteDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuoteExclusions" EntityType="Self.QuoteExclusions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seeds" EntityType="Self.Seeds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SeedValue" EntityType="Self.SeedValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TechnicalSpecs" EntityType="Self.TechnicalSpecs" Schema="dbo" store:Type="Tables" />
@@ -1089,6 +1217,14 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeSupervisors" EntitySet="EmployeeSupervisors" />
           </AssociationSet>
+          <AssociationSet Name="FK_Exclusions_AspNetUsers" Association="Self.FK_Exclusions_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Exclusions" EntitySet="Exclusions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exclusions_CreatdBy" Association="Self.FK_Exclusions_CreatdBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Exclusions" EntitySet="Exclusions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Inquiry" Association="Self.FK_Inquiry">
             <End Role="Inquiry" EntitySet="Inquiry" />
             <End Role="InquiryDetail" EntitySet="InquiryDetail" />
@@ -1169,13 +1305,33 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Quote" EntitySet="Quote" />
           </AssociationSet>
-          <AssociationSet Name="FK_Quote_Product" Association="Self.FK_Quote_Product">
-            <End Role="Product" EntitySet="Product" />
+          <AssociationSet Name="FK_Quote_Contact" Association="Self.FK_Quote_Contact">
+            <End Role="Contact" EntitySet="Contact" />
             <End Role="Quote" EntitySet="Quote" />
           </AssociationSet>
-          <AssociationSet Name="FK_Quote_ProductModel" Association="Self.FK_Quote_ProductModel">
-            <End Role="ProductModel" EntitySet="ProductModel" />
+          <AssociationSet Name="FK_Quote_Inquiry" Association="Self.FK_Quote_Inquiry">
+            <End Role="Inquiry" EntitySet="Inquiry" />
             <End Role="Quote" EntitySet="Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteDetails_Product" Association="Self.FK_QuoteDetails_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="QuoteDetails" EntitySet="QuoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteDetails_ProductModel" Association="Self.FK_QuoteDetails_ProductModel">
+            <End Role="ProductModel" EntitySet="ProductModel" />
+            <End Role="QuoteDetails" EntitySet="QuoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteDetails_Quote" Association="Self.FK_QuoteDetails_Quote">
+            <End Role="Quote" EntitySet="Quote" />
+            <End Role="QuoteDetails" EntitySet="QuoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteExclusions_Exclusions" Association="Self.FK_QuoteExclusions_Exclusions">
+            <End Role="Exclusions" EntitySet="Exclusions" />
+            <End Role="QuoteExclusions" EntitySet="QuoteExclusions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteExclusions_Quote" Association="Self.FK_QuoteExclusions_Quote">
+            <End Role="Quote" EntitySet="Quote" />
+            <End Role="QuoteExclusions" EntitySet="QuoteExclusions" />
           </AssociationSet>
           <AssociationSet Name="FK_SeedValue_Seeds" Association="Self.FK_SeedValue_Seeds">
             <End Role="Seeds" EntitySet="Seeds" />
@@ -1323,7 +1479,6 @@
           </AssociationSet>
           <EntitySet Name="Inquiries" EntityType="TMD.Models.DomainModels.Inquiry" />
           <EntitySet Name="InquiryDetails" EntityType="TMD.Models.DomainModels.InquiryDetail" />
-          <EntitySet Name="Quotes" EntityType="TMD.Models.DomainModels.Quote" />
           <EntitySet Name="Seeds" EntityType="TMD.Models.DomainModels.Seed" />
           <EntitySet Name="SeedValues" EntityType="TMD.Models.DomainModels.SeedValue" />
           <EntitySet Name="TechnicalSpecs" EntityType="TMD.Models.DomainModels.TechnicalSpec" />
@@ -1338,14 +1493,6 @@
           <AssociationSet Name="FK_inquiryUpdatedBy_AspNetUsers" Association="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Inquiry" EntitySet="Inquiries" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quote_AspNetUsers" Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Quote" EntitySet="Quotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quote_AspNetUsers1" Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers1">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Quote" EntitySet="Quotes" />
           </AssociationSet>
           <AssociationSet Name="FK_TechnicalSpecs_AspNetUsers" Association="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -1399,10 +1546,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductModel" EntitySet="ProductModels" />
           </AssociationSet>
-          <AssociationSet Name="FK_Quote_Product" Association="TMD.Models.DomainModels.FK_Quote_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Quote" EntitySet="Quotes" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_ProductCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategories" />
             <End Role="ProductCategory1" EntitySet="ProductCategories" />
@@ -1410,10 +1553,6 @@
           <AssociationSet Name="FK_ProductTechSpecs_ProductModel" Association="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel">
             <End Role="ProductModel" EntitySet="ProductModels" />
             <End Role="ProductTechSpec" EntitySet="ProductTechSpecs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quote_ProductModel" Association="TMD.Models.DomainModels.FK_Quote_ProductModel">
-            <End Role="ProductModel" EntitySet="ProductModels" />
-            <End Role="Quote" EntitySet="Quotes" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductTechSpecs_TechnicalSpecs" Association="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs">
             <End Role="TechnicalSpec" EntitySet="TechnicalSpecs" />
@@ -1437,6 +1576,55 @@
           <AssociationSet Name="FK_NotificationRecipient_Notification" Association="TMD.Models.DomainModels.FK_NotificationRecipient_Notification">
             <End Role="Notification" EntitySet="Notifications" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          </AssociationSet>
+          <EntitySet Name="Documents" EntityType="TMD.Models.DomainModels.Document" />
+          <EntitySet Name="Exclusions" EntityType="TMD.Models.DomainModels.Exclusion" />
+          <EntitySet Name="QuoteDetails" EntityType="TMD.Models.DomainModels.QuoteDetail" />
+          <EntitySet Name="QuoteExclusions" EntityType="TMD.Models.DomainModels.QuoteExclusion" />
+          <AssociationSet Name="FK_Exclusions_AspNetUsers" Association="TMD.Models.DomainModels.FK_Exclusions_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Exclusion" EntitySet="Exclusions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exclusions_CreatdBy" Association="TMD.Models.DomainModels.FK_Exclusions_CreatdBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Exclusion" EntitySet="Exclusions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteExclusions_Exclusions" Association="TMD.Models.DomainModels.FK_QuoteExclusions_Exclusions">
+            <End Role="Exclusion" EntitySet="Exclusions" />
+            <End Role="QuoteExclusion" EntitySet="QuoteExclusions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteDetails_Product" Association="TMD.Models.DomainModels.FK_QuoteDetails_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="QuoteDetail" EntitySet="QuoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteDetails_ProductModel" Association="TMD.Models.DomainModels.FK_QuoteDetails_ProductModel">
+            <End Role="ProductModel" EntitySet="ProductModels" />
+            <End Role="QuoteDetail" EntitySet="QuoteDetails" />
+          </AssociationSet>
+          <EntitySet Name="Quotes" EntityType="TMD.Models.DomainModels.Quote" />
+          <AssociationSet Name="FK_Quote_AspNetUsers" Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_AspNetUsers1" Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers1">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_Contact" Association="TMD.Models.DomainModels.FK_Quote_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quote_Inquiry" Association="TMD.Models.DomainModels.FK_Quote_Inquiry">
+            <End Role="Inquiry" EntitySet="Inquiries" />
+            <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteDetails_Quote" Association="TMD.Models.DomainModels.FK_QuoteDetails_Quote">
+            <End Role="Quote" EntitySet="Quotes" />
+            <End Role="QuoteDetail" EntitySet="QuoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteExclusions_Quote" Association="TMD.Models.DomainModels.FK_QuoteExclusions_Quote">
+            <End Role="Quote" EntitySet="Quotes" />
+            <End Role="QuoteExclusion" EntitySet="QuoteExclusions" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
@@ -1601,8 +1789,6 @@
           <NavigationProperty Name="ConductedInquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
           <NavigationProperty Name="CreatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
           <NavigationProperty Name="UpdatedInquiries" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="AspNetUser" ToRole="Inquiry" />
-          <NavigationProperty Name="CreatedQuotes" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers" FromRole="AspNetUser" ToRole="Quote" />
-          <NavigationProperty Name="UpdatedQuotes" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" FromRole="AspNetUser" ToRole="Quote" />
           <NavigationProperty Name="UpdatedTechnicalSpecs" Relationship="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers" FromRole="AspNetUser" ToRole="TechnicalSpec" />
           <NavigationProperty Name="CreatedTechnicalSpecs" Relationship="TMD.Models.DomainModels.FK_TechnicalSpecs_CreatdBy" FromRole="AspNetUser" ToRole="TechnicalSpec" />
           <NavigationProperty Name="CreatedProducts" Relationship="TMD.Models.DomainModels.FK_Product_AspNetUsers" FromRole="AspNetUser" ToRole="Product" />
@@ -1611,6 +1797,10 @@
           <NavigationProperty Name="UpdatedProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_UpdatedBy" FromRole="AspNetUser" ToRole="ProductCategory" />
           <NavigationProperty Name="Notifications" Relationship="TMD.Models.DomainModels.FK_Notification_AspNetUsers" FromRole="AspNetUser" ToRole="Notification" />
           <NavigationProperty Name="NotificationRecipients" Relationship="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers" FromRole="AspNetUser" ToRole="NotificationRecipient" />
+          <NavigationProperty Name="UpdatedExclusions" Relationship="TMD.Models.DomainModels.FK_Exclusions_AspNetUsers" FromRole="AspNetUser" ToRole="Exclusion" />
+          <NavigationProperty Name="CreatedExclusions" Relationship="TMD.Models.DomainModels.FK_Exclusions_CreatdBy" FromRole="AspNetUser" ToRole="Exclusion" />
+          <NavigationProperty Name="CreatedQuotes" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers" FromRole="AspNetUser" ToRole="Quote" />
+          <NavigationProperty Name="UpdatedQuotes" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" FromRole="AspNetUser" ToRole="Quote" />
           </EntityType>
         <EntityType Name="Attendance">
           <Key>
@@ -1978,6 +2168,7 @@
           <NavigationProperty Name="ContactUpdatedBy" Relationship="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" FromRole="Contact" ToRole="AspNetUser" />
           <NavigationProperty Name="Inquiries" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Contact" ToRole="Inquiry" />
           <NavigationProperty Name="Addresses" Relationship="TMD.Models.DomainModels.FK_Address_Contact" FromRole="Contact" ToRole="Address" />
+          <NavigationProperty Name="Quotes" Relationship="TMD.Models.DomainModels.FK_Quote_Contact" FromRole="Contact" ToRole="Quote" />
         </EntityType>
         <Association Name="FK_ContactCreatedBy_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -2024,6 +2215,7 @@
           <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" FromRole="Inquiry" ToRole="AspNetUser" />
           <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Inquiry_Contact" FromRole="Inquiry" ToRole="Contact" />
           <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="Inquiry" ToRole="InquiryDetail" />
+          <NavigationProperty Name="Quotes" Relationship="TMD.Models.DomainModels.FK_Quote_Inquiry" FromRole="Inquiry" ToRole="Quote" />
         </EntityType>
         <EntityType Name="InquiryDetail">
           <Key>
@@ -2034,31 +2226,6 @@
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Inquiry" FromRole="InquiryDetail" ToRole="Inquiry" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_InquiryDetail_Product" FromRole="InquiryDetail" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Quote">
-          <Key>
-            <PropertyRef Name="QuoteID" />
-          </Key>
-          <Property Name="QuoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuoteReferenceNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Subject" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentTerms" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="DeliveryTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="InstallationTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FreeServiceTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="WarrantyTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ValidityTerms" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="Make" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ModelId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="QouteCreatedBy" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers" FromRole="Quote" ToRole="AspNetUser" />
-          <NavigationProperty Name="QouteUpdatedBy" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" FromRole="Quote" ToRole="AspNetUser" />
-          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_Quote_Product" FromRole="Quote" ToRole="Product" />
-          <NavigationProperty Name="ProductModel" Relationship="TMD.Models.DomainModels.FK_Quote_ProductModel" FromRole="Quote" ToRole="ProductModel" />
         </EntityType>
         <EntityType Name="Seed">
           <Key>
@@ -2126,30 +2293,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Inquiry">
-              <PropertyRef Name="UpdatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Quote_AspNetUsers">
-          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Quote">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Quote_AspNetUsers1">
-          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Quote">
               <PropertyRef Name="UpdatedBy" />
             </Dependent>
           </ReferentialConstraint>
@@ -2233,7 +2376,7 @@
           <NavigationProperty Name="InquiryDetails" Relationship="TMD.Models.DomainModels.FK_InquiryDetail_Product" FromRole="Product" ToRole="InquiryDetail" />
           <NavigationProperty Name="ProductCategory" Relationship="TMD.Models.DomainModels.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductModels" Relationship="TMD.Models.DomainModels.FK_ProductModel_ProductCategory" FromRole="Product" ToRole="ProductModel" />
-          <NavigationProperty Name="Quotes" Relationship="TMD.Models.DomainModels.FK_Quote_Product" FromRole="Product" ToRole="Quote" />
+          <NavigationProperty Name="QuoteDetails" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_Product" FromRole="Product" ToRole="QuoteDetail" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2265,7 +2408,7 @@
           <Property Name="ModelDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ProductModel_ProductCategory" FromRole="ProductModel" ToRole="Product" />
           <NavigationProperty Name="ProductTechSpecs" Relationship="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel" FromRole="ProductModel" ToRole="ProductTechSpec" />
-          <NavigationProperty Name="Quotes" Relationship="TMD.Models.DomainModels.FK_Quote_ProductModel" FromRole="ProductModel" ToRole="Quote" />
+          <NavigationProperty Name="QuoteDetails" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_ProductModel" FromRole="ProductModel" ToRole="QuoteDetail" />
         </EntityType>
         <EntityType Name="ProductTechSpec">
           <Key>
@@ -2362,18 +2505,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quote_Product">
-          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Quote">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductCategory_ProductCategory">
           <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
           <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory1" Multiplicity="*" />
@@ -2395,18 +2526,6 @@
             </Principal>
             <Dependent Role="ProductTechSpec">
               <PropertyRef Name="ProductModelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Quote_ProductModel">
-          <End Type="TMD.Models.DomainModels.ProductModel" Role="ProductModel" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductModel">
-              <PropertyRef Name="ProductModelID" />
-            </Principal>
-            <Dependent Role="Quote">
-              <PropertyRef Name="ModelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2508,6 +2627,213 @@
             </Principal>
             <Dependent Role="NotificationRecipient">
               <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="DocumentId" />
+          </Key>
+          <Property Name="DocumentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefrenceType" Type="Int32" Nullable="false" />
+          <Property Name="RefrenceId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Exclusion">
+          <Key>
+            <PropertyRef Name="ExclusionId" />
+          </Key>
+          <Property Name="ExclusionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_Exclusions_AspNetUsers" FromRole="Exclusion" ToRole="AspNetUser" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_Exclusions_CreatdBy" FromRole="Exclusion" ToRole="AspNetUser" />
+          <NavigationProperty Name="QuoteExclusions" Relationship="TMD.Models.DomainModels.FK_QuoteExclusions_Exclusions" FromRole="Exclusion" ToRole="QuoteExclusion" />
+        </EntityType>
+        <EntityType Name="QuoteDetail">
+          <Key>
+            <PropertyRef Name="QuoteDetailId" />
+          </Key>
+          <Property Name="QuoteDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Make" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ModelId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_Product" FromRole="QuoteDetail" ToRole="Product" />
+          <NavigationProperty Name="ProductModel" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_ProductModel" FromRole="QuoteDetail" ToRole="ProductModel" />
+          <NavigationProperty Name="Quote" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_Quote" FromRole="QuoteDetail" ToRole="Quote" />
+        </EntityType>
+        <EntityType Name="QuoteExclusion">
+          <Key>
+            <PropertyRef Name="QuoteExclusionId" />
+          </Key>
+          <Property Name="QuoteExclusionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteId" Type="Int32" Nullable="false" />
+          <Property Name="ExclusionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Exclusion" Relationship="TMD.Models.DomainModels.FK_QuoteExclusions_Exclusions" FromRole="QuoteExclusion" ToRole="Exclusion" />
+          <NavigationProperty Name="Quote" Relationship="TMD.Models.DomainModels.FK_QuoteExclusions_Quote" FromRole="QuoteExclusion" ToRole="Quote" />
+        </EntityType>
+        <Association Name="FK_Exclusions_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Exclusion" Role="Exclusion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exclusion">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exclusions_CreatdBy">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Exclusion" Role="Exclusion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exclusion">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteExclusions_Exclusions">
+          <End Type="TMD.Models.DomainModels.Exclusion" Role="Exclusion" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.QuoteExclusion" Role="QuoteExclusion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exclusion">
+              <PropertyRef Name="ExclusionId" />
+            </Principal>
+            <Dependent Role="QuoteExclusion">
+              <PropertyRef Name="ExclusionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteDetails_Product">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.QuoteDetail" Role="QuoteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="QuoteDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteDetails_ProductModel">
+          <End Type="TMD.Models.DomainModels.ProductModel" Role="ProductModel" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.QuoteDetail" Role="QuoteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="QuoteDetail">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Quote">
+          <Key>
+            <PropertyRef Name="QuoteID" />
+          </Key>
+          <Property Name="QuoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteReferenceNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentTerms" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="InstallationTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FreeServiceTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WarrantyTerms" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ValidityTerms" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InquiryId" Type="Int32" />
+          <Property Name="ContactId" Type="Int32" />
+          <NavigationProperty Name="CreatedByUser" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers" FromRole="Quote" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" FromRole="Quote" ToRole="AspNetUser" />
+          <NavigationProperty Name="Contact" Relationship="TMD.Models.DomainModels.FK_Quote_Contact" FromRole="Quote" ToRole="Contact" />
+          <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Quote_Inquiry" FromRole="Quote" ToRole="Inquiry" />
+          <NavigationProperty Name="QuoteDetails" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_Quote" FromRole="Quote" ToRole="QuoteDetail" />
+          <NavigationProperty Name="QuoteExclusions" Relationship="TMD.Models.DomainModels.FK_QuoteExclusions_Quote" FromRole="Quote" ToRole="QuoteExclusion" />
+        </EntityType>
+        <Association Name="FK_Quote_AspNetUsers">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_AspNetUsers1">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_Contact">
+          <End Type="TMD.Models.DomainModels.Contact" Role="Contact" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quote_Inquiry">
+          <End Type="TMD.Models.DomainModels.Inquiry" Role="Inquiry" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inquiry">
+              <PropertyRef Name="InquiryID" />
+            </Principal>
+            <Dependent Role="Quote">
+              <PropertyRef Name="InquiryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteDetails_Quote">
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.QuoteDetail" Role="QuoteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quote">
+              <PropertyRef Name="QuoteID" />
+            </Principal>
+            <Dependent Role="QuoteDetail">
+              <PropertyRef Name="QuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteExclusions_Quote">
+          <End Type="TMD.Models.DomainModels.Quote" Role="Quote" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.QuoteExclusion" Role="QuoteExclusion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quote">
+              <PropertyRef Name="QuoteID" />
+            </Principal>
+            <Dependent Role="QuoteExclusion">
+              <PropertyRef Name="QuoteId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2803,28 +3129,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Quotes">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Quote">
-              <MappingFragment StoreEntitySet="Quote">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
-                <ScalarProperty Name="Make" ColumnName="Make" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ValidityTerms" ColumnName="ValidityTerms" />
-                <ScalarProperty Name="WarrantyTerms" ColumnName="WarrantyTerms" />
-                <ScalarProperty Name="FreeServiceTerms" ColumnName="FreeServiceTerms" />
-                <ScalarProperty Name="InstallationTerms" ColumnName="InstallationTerms" />
-                <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
-                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="QuoteReferenceNo" ColumnName="QuoteReferenceNo" />
-                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Seeds">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Seed">
               <MappingFragment StoreEntitySet="Seeds">
@@ -2948,6 +3252,72 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="DocumentData" ColumnName="DocumentData" />
+                <ScalarProperty Name="RefrenceId" ColumnName="RefrenceId" />
+                <ScalarProperty Name="RefrenceType" ColumnName="RefrenceType" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exclusions">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Exclusion">
+              <MappingFragment StoreEntitySet="Exclusions">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ExclusionId" ColumnName="ExclusionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuoteDetails">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.QuoteDetail">
+              <MappingFragment StoreEntitySet="QuoteDetails">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="QuoteId" ColumnName="QuoteId" />
+                <ScalarProperty Name="QuoteDetailId" ColumnName="QuoteDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuoteExclusions">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.QuoteExclusion">
+              <MappingFragment StoreEntitySet="QuoteExclusions">
+                <ScalarProperty Name="ExclusionId" ColumnName="ExclusionId" />
+                <ScalarProperty Name="QuoteId" ColumnName="QuoteId" />
+                <ScalarProperty Name="QuoteExclusionId" ColumnName="QuoteExclusionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotes">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Quote">
+              <MappingFragment StoreEntitySet="Quote">
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="InquiryId" ColumnName="InquiryId" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ValidityTerms" ColumnName="ValidityTerms" />
+                <ScalarProperty Name="WarrantyTerms" ColumnName="WarrantyTerms" />
+                <ScalarProperty Name="FreeServiceTerms" ColumnName="FreeServiceTerms" />
+                <ScalarProperty Name="InstallationTerms" ColumnName="InstallationTerms" />
+                <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="QuoteReferenceNo" ColumnName="QuoteReferenceNo" />
+                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3010,15 +3380,12 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ContactUpdatedBy_AspNetUsers" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Inquiry" Width="1.5" PointX="9.375" PointY="17.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.InquiryDetail" Width="1.5" PointX="12.125" PointY="21.375" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="14.125" PointY="12.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Seed" Width="1.5" PointX="13.375" PointY="1.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.SeedValue" Width="1.5" PointX="15.625" PointY="0.875" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.TechnicalSpec" Width="1.5" PointX="1.25" PointY="26.5" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_inquiryCreatedBy_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_inquiryUpdatedBy_AspNetUsers" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_TechnicalSpecs_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_TechnicalSpecs_CreatdBy" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Inquiry_Contact" />
@@ -3035,10 +3402,8 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_InquiryDetail_Product" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Product_ProductCategory" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductModel_ProductCategory" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_Product" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductCategory" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductTechSpecs_ProductModel" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_ProductModel" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductTechSpecs_TechnicalSpecs" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Address" Width="1.5" PointX="8.875" PointY="28.25" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Address_Contact" />
@@ -3047,6 +3412,22 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Notification_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_NotificationRecipient_Notification" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Document" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Exclusion" Width="1.5" PointX="6.875" PointY="26.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.QuoteDetail" Width="1.5" PointX="14.75" PointY="23.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.QuoteExclusion" Width="1.5" PointX="16.75" PointY="20" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Exclusions_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Exclusions_CreatdBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteExclusions_Exclusions" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteDetails_Product" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteDetails_ProductModel" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Quote" Width="1.5" PointX="16.625" PointY="8.5" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_AspNetUsers1" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_Contact" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_Inquiry" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteDetails_Quote" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteExclusions_Quote" />
         </Diagram>
     </Diagrams>
   </Designer>

@@ -127,9 +127,11 @@
     <Compile Include="DomainModels\Contact.cs" />
     <Compile Include="DomainModels\Designation.cs" />
     <Compile Include="DomainModels\Distributor.cs" />
+    <Compile Include="DomainModels\Document.cs" />
     <Compile Include="DomainModels\Employee.cs" />
     <Compile Include="DomainModels\EmployeePayroll.cs" />
     <Compile Include="DomainModels\EmployeeSupervisor.cs" />
+    <Compile Include="DomainModels\Exclusion.cs" />
     <Compile Include="DomainModels\FixedDetail.cs" />
     <Compile Include="DomainModels\FixedDirectoryCharge.cs" />
     <Compile Include="DomainModels\FixedNonStandard.cs" />
@@ -148,6 +150,8 @@
     <Compile Include="DomainModels\ProductModel.cs" />
     <Compile Include="DomainModels\ProductTechSpec.cs" />
     <Compile Include="DomainModels\Quote.cs" />
+    <Compile Include="DomainModels\QuoteDetail.cs" />
+    <Compile Include="DomainModels\QuoteExclusion.cs" />
     <Compile Include="DomainModels\Seed.cs" />
     <Compile Include="DomainModels\SeedValue.cs" />
     <Compile Include="DomainModels\ServiceEquipment.cs" />

@@ -33,5 +33,6 @@ namespace TMD.Models.DomainModels
         public virtual Contact Contact { get; set; }
         
         public virtual ICollection<InquiryDetail> InquiryDetails { get; set; }
+        public virtual ICollection<Quote> Quotes { get; set; }
     }
 }

@@ -30,10 +30,14 @@ namespace TMD.Models.DomainModels
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public System.DateTime UpdatedDate { get; set; }
+        public Nullable<int> InquiryId { get; set; }
+        public Nullable<int> ContactId { get; set; }
 
-        public virtual AspNetUser QouteCreatedBy { get; set; }
-        public virtual AspNetUser QouteUpdatedBy { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual ProductModel ProductModel { get; set; }
+        public virtual AspNetUser CreatedByUser { get; set; }
+        public virtual AspNetUser UpdatedByUser { get; set; }
+        public virtual Contact Contact { get; set; }
+        public virtual Inquiry Inquiry { get; set; }
+        public virtual ICollection<QuoteDetail> QuoteDetails { get; set; }
+        public virtual ICollection<QuoteExclusion> QuoteExclusions { get; set; }
     }
 }

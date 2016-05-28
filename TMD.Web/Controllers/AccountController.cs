@@ -262,8 +262,7 @@ namespace IdentitySample.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
-
+                return RedirectToAction("Error", new { e=ex.Message});
             }
         }
         public ActionResult LogOff()
@@ -705,11 +704,11 @@ namespace IdentitySample.Controllers
         //
         // POST: /Account/Login
 
-        [AllowAnonymous]
-        public ActionResult Error()
-        {
-            return View();
-        }
+        //[AllowAnonymous]
+        //public ActionResult Error()
+        //{
+        //    return View();
+        //}
         [AllowAnonymous]
         public ActionResult Error(string e)
         {

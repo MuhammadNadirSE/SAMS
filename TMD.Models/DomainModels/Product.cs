@@ -24,6 +24,6 @@ namespace TMD.Models.DomainModels
 
         public virtual ICollection<ProductModel> ProductModels { get; set; }
 
-        public virtual ICollection<Quote> Quotes { get; set; }
+        public virtual ICollection<QuoteDetail> QuoteDetails { get; set; }
     }
 }
