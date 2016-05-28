@@ -101,6 +101,18 @@ namespace TMD.Repository.BaseRepository
         public DbSet<InquiryDetail> InuiryDetail { get; set; }
         public DbSet<TechnicalSpec> TechnicalSpec { get; set; }
         public DbSet<ProductTechSpec> ProductTechSpec { get; set; }
+        public DbSet<Quote> Quote { get; set; }
+        public DbSet<QuoteDetail> QuoteDetail { get; set; }
+        public DbSet<Exclusion> Exclusion { get; set; }
+        public DbSet<Document> Document { get; set; }
+        public DbSet<QuoteExclusion> QuoteExclusion { get; set; }
+
+
+
+
+
+
+
 
 
         /// <summary>

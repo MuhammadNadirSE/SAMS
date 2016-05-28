@@ -60,6 +60,8 @@
     <Compile Include="IRepository\IAttendanceRepository.cs" />
     <Compile Include="IRepository\IAspNetRoleRepository.cs" />
     <Compile Include="IRepository\IBillDetailRepository.cs" />
+    <Compile Include="IRepository\IDocumentRepository.cs" />
+    <Compile Include="IRepository\IExclusionRepository.cs" />
     <Compile Include="IRepository\IInquiryDetailRepository.cs" />
     <Compile Include="IRepository\IInquiryRepository.cs" />
     <Compile Include="IRepository\INotificationRecipientRepository.cs" />
@@ -78,6 +80,9 @@
     <Compile Include="IRepository\IProductModelRepository.cs" />
     <Compile Include="IRepository\IProductRepository.cs" />
     <Compile Include="IRepository\IProductTechnicalSpecsRepository.cs" />
+    <Compile Include="IRepository\IQuoteDetailRepository.cs" />
+    <Compile Include="IRepository\IQuoteExclusionRepository.cs" />
+    <Compile Include="IRepository\IQuoteRepository.cs" />
     <Compile Include="IRepository\ITechnicalSpecsRepository.cs" />
     <Compile Include="IRepository\ITicketRepository.cs" />
     <Compile Include="IRepository\ITicketTypeRepository.cs" />
@@ -90,10 +95,12 @@
     <Compile Include="IServices\IClientService.cs" />
     <Compile Include="IServices\IContactService.cs" />
     <Compile Include="IServices\IDistributorService.cs" />
+    <Compile Include="IServices\IDocumentService.cs" />
     <Compile Include="IServices\IEmployeePayrollService.cs" />
     <Compile Include="IServices\IEmployeeSupervisorService.cs" />
     <Compile Include="IServices\IDesignationService.cs" />
     <Compile Include="IServices\IEnumberable.cs" />
+    <Compile Include="IServices\IExclusionService.cs" />
     <Compile Include="IServices\IInquiryDetailService.cs" />
     <Compile Include="IServices\IInquiryService.cs" />
     <Compile Include="IServices\INotificationService.cs" />
@@ -104,6 +111,7 @@
     <Compile Include="IServices\IProductCategoryService.cs" />
     <Compile Include="IServices\IProductModelService.cs" />
     <Compile Include="IServices\IProductService.cs" />
+    <Compile Include="IServices\IQuoteService.cs" />
     <Compile Include="IServices\ITechnicalSpecsService.cs" />
     <Compile Include="IServices\ITicketService.cs" />
     <Compile Include="IServices\ITicketTypeService.cs" />

@@ -298,6 +298,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ExclusionController.cs" />
     <Compile Include="Controllers\InquiryController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="ModelMappers\AspNetRoleMapper.cs" />
     <Compile Include="ModelMappers\DesignationMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\ExclusionMapper.cs" />
     <Compile Include="ModelMappers\InquiryDetailMapper.cs" />
     <Compile Include="ModelMappers\InquiryMapper.cs" />
     <Compile Include="ModelMappers\NotificationMapper.cs" />
@@ -352,6 +354,7 @@
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\ExclusionModel.cs" />
     <Compile Include="Models\InquiryDetailModel.cs" />
     <Compile Include="Models\InquiryModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
@@ -1807,6 +1810,8 @@
     <Content Include="Views\Product\ModelSpecs.cshtml" />
     <Content Include="Views\Inquiry\Create.cshtml" />
     <Content Include="Views\Inquiry\Index.cshtml" />
+    <Content Include="Views\Exclusion\Create.cshtml" />
+    <Content Include="Views\Exclusion\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

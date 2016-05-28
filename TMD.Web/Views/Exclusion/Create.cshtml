@@ -1,0 +1,84 @@
+﻿@model TMD.Web.Models.ExclusionModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 8;
+    Session["ParentMenu"] = 1;
+
+
+}
+
+
+
+@using (Html.BeginForm("Create", "Exclusion", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
+{
+
+    @Html.HiddenFor(x => x.CreatedDate);
+    @Html.HiddenFor(x => x.CreatedBy);
+    @Html.HiddenFor(x => x.ExclusionId);
+    @Html.AntiForgeryToken()
+    <div class="portlet portletCustomHeight light bg-inverse">
+        <div class="portlet-title">
+            <div class="tools">
+            </div>
+            <div class="caption">
+                <i class="icon-credit-card font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Exclusions</span>
+                <span class="caption-helper">Create/Update</span>
+
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+
+
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Name, new { @class = "col-md-3 control-label requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(x => x.Name, new { @class = "form-control mandatory", placeholder = "Exclusion Description", rows = 5, @style = "resize:none" })
+                                @Html.ValidationMessageFor(x => x.Name)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-6">
+                                    <button type="submit" class="btn green-seagreen">Save</button>
+                                    <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
+                                    <a href="@Url.Action("Index", "TechnicalSpecs")" class="btn red-sunglo">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+}
+
+<script>
+    function clearFields() {
+        $('#Exclusion_Name').val('');
+
+    }
+
+    $(document)
+        .ready(function () {
+
+        });
+</script>

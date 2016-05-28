@@ -40,6 +40,8 @@ namespace TMD.Implementation
             unityContainer.RegisterType<IInquiryService, InquiryService>();
             unityContainer.RegisterType<IInquiryDetailService, InquiryDetailService>();
             unityContainer.RegisterType<IProductModelService, ProductModelService>();
+            unityContainer.RegisterType<IExclusionService, ExclusionService>();
+
         } 
     }
 }
