@@ -19,18 +19,17 @@
 {
     @*@Html.AntiForgeryToken()
         @Html.ValidationSummary(true)*@
-    @Html.HiddenFor(x => x.Quote.QuoteID)
+    @Html.HiddenFor(x => x.Quote.QuoteId)
     @Html.HiddenFor(x => x.Quote.CreatedDate)
     @Html.HiddenFor(x => x.Quote.CreatedBy)
-    @Html.HiddenFor(x => x.Quote.UserId)
- 
+  
    
    
     <div class="portlet portletCustomHeight light bg-inverse" style="display: none;">
         <div class="portlet-title">
             <div class="caption">
                 <i class="icon-user font-red-sunglo"></i>
-                <span class="caption-subject font-red-sunglo bold uppercase">Inquiry</span>
+                <span class="caption-subject font-red-sunglo bold uppercase">Quote</span>
                
             </div>
         </div>
@@ -43,27 +42,49 @@
                     <!--Company Name is Inquiry Title-->
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.CompanyName, new {@class = "control-label col-md-3 requiredLabel"})
+                            @Html.LabelFor(model => model.Quote.QuoteReferenceNo, new {@class = "control-label col-md-3 requiredLabel"})
                             <div class="col-md-9">
-                                @Html.TextBoxFor(m => m.InquiryModel.CompanyName, new {@class = "form-control mandatory", placeholder = "Inquiry Title"})
+                                @Html.TextBoxFor(m => m.Quote.QuoteReferenceNo, new { @class = "form-control mandatory", placeholder = "Ref#" })
 
 
-                                @Html.ValidationMessageFor(model => model.InquiryModel.CompanyName)
+                                @Html.ValidationMessageFor(model => model.Quote.QuoteReferenceNo)
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.InquiryDate, new { @class = "control-label col-md-3 requiredLabel" })
+                            @Html.LabelFor(model => model.Quote.CreatedDate, new { @class = "control-label col-md-3 requiredLabel" })
                             <div class="col-md-9">
-                                @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, "{0:d}", new { @class = "datepicker form-control  mandatory cursorHand", placeholder = "Inquiry Date", @readonly = "readonly" })
+                                @Html.TextBoxFor(m => m.Quote.CreatedDate, "{0:d}", new { @class = "datepicker form-control  mandatory cursorHand", placeholder = "Quote Date", @readonly = "readonly" })
 
 
-                                @Html.ValidationMessageFor(model => model.InquiryModel.InquiryDate)
+                                @Html.ValidationMessageFor(model => model.Quote.CreatedDate)
                             </div>
                         </div>
                     </div>
+
+
+                    <!--/span-->
+                </div>
+
+
+                <div class="row">
+
+                    <!--Company Name is Inquiry Title-->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Quote.Subject, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Quote.Subject, new { @class = "form-control mandatory", placeholder = "Subject" })
+
+
+                                @Html.ValidationMessageFor(model => model.Quote.Subject)
+                            </div>
+                        </div>
+                    </div>
+
+                    
 
 
                     <!--/span-->
@@ -75,20 +96,20 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-3 requiredLabel"})
+                            @Html.LabelFor(model => model.Quote.ContactId, new { @class = "control-label col-md-3 requiredLabel" })
                             <div class="col-md-7">
-                                @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new {@class = "form-control select2me"})
-                                @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
+                                @Html.DropDownListFor(x => x.Quote.ContactId, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.Quote.ContactID), "--Please Select--", new { @class = "form-control select2me" })
+                                @Html.ValidationMessageFor(model => model.Quote.ContactId)
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.InquiryProductId, new {@class = "control-label col-md-3 requiredLabel"})
+                            @Html.LabelFor(model => model.Quote.QuoteDetail.ProductId, new { @class = "control-label col-md-3 requiredLabel" })
                             <div class="col-md-7">
-                                @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new {@class = "form-control select2me"})
-                                @Html.ValidationMessageFor(model => model.InquiryModel.InquiryProductId)
+                                @Html.DropDownListFor(x => x.Quote.QuoteQuoteDetail.ProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.Quote.QuoteDetail.ProductId), "--Please Select--", new { @class = "form-control select2me" })
+                                @Html.ValidationMessageFor(model => model.Quote.QuoteQuoteDetail.ProductId)
                             </div>
                         </div>
                     </div>
@@ -99,7 +120,17 @@
                 <div class="row">
 
 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Quote.QuoteQuoteDetail.Subject, new { @class = "control-label col-md-3 requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Quote.QuoteQuoteDetail.Subject, new { @class = "form-control mandatory", placeholder = "Make" })
 
+
+                                @Html.ValidationMessageFor(model => model.Quote.Subject)
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.Priority, new {@class = "control-label col-md-3 requiredLabel"})
