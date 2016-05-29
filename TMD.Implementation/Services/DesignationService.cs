@@ -22,6 +22,26 @@ namespace TMD.Implementation.Services
             
         }
 
+        public int AddDesignation(Designation designation)
+        {
+            DesignationRepository.Add(designation);
+            DesignationRepository.SaveChanges();
+
+            return designation.DesignationId;
+        }
+
+        public int UpdateDesignation(Designation designation)
+        {
+            DesignationRepository.Update(designation);
+            DesignationRepository.SaveChanges();
+
+            return designation.DesignationId;
+        }
+        public Designation GetDesignationById(int id)
+        {
+            return DesignationRepository.Find(id);
+        }
+
  
         public IEnumerable<Designation> GetAllDesignations()
         {

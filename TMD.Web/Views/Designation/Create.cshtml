@@ -1,0 +1,110 @@
+﻿@model TMD.Web.Models.DesignationModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 8;
+    Session["ParentMenu"] = 1;
+
+
+}
+
+
+
+@using (Html.BeginForm("Create", "Designation", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
+{
+
+    @Html.HiddenFor(x => x.RecCreatedDt);
+    @Html.HiddenFor(x => x.RecCreatedBy);
+    @Html.HiddenFor(x => x.DesignationId);
+    @Html.AntiForgeryToken()
+    <div class="portlet portletCustomHeight light bg-inverse">
+        <div class="portlet-title">
+            <div class="tools">
+            </div>
+            <div class="caption">
+                <i class="icon-credit-card font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">Designation</span>
+                <span class="caption-helper">Create/Update</span>
+
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+
+
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Title, new { @class = "col-md-3 control-label requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.Title, new { @class = "form-control mandatory", placeholder = "Title", rows = 5, @style = "resize:none" })
+                                @Html.ValidationMessageFor(x => x.Title)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Abbreviation, new { @class = "col-md-3 control-label requiredLabel" })
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(x => x.Abbreviation, new { @class = "form-control mandatory", placeholder = "Abbrevation", rows = 5, @style = "resize:none" })
+                                @Html.ValidationMessageFor(x => x.Abbreviation)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Description, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control mandatory", placeholder = "Description", rows = 5, @style = "resize:none" })
+                                @Html.ValidationMessageFor(x => x.Description)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-6">
+                                    <button type="submit" class="btn green-seagreen">Save</button>
+                                    <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
+                                    <a href="@Url.Action("Index", "TechnicalSpecs")" class="btn red-sunglo">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+}
+
+<script>
+    function clearFields() {
+        $('#Exclusion_Name').val('');
+
+    }
+
+    $(document)
+        .ready(function () {
+
+        });
+</script>

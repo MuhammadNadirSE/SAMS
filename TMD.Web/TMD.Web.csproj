@@ -296,6 +296,7 @@
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ExclusionController.cs" />
@@ -354,6 +355,7 @@
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\DesignationModel.cs" />
     <Compile Include="Models\ExclusionModel.cs" />
     <Compile Include="Models\InquiryDetailModel.cs" />
     <Compile Include="Models\InquiryModel.cs" />
@@ -1812,6 +1814,8 @@
     <Content Include="Views\Inquiry\Index.cshtml" />
     <Content Include="Views\Exclusion\Create.cshtml" />
     <Content Include="Views\Exclusion\Index.cshtml" />
+    <Content Include="Views\Designation\Create.cshtml" />
+    <Content Include="Views\Designation\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
