@@ -9,6 +9,6 @@ namespace TMD.Interfaces.IRepository
 {
     public interface IProductRepository : IBaseRepository<Product, int>
     {
-
+        IEnumerable<Product> GetAllProductsAndModels();
     }
 }

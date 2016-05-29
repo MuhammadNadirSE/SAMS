@@ -196,6 +196,7 @@
     <Compile Include="ResponseModels\PorductModelResponse.cs" />
     <Compile Include="ResponseModels\PorductResponse.cs" />
     <Compile Include="ResponseModels\ProductCategoryResponse.cs" />
+    <Compile Include="ResponseModels\QuoteResponse.cs" />
     <Compile Include="ResponseModels\TicketReplyResponse.cs" />
     <Compile Include="ResponseModels\DashboardResponse.cs" />
   </ItemGroup>

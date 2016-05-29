@@ -39,5 +39,15 @@ namespace TMD.Web.ModelMappers
 
             };
         }
+        public static Models.Product CreateDDL(this Product source)
+        {
+            return new Models.Product
+            {
+
+                ProductID = source.ProductID,
+                ProductName = source.ProductName,
+                Price = source.Price,
+            };
+        }
     }
 }

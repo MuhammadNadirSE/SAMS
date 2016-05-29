@@ -139,6 +139,7 @@
     <Compile Include="Services\IAspNetRoleService.cs" />
     <Compile Include="Services\IEnumberable.cs" />
     <Compile Include="Services\InquiryDetailService.cs" />
+    <Compile Include="Services\QuoteService.cs" />
     <Compile Include="Services\InquiryService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\LeaveService.cs" />

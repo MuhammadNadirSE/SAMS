@@ -23,5 +23,9 @@ namespace TMD.Repository.Repositories
             get { return db.Quote; }
         }
 
+        public Quote GetQuoteAndQuoteDetail(int quoteId)
+        {
+            return DbSet.Include("QuoteDetails").Include("QuoteExclusion").FirstOrDefault(x => x.QuoteID == quoteId);
+        }
     }
 }

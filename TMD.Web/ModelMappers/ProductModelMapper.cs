@@ -24,5 +24,15 @@ namespace TMD.Web.ModelMappers
                 ModelDescription = source.ModelDescription
             };
         }
+
+        public static Models.ProductModel CreateDDL(this ProductModel source)
+        {
+            return new Models.ProductModel
+            {
+                ProductModelId = source.ProductModelID,
+                ProductId = source.ProductId,
+                ModelName = source.ModelName,
+            };
+        }
     }
 }

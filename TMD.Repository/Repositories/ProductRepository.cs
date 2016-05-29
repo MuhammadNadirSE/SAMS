@@ -22,6 +22,9 @@ namespace TMD.Repository.Repositories
         {
             get { return db.Product; }
         }
-
+        public IEnumerable<Product> GetAllProductsAndModels()
+        {
+            return DbSet.Include(x => x.ProductModels);
+        }
     }
 }

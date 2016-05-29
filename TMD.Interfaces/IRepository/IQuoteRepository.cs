@@ -9,6 +9,6 @@ namespace TMD.Interfaces.IRepository
 {
     public interface IQuoteRepository : IBaseRepository<Quote, int>
     {
-
+        Quote GetQuoteAndQuoteDetail(int quoteId);
     }
 }

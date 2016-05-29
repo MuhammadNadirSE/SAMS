@@ -306,6 +306,7 @@
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TechnicalSpecsController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
@@ -335,6 +336,7 @@
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMappers.cs" />
+    <Compile Include="ModelMappers\QuoteMapper.cs" />
     <Compile Include="ModelMappers\ProductModelMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\TechnicalSpecsMapper.cs" />
@@ -366,6 +368,9 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductTechnicalSpec.cs" />
+    <Compile Include="Models\QuoteDetailModel.cs" />
+    <Compile Include="Models\QuoteExclusionModel.cs" />
+    <Compile Include="Models\QuoteModel.cs" />
     <Compile Include="Models\TechnicalSpecsModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Models\TicketTypeModel.cs" />
@@ -434,6 +439,7 @@
     <Compile Include="ViewModels\Product\ProductModelViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Product\TechnicalSpecsViewModel.cs" />
+    <Compile Include="ViewModels\Quote\QuoteViewModel.cs" />
     <Compile Include="ViewModels\Ticket\TicketReplyViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\UserRoles\AspNetRoleModel.cs" />
@@ -1816,6 +1822,8 @@
     <Content Include="Views\Exclusion\Index.cshtml" />
     <Content Include="Views\Designation\Create.cshtml" />
     <Content Include="Views\Designation\Index.cshtml" />
+    <Content Include="Views\Quote\Create.cshtml" />
+    <Content Include="Views\Quote\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

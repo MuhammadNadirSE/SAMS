@@ -9,6 +9,6 @@ namespace TMD.Interfaces.IRepository
 {
     public interface IQuoteExclusionRepository : IBaseRepository<QuoteExclusion, int>
     {
-
+        IEnumerable<QuoteExclusion> GetQuoteExclusionsByQuoteId(int quoteId);
     }
 }

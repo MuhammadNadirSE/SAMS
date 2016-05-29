@@ -22,6 +22,9 @@ namespace TMD.Repository.Repositories
         {
             get { return db.QuoteExclusion; }
         }
-
+        public IEnumerable<QuoteExclusion> GetQuoteExclusionsByQuoteId(int quoteId)
+        {
+            return DbSet.Where(x => x.QuoteId == quoteId);
+        }
     }
 }

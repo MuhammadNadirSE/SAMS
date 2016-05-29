@@ -23,9 +23,7 @@ namespace TMD.Models.DomainModels
         public string FreeServiceTerms { get; set; }
         public string WarrantyTerms { get; set; }
         public string ValidityTerms { get; set; }
-        public int ProductId { get; set; }
-        public string Make { get; set; }
-        public int ModelId { get; set; }
+        
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
