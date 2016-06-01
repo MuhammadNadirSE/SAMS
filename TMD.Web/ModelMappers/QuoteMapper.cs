@@ -25,7 +25,6 @@ namespace TMD.Web.ModelMappers
                 CreatedDate = source.CreatedDate,
                 UpdatedBy = source.UpdatedBy,
                 UpdatedDate = source.UpdatedDate  
-
             };
         }
         public static QuoteModel MapServerToClient(this Quote source)
@@ -48,7 +47,6 @@ namespace TMD.Web.ModelMappers
                 CreatedDate = source.CreatedDate,
                 UpdatedBy = source.UpdatedBy,
                 UpdatedDate = source.UpdatedDate
-
             };
         }
 

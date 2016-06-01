@@ -33,7 +33,7 @@
                <div class="col-md-8">
                    <div class="form-group">
                        <div class="col-md-3 control-label ">Parent Category</div>
-                       <div class="col-md-6">
+                       <div class="col-md-8">
                            @Html.DropDownListFor(x => x.ProductCategory.ParentCatID, new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", Model.ProductCategory.ParentCatID), "Select Parent Category", new { @class = "form-control select2me" })
 
 

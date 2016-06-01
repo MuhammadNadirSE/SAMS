@@ -150,13 +150,13 @@
                                 <thead class="flip-content">
                                 <tr>
                                     <th style="display: none"></th>
-                                    <th>
+                                    <th width="40%">
                                         Name
                                     </th>
-                                    <th>
+                                    <th width="40%">
                                         Value
                                     </th>
-                                    <th>
+                                    <th width="20%">
                                         <span class="mustDisplay">Remove</span>
                                     </th>
                                 </tr>
@@ -235,7 +235,8 @@
         var theValue = $("#TechSpecValue").val();
 
         //validate fields
-        if (theId === "" || theValue==="") {
+        if (theId === "" || theValue === "") {
+            toastr.warning("Must enter specification value");
             return false;
         }
 

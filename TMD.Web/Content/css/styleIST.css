@@ -4,8 +4,12 @@
 .formMinHeight142_3Rows {
     min-height: 142px;
 }
-.select2me {
-    width: 128% !important;
+.fullRowField {
+    width: 263% !important;
+}
+.select2-container .select2-choice {
+    height: 34px !important;
+    padding: 3px 0 0 8px !important;
 }
 .badge {
     right: 10px !important;

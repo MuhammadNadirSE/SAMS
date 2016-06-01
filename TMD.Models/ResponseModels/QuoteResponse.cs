@@ -11,7 +11,7 @@ namespace TMD.Models.ResponseModels
     {
         public Quote Quote { get; set; }
         //Base Data
-        public Exclusion Exclusions { get; set; }
+        public IEnumerable<Exclusion> Exclusions { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<ProductModel> ProductModels { get; set; }

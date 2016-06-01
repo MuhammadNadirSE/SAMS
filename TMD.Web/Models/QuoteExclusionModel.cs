@@ -10,5 +10,6 @@ namespace TMD.Web.Models
         public int QuoteExclusionId { get; set; }
         public int QuoteId { get; set; }
         public int ExclusionId { get; set; }
+        public string ExclusionName { get; set; }
     }
 }

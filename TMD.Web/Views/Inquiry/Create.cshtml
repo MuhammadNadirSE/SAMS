@@ -44,7 +44,7 @@
     
    
    
-    <div class="portlet portletCustomHeight light bg-inverse" style="display: none;">
+    <div class="portlet light bg-inverse">
         <div class="portlet-title">
             <div class="caption">
                 <i class="icon-user font-red-sunglo"></i>
@@ -61,8 +61,8 @@
                     <!--Company Name is Inquiry Title-->
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.CompanyName, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-9">
+                            @Html.LabelFor(model => model.InquiryModel.CompanyName, new {@class = "control-label col-md-4 requiredLabel"})
+                            <div class="col-md-8">
                                 @Html.TextBoxFor(m => m.InquiryModel.CompanyName, new {@class = "form-control mandatory", placeholder = "Inquiry Title"})
 
 
@@ -73,8 +73,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.InquiryDate, new { @class = "control-label col-md-3 requiredLabel" })
-                            <div class="col-md-9">
+                            @Html.LabelFor(model => model.InquiryModel.InquiryDate, new { @class = "control-label col-md-4 requiredLabel" })
+                            <div class="col-md-8">
                                 @Html.TextBoxFor(m => m.InquiryModel.InquiryDate, "{0:d}", new { @class = "datepicker form-control  mandatory cursorHand", placeholder = "Inquiry Date", @readonly = "readonly" })
 
 
@@ -93,8 +93,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-7">
+                            @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-4 requiredLabel"})
+                            <div class="col-md-8">
                                 @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new {@class = "form-control select2me"})
                                 @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
                             </div>
@@ -103,8 +103,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.InquiryProductId, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-7">
+                            @Html.LabelFor(model => model.InquiryModel.InquiryProductId, new {@class = "control-label col-md-4 requiredLabel"})
+                            <div class="col-md-8">
                                 @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new {@class = "form-control select2me"})
                                 @Html.ValidationMessageFor(model => model.InquiryModel.InquiryProductId)
                             </div>
@@ -115,68 +115,36 @@
 
 
                 <div class="row">
-
-
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.Priority, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-7">
+                            @Html.LabelFor(model => model.InquiryModel.Priority, new {@class = "control-label col-md-4 requiredLabel"})
+                            <div class="col-md-8">
                                 @Html.DropDownListFor(x => x.InquiryModel.Priority, GetAllPriorities(), "--Please Select--", new {@class = "form-control select2me"})
                                 @Html.ValidationMessageFor(model => model.InquiryModel.Priority)
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-                    <!--/span-->
                 </div>
-
-
                 <div class="row">
-
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.ContactResponse, new { @class = "control-label col-md-3 requiredLabel" })
-                            <div class="col-md-9">
+                            @Html.LabelFor(model => model.InquiryModel.ContactResponse, new { @class = "control-label col-md-4 requiredLabel" })
+                            <div class="col-md-8">
                                 @Html.TextAreaFor(m => m.InquiryModel.ContactResponse, new { @class = "form-control mandatory", placeholder = "Contact Response" })
-
-
                                 @Html.ValidationMessageFor(model => model.InquiryModel.ContactResponse)
                             </div>
                         </div>
                     </div>
-
-
-                    <!--/span-->
-                </div>
-
-              
-
-                <div class="row">
-
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.UserComments, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-9">
+                            @Html.LabelFor(model => model.InquiryModel.UserComments, new {@class = "control-label col-md-4 requiredLabel"})
+                            <div class="col-md-8">
                                 @Html.TextAreaFor(m => m.InquiryModel.UserComments, new {@class = "form-control mandatory", placeholder = "User Comments"})
-
-
                                 @Html.ValidationMessageFor(model => model.InquiryModel.UserComments)
                             </div>
                         </div>
                     </div>
-
-
-                    <!--/span-->
                 </div>
-
-
             </div>
         </div>
                
@@ -186,7 +154,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-offset-3 col-md-9">
+                        <div class="col-md-offset-3 col-md-8">
                             <input type="submit" class="btn green-seagreen hideOthersDetail" value="Submit" />
                             <button type="reset" class="btn green-jungle hideOthersDetail">Reset</button>
                             <a href="~/Inquiry/Index" class="btn default cancelBtn">Cancel</a>
@@ -201,15 +169,3 @@
     </div>
 
 }
-
-
-<script>
-    $(document).ready(function () {
-        
-        $('.portletCustomHeight').show();
-
-
-    });
-
-</script>
-<!-- Matter ends -->
