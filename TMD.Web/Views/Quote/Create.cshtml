@@ -104,7 +104,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Quote.QuoteDetail.ModelId, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.Quote.QuoteDetail.ModelId, new SelectList(Model.ProductModels, "ProductModelId", "ModelName", Model.Quote.QuoteDetail.ModelId), "--Please Select--", new {@class = "form-control select2me"})
+                                @Html.DropDownListFor(x => x.Quote.QuoteDetail.ModelId, new SelectList(Model.ProductModels, "ProductModelId", "ModelName", Model.Quote.QuoteDetail.ModelId), "--Please Select--", new {@class = "form-control select2me",@id="modelDDL"})
                                 @Html.ValidationMessageFor(model => model.Quote.QuoteDetail.ModelId)
                             </div>
                         </div>
@@ -286,19 +286,36 @@
 
 
 <script>
+    function clearProductModelDLL() {
+        $("#modelDDL").empty();
+        //$("#modelDDL").select2('data', null);
+        var option = new Option("--Please Select--", "");
+        option.selected = true;
+        $("#modelDDL").append(option);
+        $("#modelDDL").trigger("change");
+    }
     $(document).ready(function () {
+        if ('@Model.Quote.QuoteID' < 1) {
+            clearProductModelDLL();
+        }
         $("#ProductsDDL").on('change', function () {
             //Quote Subject
-            $("#QuoteSubject").val("Quotation for supply of " + $("#ProductsDDL").select2('data').text);
+            if ($("#ProductsDDL").select2('data').text !== "--Please Select--") {
+                $("#QuoteSubject").val("Quotation for supply of " + $("#ProductsDDL").select2('data').text);
+            } else {
+                $("#QuoteSubject").val("Quotation for supply of ");
+            }
 
             //Models Dropdown List
             var productId = $("#ProductsDDL").val();
             var productModelsList = '@Html.Raw(Json.Encode(Model.ProductModels))';
             var parsedproductModelsList = JSON.parse(productModelsList);
-
+            clearProductModelDLL();
             $.each(parsedproductModelsList, function (key, value) {
                 if (value.ProductId === parseInt(productId)) {
-                    
+                    var option = new Option(value.ModelName,value.ProductModelId);
+                    $("#modelDDL").append(option);
+                    //$("#modelDDL").select2('data', { id: value.ProductModelId, text: value.ModelName });
                 }
             });
         });
