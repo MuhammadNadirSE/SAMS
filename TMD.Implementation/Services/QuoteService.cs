@@ -14,6 +14,7 @@ namespace TMD.Implementation.Services
 {
     public class QuoteService : IQuoteService
     {
+        private readonly IExclusionRepository exclusionRepository;
         private readonly IQuoteRepository quoteRepository;
         private readonly IQuoteDetailRepository quoteDetailRepository;
         private readonly IQuoteExclusionRepository quoteExclusionRepository;
@@ -21,8 +22,9 @@ namespace TMD.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly IProductModelRepository productModelRepository;
 
-        public QuoteService(IQuoteRepository quoteRepository, IQuoteDetailRepository quoteDetailRepository, IQuoteExclusionRepository quoteExclusionRepository, IContactRepository contactRepository, IProductRepository productRepository, IProductModelRepository productModelRepository)
+        public QuoteService(IExclusionRepository exclusionRepository,IQuoteRepository quoteRepository, IQuoteDetailRepository quoteDetailRepository, IQuoteExclusionRepository quoteExclusionRepository, IContactRepository contactRepository, IProductRepository productRepository, IProductModelRepository productModelRepository)
         {
+            this.exclusionRepository = exclusionRepository;
             this.quoteRepository = quoteRepository;
             this.quoteDetailRepository = quoteDetailRepository;
             this.quoteExclusionRepository = quoteExclusionRepository;
@@ -60,6 +62,7 @@ namespace TMD.Implementation.Services
             response.Contacts = contactRepository.GetAll().ToList();
             response.Products = productRepository.GetAll().ToList();
             response.ProductModels = productModelRepository.GetAll().ToList();
+            response.Exclusions = exclusionRepository.GetAll().ToList();
 
             return response;
         }
@@ -73,15 +76,14 @@ namespace TMD.Implementation.Services
         {
             if (model.QuoteID > 0)
             {
-                AddQuote(model);
+                UpdateQuote(model);
+                SaveQuoteDetails(model);
+                SaveQuoteExclusions(model);
             }
             else
             {
-                UpdateQuote(model);
+                AddQuote(model);
             }
-            SaveQuoteDetails(model);
-            SaveQuoteExclusions(model);
-
             return true;
         }
 

@@ -5,7 +5,7 @@ namespace TMD.Web.ModelMappers
 {
     public static class ExclusionMapper
     {
-       
+        #region Exclusion Mappers  
         public static Exclusion MapClientToServer(this ExclusionModel source)
         {
             return new Exclusion
@@ -33,7 +33,27 @@ namespace TMD.Web.ModelMappers
                 UpdatedDate = source.UpdatedDate
             };
         }
-      
-
+        #endregion
+        #region QuoteExclusion Mappers  
+        public static QuoteExclusion MapClientToServer(this QuoteExclusionModel source)
+        {
+            return new QuoteExclusion
+            {
+                QuoteExclusionId = source.QuoteExclusionId,
+                ExclusionId = source.ExclusionId,
+                QuoteId = source.QuoteId
+            };
+        }
+        public static QuoteExclusionModel MapServerToClient(this QuoteExclusion source)
+        {
+            return new QuoteExclusionModel
+            {
+                QuoteExclusionId = source.QuoteExclusionId,
+                ExclusionId = source.ExclusionId,
+                QuoteId = source.QuoteId,
+                ExclusionName = source.Exclusion.Name
+            };
+        }
+        #endregion
     }
 }

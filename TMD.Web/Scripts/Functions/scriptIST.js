@@ -1,4 +1,5 @@
 ﻿function clearInputFields(form) {
+    debugger
     $(form).find('input, select, textarea')
         .each(function () {
             $(this).val('');

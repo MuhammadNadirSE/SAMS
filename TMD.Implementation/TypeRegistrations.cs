@@ -41,6 +41,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<IInquiryDetailService, InquiryDetailService>();
             unityContainer.RegisterType<IProductModelService, ProductModelService>();
             unityContainer.RegisterType<IExclusionService, ExclusionService>();
+            unityContainer.RegisterType<IQuoteService, QuoteService>();
 
         } 
     }
