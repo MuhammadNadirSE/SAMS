@@ -10,6 +10,7 @@ using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Quote;
 using TMD.Web.ModelMappers;
 using TMD.Models.RequestModels;
+using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace TMD.Web.Controllers
             this.quoteService = quoteService;
         }
         // GET: /Quote/
-        //[SiteAuthorize(PermissionKey = "InquiriesList")]
+        [SiteAuthorize(PermissionKey = "QuotesList")]
         public ActionResult Index()
         {
             //List<TMD.Web.Models.InquiryModel> Inquiries =
@@ -52,6 +53,7 @@ namespace TMD.Web.Controllers
         }
 
         // GET: /Quote/Details/5
+        [SiteAuthorize(PermissionKey = "QuotesList")]
         public ActionResult Print(int id)
         {
             var quote = quoteService.GetQuoteAndQuoteDetail(id);
@@ -70,6 +72,7 @@ namespace TMD.Web.Controllers
         }
 
         // GET: /Quote/Create
+        [SiteAuthorize(PermissionKey = "CreateUpdateQuote")]
         public ActionResult Create(int? id)
         {
             QuoteViewModel viewModel = new QuoteViewModel();
@@ -111,6 +114,7 @@ namespace TMD.Web.Controllers
 
         // POST: /Quote/Create
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "CreateUpdateQuote")]
         public ActionResult Create(QuoteViewModel viewModel)
         {
             try
