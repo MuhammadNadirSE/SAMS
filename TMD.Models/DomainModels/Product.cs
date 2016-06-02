@@ -9,7 +9,6 @@ namespace TMD.Models.DomainModels
         public string ProductName { get; set; }
         public string ShortDescription { get; set; }
         public string DetailDescription { get; set; }
-        public decimal Price { get; set; }
         public int ProductCategoryID { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }

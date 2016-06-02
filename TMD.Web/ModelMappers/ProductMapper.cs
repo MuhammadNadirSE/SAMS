@@ -12,7 +12,6 @@ namespace TMD.Web.ModelMappers
                 ProductName = source.ProductName,
                 ShortDescription = source.ShortDescription,
                 DetailDescription = source.DetailDescription,
-                Price = source.Price,
                 ProductCategoryID = source.ProductCategoryID,
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
@@ -30,7 +29,6 @@ namespace TMD.Web.ModelMappers
                 ProductName = source.ProductName,
                 ShortDescription = source.ShortDescription,
                 DetailDescription = source.DetailDescription,
-                Price = source.Price,
                 ProductCategoryID = source.ProductCategoryID,
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
@@ -45,8 +43,7 @@ namespace TMD.Web.ModelMappers
             {
 
                 ProductID = source.ProductID,
-                ProductName = source.ProductName,
-                Price = source.Price,
+                ProductName = source.ProductName
             };
         }
     }

@@ -73,18 +73,6 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor((m => m.Product.Price), new {@class = "col-md-4 control-label requiredLabel"})
-                            <div class="col-md-8">
-                                @Html.TextBoxFor((m => m.Product.Price), new {@class = "form-control mandatory", placeholder = "Price"})
-                                @Html.ValidationMessageFor((x => x.Product.Price))
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
                             @Html.LabelFor((m => m.Product.ShortDescription), new {@class = "col-md-4 control-label requiredLabel"})
                             <div class="col-md-8">
                                 @Html.TextAreaFor((m => m.Product.ShortDescription), new {@class = "form-control mandatory", placeholder = "Short Description"})
