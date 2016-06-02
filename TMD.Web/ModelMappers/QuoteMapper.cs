@@ -95,6 +95,7 @@ namespace TMD.Web.ModelMappers
                 ValidityTerms = source.ValidityTerms,
                 WarrantyTerms = source.WarrantyTerms,
                 PaymentTerms = source.PaymentTerms,
+                ContactName=source.Contact.FirstName+" "+source.Contact.LastName,
 
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,

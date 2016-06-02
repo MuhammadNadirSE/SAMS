@@ -49,7 +49,7 @@ namespace TMD.Repository.Repositories
                 s =>
                     (
                         (string.IsNullOrEmpty(searchRequest.Subject) || (s.Subject).Contains(searchRequest.Subject)) &&
-                        (searchRequest.ReferenceNumber == "" || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber)) 
+                        (string.IsNullOrEmpty(searchRequest.ReferenceNumber) || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber)) 
                    
                     );
 

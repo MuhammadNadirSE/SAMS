@@ -44,6 +44,8 @@ namespace TMD.Web.Models
         [Required(ErrorMessage = "Contact is required.")]
         public Nullable<int> ContactId { get; set; }
 
+        public string ContactName { get; set; }
+
         public QuoteDetailModel QuoteDetail { get; set; }
         public List<QuoteExclusionModel> QuoteExclusions { get; set; }
     }
