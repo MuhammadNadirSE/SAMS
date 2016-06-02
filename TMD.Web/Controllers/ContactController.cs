@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using TMD.Common;
 using TMD.Interfaces.IServices;
 using TMD.Models.ResponseModels;
 using TMD.Web.ViewModels.Contact;
@@ -87,7 +88,10 @@ namespace TMD.Web.Controllers
                 contactResp.Contact = ContactViewModel.Contact.MapClientToServer();
                 if (ContactViewModel.Addresses != null)
                     contactResp.Addresses = ContactViewModel.Addresses.Select(x => x.MapClientToServer()).ToList();
-
+                if (contactResp.Addresses.Any() && contactResp.Addresses.All(x => (AddressType) x.AddressType != AddressType.PrimaryAddress))
+                {
+                    contactResp.Addresses.FirstOrDefault().AddressType=(int)AddressType.PrimaryAddress;
+                }
                 contactService.SaveContact(contactResp);
                 TempData["message"] = new MessageViewModel
                 {

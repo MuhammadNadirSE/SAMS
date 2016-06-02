@@ -53,7 +53,19 @@ namespace TMD.Web.Controllers
         // GET: /Quote/Details/5
         public ActionResult Print(int id)
         {
-            return View();
+            var quote = quoteService.GetQuoteAndQuoteDetail(id);
+            QuotePrintViewModel viewModel=new QuotePrintViewModel();
+            if (quote != null)
+            {
+                viewModel.Quote = quote.MapServerToClient();
+                viewModel.Quote.QuoteExclusions = quote.QuoteExclusions.Select(x => x.MapServerToClient()).ToList();
+                viewModel.Contact = quote.Contact.MapForQuotePrint();
+                viewModel.Quote.QuoteDetail = quote.QuoteDetails.FirstOrDefault().MapServerToClient();
+                viewModel.ProductModel = quote.QuoteDetails.FirstOrDefault().ProductModel.MapServerToClient();
+                viewModel.Product = quote.QuoteDetails.FirstOrDefault().ProductModel.Product.MapServerToClient();
+                viewModel.ProductModelTechnicalSpec = quote.QuoteDetails.FirstOrDefault().ProductModel.ProductTechSpecs.Select(x => x.MapServerToClient()).ToList();
+            }
+            return View(viewModel);
         }
 
         // GET: /Quote/Create
@@ -83,6 +95,8 @@ namespace TMD.Web.Controllers
                     WarrantyTerms = "1 Year(s)",
                     ValidityTerms = "1 Week(s)"
                 };
+
+                viewModel.Quote.QuoteReferenceNo = "Z-LHR-"+ viewModel.Quote.QuoteID;
                 viewModel.Quote.QuoteDetail.Make = "ZAMTAS";
             }
             viewModel.Contacts = quoteResponse.Contacts.Select(x => x.CreateDDL()).ToList();

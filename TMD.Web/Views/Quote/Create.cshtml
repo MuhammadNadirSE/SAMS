@@ -47,7 +47,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Quote.QuoteReferenceNo, new {@class = "control-label col-md-4 requiredLabel" })
                             <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.Quote.QuoteReferenceNo, new {@class = "form-control mandatory", placeholder = "Quote Reference#" })
+                                @Html.TextBoxFor(m => m.Quote.QuoteReferenceNo, new {@class = "form-control mandatory", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.Quote.QuoteReferenceNo)
                             </div>
                         </div>
@@ -267,6 +267,10 @@
                     <div class="row">
                         <div class="col-md-offset-3 col-md-8">
                             <button type="submit" class="btn green-seagreen hideOthersDetail" value="Submit">Submit</button>
+                            @if (Model.Quote.QuoteID > 0)
+                            {
+                                <a href="~/Quote/Print/@(Model.Quote.QuoteID)" class="btn blue hidden-print">Print <i class="fa fa-print"></i></a>
+                            }
                             <a href="~/Quote/Index" class="btn default cancelBtn">Cancel</a>
 
                         </div>

@@ -22,6 +22,8 @@ namespace TMD.Implementation.Services
             
         }
 
+        #endregion 'Private and Constructor'
+
         public string AddRole(AspNetRole AspNetRole)
         {
             AspNetRoleRepository.Add(AspNetRole);
@@ -47,16 +49,9 @@ namespace TMD.Implementation.Services
             return AspNetRoleRepository.GetAll();
         }
 
-        public IEnumberable<AspNetRole> GetAllRoles()
-        {
-            return (IEnumberable<AspNetRole>)AspNetRoleRepository.GetAll();
-        }
-
-      
-
-
-        #endregion 'Private and Constructor'
-
-
+         public IEnumerable<AspNetRole> GetAllRolesExceptSuperAdmin()
+         {
+             return AspNetRoleRepository.GetAllRolesExceptSuperAdmin();
+         }
     }
 }

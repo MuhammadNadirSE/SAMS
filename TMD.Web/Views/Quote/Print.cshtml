@@ -1,5 +1,5 @@
 ﻿@using System.Web.UI.WebControls
-@*@model  TMD.Web.ViewModels.Quote.QuoteViewModel*@
+@model  TMD.Web.ViewModels.Quote.QuotePrintViewModel
 @{
     ViewBag.Title = "Print Quote";
     Session["MenuKey"] = 4;
@@ -11,227 +11,259 @@
     padding-left: 10px !important;
     padding-right: 10px !important;
 }
+    @@page 
+        {
+            size: auto;   /* auto is the current printer page size */
+            margin: 0mm;  /* this affects the margin in the printer settings */
+        }
+
+        body 
+        {
+            background-color:#FFFFFF; 
+            border: solid 1px black ;
+            margin: 0px;  /* the margin on the content before printing */
+       }
 </style>
 <!-- BEGIN PAGE HEADER-->
-<span>
-    <h3 class="page-title">
-        Price Quote
-    </h3>
-    <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();">
-        Print <i class="fa fa-print"></i>
-    </a>
-</span>
-<hr/>
+<div class="row invoice-logo">
+    <div class="col-xs-8 invoice-logo-space">
+        <img src="~/Images/Web/mainlogo.jpg" class="img-responsive" alt="ZAMTAS" />
+    </div>
+    <div class="col-xs-4 textAlignRight">
+        <label>194-H, N Block Model Town Lahore Pakistan</label><br />
+        <label>+92 42 3517 1145-6</label><br />
+        <label>info@zamtas.com.pk</label>
+    </div>
+</div>
+<hr />
 <!-- END PAGE HEADER-->
 <!-- BEGIN PAGE CONTENT-->
 <div class="invoice">
-    <div class="row invoice-logo">
-        <div class="col-xs-6 invoice-logo-space">
-            <label><b>Talha Iftikhar</b></label><br />
-            <label>HATAN Solutions</label><br />
-            <label>Faisal Town, Lahore</label><br />
-            <label>+92-313-444-1895</label><br />
-            <label>talha@@hatansolutions.com</label>
-        </div>
-        <div class="col-xs-6" style="text-align: right;">
-            <label>Ref #: ZAM-LHR-1235</label><br />
-            <label>Date: 01-06-2016</label><br />
-            <label>Validity: 1 Week(s)</label>
-        </div>
+<div class="row invoice-logo">
+    <div class="col-xs-6">
+        <label><b>To,</b></label><br />
+        <label><b>@Model.Contact.FullName</b></label><br/>
+        <label>@Model.Contact.CompanyName</label><br/>
+        <label>@Model.Contact.Address</label><br/>
+        Phone:<label>@Model.Contact.PrimaryPhone</label>; Email:<label>@Model.Contact.Email</label>
     </div>
-    <hr />
-    <div class="row">
-        <div class="col-xs-12" style="text-align: center;"><h4>SUB:   QUOTATION FOR SUPPLY OF AUTO SLIDING DOOR SYSTEM</h4></div>
-    </div>
-            <h4>Terms & Conditions</h4>
-    <div class="row">
-        <div class="col-xs-4">
-            <b>Payment:</b>
-            <ul class="list-unstyled">
-                <li>
-                    70% on Product Delivery
-                </li>
-                <li>
-                    30% After installation
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-4">
-            <b>Delivery:</b>
-            <ul class="list-unstyled">
-                <li>
-                    1 - 2 Week(s)
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-4">
-            <b>Installation:</b>
-            <ul class="list-unstyled">
-                <li>
-                    1 Week(s)
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-    <div class="col-xs-4">
-        <b>Warranty:</b>
-        <ul class="list-unstyled">
-            <li>
-                1 Year(s)
-            </li>
-        </ul>
-    </div>
-    <div class="col-xs-4">
-        <b>Free Service:</b>
-        <ul class="list-unstyled">
-            <li>
-                6 Month(s)
-            </li>
-        </ul>
+    <div class="col-xs-6 textAlignRight">
+        <label>Ref #: @Model.Quote.QuoteReferenceNo</label><br/>
+        <label>Date: @Model.Quote.CreatedDate.ToShortDateString()</label><br/>
+        <label>Validity: @Model.Quote.ValidityTerms</label>
     </div>
 </div>
+<hr/>
+    <div class="row">
+        <div class="col-xs-12 textAlignCenter"><h4>Subject: <b>@Model.Quote.Subject</b></h4>
+        </div>
+    </div>
 <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                                <th>
-                                    Item
-                                </th>
-                                <th class="hidden-480">
-                                    Description
-                                </th>
-                                <th class="hidden-480">
-                                    Quantity
-                                </th>
-                                <th class="hidden-480">
-                                    Unit Cost
-                                </th>
-                                <th>
-                                    Total
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    Hardware
-                                </td>
-                                <td class="hidden-480">
-                                    Server hardware purchase
-                                </td>
-                                <td class="hidden-480">
-                                    32
-                                </td>
-                                <td class="hidden-480">
-                                    $75
-                                </td>
-                                <td>
-                                    $2152
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    2
-                                </td>
-                                <td>
-                                    Furniture
-                                </td>
-                                <td class="hidden-480">
-                                    Office furniture purchase
-                                </td>
-                                <td class="hidden-480">
-                                    15
-                                </td>
-                                <td class="hidden-480">
-                                    $169
-                                </td>
-                                <td>
-                                    $4169
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    Foods
-                                </td>
-                                <td class="hidden-480">
-                                    Company Anual Dinner Catering
-                                </td>
-                                <td class="hidden-480">
-                                    69
-                                </td>
-                                <td class="hidden-480">
-                                    $49
-                                </td>
-                                <td>
-                                    $1260
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    Software
-                                </td>
-                                <td class="hidden-480">
-                                    Payment for Jan 2013
-                                </td>
-                                <td class="hidden-480">
-                                    149
-                                </td>
-                <td class="hidden-480">
-                    $12
+    <div class="col-xs-12">
+        <p>
+            <b>Dear Sir,</b><br/>
+            Thanks for your valued inquiry regarding Automatic Sliding Door System; we are pleased to quote as under:
+        </p>
+    </div>
+</div>
+<h4><i><b>Item(s)</b></i></h4>
+<div class="row">
+   
+    <div class="col-xs-12">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Item
+                </th>
+                <th class="hidden-480">
+                    Model
+                </th>
+                <th class="hidden-480">
+                    Make
+                </th>
+                <th class="hidden-480">
+                    Quantity
+                </th>
+                <th class="hidden-480">
+                    Unit Cost
+                </th>
+                <th>
+                    Total
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    1
                 </td>
                 <td>
-                    $866
+                    @Model.Product.ProductName
+                </td>
+                <td class="hidden-480">
+                    @Model.ProductModel.ModelName
+                </td>
+                <td class="hidden-480">
+                    @Model.Quote.QuoteDetail.Make
+                </td>
+                <td class="hidden-480">
+                    @Model.Quote.QuoteDetail.Quantity
+                </td>
+                <td class="hidden-480">
+                    @Model.Quote.QuoteDetail.Price
+                </td>
+                <td>
+                    @(Model.Quote.QuoteDetail.Quantity * Model.Quote.QuoteDetail.Price)
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+<h4><i><b>Technical Specifications</b></i></h4>
 <div class="row">
-    <div class="col-xs-8">
-        <h4>Exclusions</h4>
-        <ul class="list-unstyled">
-            <li>
-                Taxes are not included in the price.
-            </li>
-            <li>
-                Glass / Aluminum will be provided by the client.
-            </li>
-            <li>
-                All kind of Civil / Electrical Work is client responsibility
-            </li>
-        </ul>
+   
+    <div class="col-xs-12">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>
+                    Specification
+                </th>
+                <th>
+                    Value
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var techspec in @Model.ProductModelTechnicalSpec)
+            {
+                <tr>
+                    <td>
+                        @techspec.TechSpecName
+                    </td>
+                    <td>
+                        @techspec.SpecValue
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
-    <div class="col-xs-4 invoice-block">
-        <ul class="list-unstyled amounts">
-            <li>
-                <strong>Sub - Total amount:</strong> $9265
-            </li>
-            <li>
-                <strong>Discount:</strong> 12.9%
-            </li>
-            <li>
-                <strong>VAT:</strong> -----
-            </li>
-            <li>
-                <strong>Grand Total:</strong> $12489
-            </li>
+    @*<div class="col-xs-4 invoice-block">
+            <ul class="list-unstyled amounts textAlignRight">
+                <li>
+                    <strong>Sub-Total:</strong> $9265
+                </li>
+                <li>
+                    <strong>Discount:</strong> 12.9%
+                </li>
+                <li>
+                    <strong>Grand Total:</strong> $12489
+                </li>
+            </ul>
+        </div>*@
+</div>
+<h4><i><b>Terms & Conditions</b></i></h4>
+    <div class="row">
+        <div class="col-xs-4">
+            <b>Payment:</b>
+            <ul class="list-unstyled">
+                @foreach (var payment in @Model.Quote.PaymentTerms.Split('\n'))
+                {
+                    <li>
+                        @payment
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-xs-4">
+            <b>Delivery:</b>
+            <ul class="list-unstyled">
+                @foreach (var payment in @Model.Quote.DeliveryTerms.Split('\n'))
+                {
+                    <li>
+                        @payment
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-xs-4">
+            <b>Installation:</b>
+            <ul class="list-unstyled">
+                @foreach (var payment in @Model.Quote.InstallationTerms.Split('\n'))
+                {
+                    <li>
+                        @payment
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <b>Warranty:</b>
+            <ul class="list-unstyled">
+                @foreach (var payment in @Model.Quote.WarrantyTerms.Split('\n'))
+                {
+                    <li>
+                        @payment
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-xs-4">
+            <b>Free Service:</b>
+            <ul class="list-unstyled">
+               @foreach (var payment in @Model.Quote.FreeServiceTerms.Split('\n'))
+               {
+                <li>
+                    @payment
+                </li>
+               }
+            </ul>
+        </div>
+    </div>
+
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <h4><i><b>Exclusions</b></i></h4>
+        <ul class="list-unstyled">
+            @foreach (var exclusion in @Model.Quote.QuoteExclusions)
+            {
+                <li>
+                    @exclusion.ExclusionName
+                </li>
+            }
         </ul>
     </div>
 </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p>
+                <b>Looking forward to your valued order and assuring you of our best services.</b><br/>
+                <b>Regards,</b><br />
+                <b>ZAMTAS INTERNTIONAL</b>
+            </p>
         </div>
-        <!-- END PAGE CONTENT-->
+    </div>
+</div>
+<div class="row" style="margin-bottom: 30px;">
+    <div class="col-xs-8"></div>
+    <div class="col-xs-4">
+        <a class="btn btn-lg blue hidden-print" onclick=" javascript:window.print(); ">
+            Print <i class="fa fa-print"></i>
+        </a>
+        <a href="~/Quote/Index" class="btn btn-lg default  hidden-print">Cancel</a>
+    </div>
+</div>
+
+<!-- END PAGE CONTENT-->

@@ -440,6 +440,7 @@
     <Compile Include="ViewModels\Product\ProductModelViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Product\TechnicalSpecsViewModel.cs" />
+    <Compile Include="ViewModels\Quote\QuotePrintViewModel.cs" />
     <Compile Include="ViewModels\Quote\QuoteViewModel.cs" />
     <Compile Include="ViewModels\Ticket\TicketReplyViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />

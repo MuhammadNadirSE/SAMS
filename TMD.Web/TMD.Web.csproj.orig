@@ -293,17 +293,21 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AspNetRoleController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ExclusionController.cs" />
     <Compile Include="Controllers\InquiryController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TechnicalSpecsController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
@@ -326,11 +330,15 @@
     <Compile Include="ModelMappers\AspNetRoleMapper.cs" />
     <Compile Include="ModelMappers\DesignationMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\ExclusionMapper.cs" />
+    <Compile Include="ModelMappers\InquiryDetailMapper.cs" />
     <Compile Include="ModelMappers\InquiryMapper.cs" />
     <Compile Include="ModelMappers\NotificationMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\EmployeePayRollMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMappers.cs" />
+    <Compile Include="ModelMappers\QuoteMapper.cs" />
+    <Compile Include="ModelMappers\ProductModelMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\TechnicalSpecsMapper.cs" />
     <Compile Include="ModelMappers\TicketMapper.cs" />
@@ -350,6 +358,9 @@
     <Compile Include="Models\Common\EmployeesDropdownModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\DesignationModel.cs" />
+    <Compile Include="Models\ExclusionModel.cs" />
+    <Compile Include="Models\InquiryDetailModel.cs" />
     <Compile Include="Models\InquiryModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\Order.cs" />
@@ -357,6 +368,10 @@
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProductTechnicalSpec.cs" />
+    <Compile Include="Models\QuoteDetailModel.cs" />
+    <Compile Include="Models\QuoteExclusionModel.cs" />
+    <Compile Include="Models\QuoteModel.cs" />
     <Compile Include="Models\TechnicalSpecsModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Models\TicketTypeModel.cs" />
@@ -425,6 +440,7 @@
     <Compile Include="ViewModels\Product\ProductModelViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Product\TechnicalSpecsViewModel.cs" />
+    <Compile Include="ViewModels\Quote\QuoteViewModel.cs" />
     <Compile Include="ViewModels\Ticket\TicketReplyViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\UserRoles\AspNetRoleModel.cs" />
@@ -1687,6 +1703,7 @@
     <Content Include="Content\global\plugins\bootstrap-hover-dropdown\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="Images\Web\mainlogo.jpg" />
     <Content Include="Scripts\App\jquery.comiseo.daterangepicker.js" />
     <Content Include="Scripts\App\jquery.dataTables.js" />
     <Content Include="Scripts\App\moment.min.js" />
@@ -1799,12 +1816,21 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\Create.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Product\ModelSpecs.cshtml" />
-=======
     <Content Include="Views\Inquiry\Create.cshtml" />
     <Content Include="Views\Inquiry\Index.cshtml" />
->>>>>>> 59e05e5d2ee98e112ce2834c48923541ca92c62b
+    <Content Include="Views\Exclusion\Create.cshtml" />
+    <Content Include="Views\Exclusion\Index.cshtml" />
+    <Content Include="Views\Designation\Create.cshtml" />
+    <Content Include="Views\Designation\Index.cshtml" />
+    <Content Include="Views\Quote\Create.cshtml" />
+    <Content Include="Views\Quote\Index.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Quote\Print.cshtml" />
+=======
+    <Content Include="Views\AspNetRole\Index.cshtml" />
+    <Content Include="Views\AspNetRole\Create.cshtml" />
+>>>>>>> 6ad2afc382604d7a6fd89954fcc2a3f4c86a234c
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2902,6 +2928,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TMD.Common\TMD.Common.csproj">
+      <Project>{777eb540-a05d-4f6a-a320-52e3035c7abb}</Project>
+      <Name>TMD.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TMD.Implementation\TMD.Implementation.csproj">
       <Project>{42d2e6c0-74f1-46fb-b7ba-43251156275d}</Project>
       <Name>TMD.Implementation</Name>

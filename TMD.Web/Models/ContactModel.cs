@@ -9,6 +9,7 @@ namespace TMD.Web.Models
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name is required.")]
         public string FirstName { get; set; }
+        public string FullName { get; set; }
 
         public string MiddleName { get; set; }
 
@@ -40,6 +41,7 @@ namespace TMD.Web.Models
 
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
+        public string Address { get; set; }
 
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }

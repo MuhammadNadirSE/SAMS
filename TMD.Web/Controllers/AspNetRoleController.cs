@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Common;
-using TMD.Web.ViewModels.Product;
-using TMD.WebBase.Mvc;
-using TMD.Web.Models;
 using TMD.Implementation.Services;
 
 namespace TMD.Web.Controllers
@@ -27,7 +21,7 @@ namespace TMD.Web.Controllers
         public ActionResult Index()
         {
             List<TMD.Web.ViewModels.UserRoles.AspNetRoleModel> Roles =
-               aspNetRoleService.GetAllRoles()
+               aspNetRoleService.GetAllRolesExceptSuperAdmin()
                    .ToList()
                    .Select(x => x.CreateFromServerToClient()).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
