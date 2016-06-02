@@ -26,7 +26,7 @@ namespace TMD.Web.Controllers
         }
 
         // GET: /Quote/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Print(int id)
         {
             return View();
         }

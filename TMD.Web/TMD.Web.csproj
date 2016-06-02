@@ -1824,6 +1824,7 @@
     <Content Include="Views\Designation\Index.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\Quote\Print.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
