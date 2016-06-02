@@ -8,6 +8,10 @@ using TMD.Repository.BaseRepository;
 using TMD.Models.DomainModels;
 using Microsoft.Practices.Unity;
 using System.Data.Entity;
+using TMD.Models.Common;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
+using System.Linq.Expressions;
 
 namespace TMD.Repository.Repositories
 {
@@ -26,6 +30,41 @@ namespace TMD.Repository.Repositories
         public Quote GetQuoteAndQuoteDetail(int quoteId)
         {
             return DbSet.Include("QuoteDetails").Include("QuoteExclusions").FirstOrDefault(x => x.QuoteID == quoteId);
+        }
+
+        private readonly Dictionary<OrderByColumnQuote, Func<Quote, object>> sortClause =
+
+         new Dictionary<OrderByColumnQuote, Func<Quote, object>>
+            {
+                {OrderByColumnQuote.Subject, c => c.Subject},
+                {OrderByColumnQuote.ReferenceNumber, c => c.QuoteReferenceNo}
+                
+            };
+        public QuoteResponse GetAllQuotes(QuoteSearchRequest searchRequest)
+        {
+            int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
+            int toRow = searchRequest.PageSize;
+
+            Expression<Func<Quote, bool>> query =
+                s =>
+                    (
+                        (string.IsNullOrEmpty(searchRequest.Subject) || (s.Subject).Contains(searchRequest.Subject)) &&
+                        (searchRequest.ReferenceNumber == "" || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber)) 
+                   
+                    );
+
+            IEnumerable<Quote> quotes = searchRequest.IsAsc
+               ? DbSet
+                   .Where(query)
+                   .OrderBy(sortClause[searchRequest.OrderByColumn]).Skip(fromRow)
+                   .Take(toRow)
+                   .ToList()
+               : DbSet
+                   .Where(query)
+                   .OrderByDescending(sortClause[searchRequest.OrderByColumn]).Skip(fromRow)
+                   .Take(toRow)
+                   .ToList();
+            return new QuoteResponse { Quotes = quotes.ToList(), TotalCount = DbSet.Count(query), FilteredCount = quotes.Count() };
         }
     }
 }

@@ -143,5 +143,10 @@ namespace TMD.Implementation.Services
             }
             quoteExclusionRepository.SaveChanges();
         }
+        public QuoteResponse GetAllQuotes(QuoteSearchRequest searchRequest)
+        {
+            var inquiries = quoteRepository.GetAllQuotes(searchRequest);
+            return inquiries;
+        }
     }
 }
