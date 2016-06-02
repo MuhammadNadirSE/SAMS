@@ -13,6 +13,7 @@ using TMD.Models.RequestModels;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize]
     public class QuoteController : Controller
     {
         private readonly IQuoteService quoteService;
@@ -132,7 +133,8 @@ namespace TMD.Web.Controllers
                 {
                     viewModel.Quote.QuoteDetail.MapClientToServer()
                 };
-                quote.QuoteExclusions= viewModel.QuoteExclusions.Select(x => x.MapClientToServer()).ToList();
+                if(viewModel.QuoteExclusions.Any())
+                    quote.QuoteExclusions= viewModel.QuoteExclusions.Select(x => x.MapClientToServer()).ToList();
 
                 if (quoteService.SaveQuote(quote))
                 {
@@ -157,7 +159,7 @@ namespace TMD.Web.Controllers
                 ViewBag.MessageVM = new MessageViewModel
                 {
                     IsError = true,
-                    Message = "There is some problem, please try again!"
+                    Message = e.Message+"\n"+e.InnerException
                 };
                 return View(viewModel);
             }

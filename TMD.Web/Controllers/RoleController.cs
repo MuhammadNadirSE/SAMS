@@ -9,11 +9,11 @@ using TMD.Implementation.Services;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class AspNetRoleController : Controller
+    public class RoleController : Controller
     {
         private readonly IAspNetRoleService aspNetRoleService;
 
-        public AspNetRoleController(IAspNetRoleService aspNetRoleService)
+        public RoleController(IAspNetRoleService aspNetRoleService)
         {
             this.aspNetRoleService = aspNetRoleService;
         }
@@ -40,7 +40,7 @@ namespace TMD.Web.Controllers
             {
 
 
-                var aspNetRolesModel = aspNetRoleService.GetRoleById(Convert.ToInt32(id));
+                var aspNetRolesModel = aspNetRoleService.GetRoleById(Convert.ToString(id));
 
                 if (aspNetRolesModel != null)
                 {
