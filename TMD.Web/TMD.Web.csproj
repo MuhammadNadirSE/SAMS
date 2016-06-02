@@ -293,6 +293,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AspNetRoleController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -1824,6 +1825,8 @@
     <Content Include="Views\Designation\Index.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\AspNetRole\Index.cshtml" />
+    <Content Include="Views\AspNetRole\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

@@ -15,6 +15,17 @@ namespace TMD.Web.ModelMappers
             };
         }
 
+
+        public static AspNetRole CreateFromClientToServer(this AspNetRoleModel source)
+        {
+
+            return new AspNetRole
+            {
+                Id = source.Id,
+                Name = source.Name
+            };
+        }
+
       
      
     }

@@ -9,6 +9,7 @@ using TMD.Models.DomainModels;
 using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Quote;
 using TMD.Web.ModelMappers;
+using TMD.Models.RequestModels;
 
 namespace TMD.Web.Controllers
 {
@@ -20,9 +21,33 @@ namespace TMD.Web.Controllers
             this.quoteService = quoteService;
         }
         // GET: /Quote/
+        //[SiteAuthorize(PermissionKey = "InquiriesList")]
         public ActionResult Index()
         {
+            //List<TMD.Web.Models.InquiryModel> Inquiries =
+            //    inquiryService.GetAllInquiries()
+            //        .ToList()
+            //        .Select(x => x.MapServerToClient()).ToList();
+           // ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            //return View(new InquiryViewModel());
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Index(QuoteSearchRequest searchRequest)
+        {
+
+            //var contactResponse = inquiryService.GetAllInquiries(searchRequest);
+            //var inquiryList = contactResponse.Inquiries.ToList().Select(x => x.MapServerToClientSearch()).ToList();
+            //var model = new InquiryViewModel()
+            //{
+            //    data = inquiryList,
+            //    recordsFiltered = contactResponse.FilteredCount,
+            //    recordsTotal = contactResponse.TotalCount
+            //};
+           
+           // return Json(model, JsonRequestBehavior.AllowGet);
+            return null;
         }
 
         // GET: /Quote/Details/5

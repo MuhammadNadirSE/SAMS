@@ -107,6 +107,7 @@
     <Compile Include="Common\OrderByColumnAttendance.cs" />
     <Compile Include="Common\EmployeeAttendanceStatus.cs" />
     <Compile Include="Common\OrderByColumn.cs" />
+    <Compile Include="Common\OrderByColumnQuote.cs" />
     <Compile Include="DomainModels\Address.cs" />
     <Compile Include="DomainModels\AllowanceType.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\AttendanceSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
+    <Compile Include="RequestModels\QuoteSearchRequest.cs" />
     <Compile Include="RequestModels\TicketRequestModel.cs" />
     <Compile Include="Resources\PayRollGroupByModel.cs" />
     <Compile Include="ResponseModels\BillDetailResponse.cs" />
