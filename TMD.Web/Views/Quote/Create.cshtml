@@ -111,7 +111,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Quote.QuoteDetail.Price, new {@class = "control-label col-md-4 requiredLabel" })
                             <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.Quote.QuoteDetail.Price, new {@class = "form-control mandatory", placeholder = "Product Price"})
+                                @Html.TextBoxFor(m => m.Quote.QuoteDetail.Price, new {@class = "form-control mandatory", placeholder = "Product Price",@id="ProductPrice"})
                                 @Html.ValidationMessageFor(model => model.Quote.QuoteDetail.Price)
                             </div>
                         </div>
@@ -315,11 +315,19 @@
                 if (value.ProductId === parseInt(productId)) {
                     var option = new Option(value.ModelName,value.ProductModelId);
                     $("#modelDDL").append(option);
-                    //$("#modelDDL").select2('data', { id: value.ProductModelId, text: value.ModelName });
+                }
+            });
+
+            //Product Dropdown List
+            var productsList = '@Html.Raw(Json.Encode(Model.Products))';
+            var parsedproductsList = JSON.parse(productsList);
+            $.each(parsedproductsList, function (key, value) {
+                if (value.ProductID === parseInt(productId)) {
+                    $("#ProductPrice").val(value.Price);
                 }
             });
         });
-
+       
         $('.remove').live("click", function () {
             if (!confirm("Are you sure to delete this exclusion?")) {
                 return;

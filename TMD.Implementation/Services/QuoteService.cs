@@ -74,17 +74,28 @@ namespace TMD.Implementation.Services
 
         public bool SaveQuote(Quote model)
         {
-            if (model.QuoteID > 0)
+            try
             {
-                UpdateQuote(model);
-                SaveQuoteDetails(model);
-                SaveQuoteExclusions(model);
+                if (model.QuoteID > 0)
+                {
+                    UpdateQuote(model);
+                    SaveQuoteDetails(model);
+                    SaveQuoteExclusions(model);
+                }
+                else
+                {
+                    AddQuote(model);
+
+                    model.QuoteReferenceNo = "Z-LHR-" + model.QuoteID;
+                    UpdateQuote(model);
+                }
+                return true;
             }
-            else
+            catch (Exception ex)
             {
-                AddQuote(model);
+                throw ex;
             }
-            return true;
+            
         }
 
         private void SaveQuoteDetails(Quote model)

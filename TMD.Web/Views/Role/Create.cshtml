@@ -9,7 +9,7 @@
 
 
 
-@using (Html.BeginForm("Create", "AspNetRole", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
+@using (Html.BeginForm("Create", "Role", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
 {
 
     
@@ -56,7 +56,7 @@
                                 <div class="col-md-offset-4 col-md-6">
                                     <button type="submit" class="btn green-seagreen">Save</button>
                                     <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
-                                    <a href="@Url.Action("Index", "TechnicalSpecs")" class="btn red-sunglo">Cancel</a>
+                                    <a href="@Url.Action("Index", "Role")" class="btn red-sunglo">Cancel</a>
                                 </div>
                             </div>
                         </div>

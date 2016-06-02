@@ -39,7 +39,7 @@ namespace TMD.Implementation.Services
 
             return AspNetRole.Id;
         }
-        public AspNetRole GetRoleById(int id)
+        public AspNetRole GetRoleById(string id)
         {
             return AspNetRoleRepository.Find(id);
         }
