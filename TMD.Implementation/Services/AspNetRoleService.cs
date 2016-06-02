@@ -22,6 +22,31 @@ namespace TMD.Implementation.Services
             
         }
 
+        public string AddRole(AspNetRole AspNetRole)
+        {
+            AspNetRoleRepository.Add(AspNetRole);
+            AspNetRoleRepository.SaveChanges();
+
+            return AspNetRole.Id;
+        }
+
+        public string UpdateRole(AspNetRole AspNetRole)
+        {
+            AspNetRoleRepository.Update(AspNetRole);
+            AspNetRoleRepository.SaveChanges();
+
+            return AspNetRole.Id;
+        }
+        public AspNetRole GetRoleById(int id)
+        {
+            return AspNetRoleRepository.Find(id);
+        }
+
+        public IEnumerable<AspNetRole> GetAllRegisteredRoles()
+        {
+            return AspNetRoleRepository.GetAll();
+        }
+
         public IEnumberable<AspNetRole> GetAllRoles()
         {
             return (IEnumberable<AspNetRole>)AspNetRoleRepository.GetAll();
