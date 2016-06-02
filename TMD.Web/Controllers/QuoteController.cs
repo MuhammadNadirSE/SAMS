@@ -28,26 +28,26 @@ namespace TMD.Web.Controllers
             //    inquiryService.GetAllInquiries()
             //        .ToList()
             //        .Select(x => x.MapServerToClient()).ToList();
-           // ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            //return View(new InquiryViewModel());
-            return View();
+            //ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(new QuoteViewModel());
         }
 
         [HttpPost]
         public JsonResult Index(QuoteSearchRequest searchRequest)
         {
 
-            //var contactResponse = inquiryService.GetAllInquiries(searchRequest);
-            //var inquiryList = contactResponse.Inquiries.ToList().Select(x => x.MapServerToClientSearch()).ToList();
-            //var model = new InquiryViewModel()
-            //{
-            //    data = inquiryList,
-            //    recordsFiltered = contactResponse.FilteredCount,
-            //    recordsTotal = contactResponse.TotalCount
-            //};
-           
-           // return Json(model, JsonRequestBehavior.AllowGet);
-            return null;
+            var contactResponse = quoteService.GetAllQuotes(searchRequest);
+            var quoteList = contactResponse.Quotes.ToList().Select(x => x.MapServerToClientSearch()).ToList();
+            var model = new QuoteViewModel()
+            {
+                data = quoteList,
+                recordsFiltered = contactResponse.FilteredCount,
+                recordsTotal = contactResponse.TotalCount
+            };
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+            //return null;
         }
 
         // GET: /Quote/Details/5

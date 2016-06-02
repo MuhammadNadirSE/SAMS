@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 
 namespace TMD.Interfaces.IServices
@@ -16,6 +17,7 @@ namespace TMD.Interfaces.IServices
         Quote GetQuoteAndQuoteDetail(int quoteId);
         bool SaveQuote(Quote model);
 
-        //QuoteResponse GetAllInquiries(QuoteSearchRequest searchRequest);
+        QuoteResponse GetAllQuotes(QuoteSearchRequest searchRequest);
+
     }
 }

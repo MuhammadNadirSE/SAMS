@@ -1,5 +1,5 @@
 ﻿@using System.Web
-@model TMD.Web.ViewModels.Inquiry.InquiryViewModel
+@model TMD.Web.ViewModels.Quote.QuoteViewModel
 @{
     ViewBag.Title = "Inquiries";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -116,22 +116,23 @@
         //$("#PayrollSearchRequest_EmployeeId").select2();
 
         var siteURL = $('#siteURL').val();
-        var start = ('@Model.InquirySearchRequest.PageNo' - 1) * '@Model.InquirySearchRequest.PageSize';
-        var isAsc = '@Model.InquirySearchRequest.IsAsc' == "True" || '@Model.InquirySearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.InquirySearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+        var start = ('@Model.quoteSearchRequest.PageNo' - 1) * '@Model.quoteSearchRequest.PageSize';
+        var isAsc = '@Model.quoteSearchRequest.IsAsc' == "True" || '@Model.quoteSearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.quoteSearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
         var columns = [
             {
                 "aTargets": [1],
                 "sDefaultContent": "No Data",
                 "mRender": function(data, type, full) {
-                    var element = '<a href="/Inquiry/Create/' + full["InquiryID"] + '">' + full["CompanyName"]+'</a>';
+                    var element = '<a href="/Quote/Create/' + full["QuoteID"] + '">' + full["QuoteReferenceNo"] + '</a>';
                     return element;
                 }
             },
-            { "data": "ContactName" },
-            { "data": "PriorityName" },
-            { "data": "CreatedByName" }
+            { "data": "QuoteReferenceNo" },
+            { "data": "Subject" },
+            { "data": "Subject" },
+            { "data": "Subject" }
         ];
 
         var attendances = $('#dataTable').dataTable({
@@ -150,7 +151,7 @@
             "order": [[0, "asc"]],
 
             "ajax": {
-                url: siteURL + "/Inquiry/Index/",
+                url: siteURL + "/Quote/Index/",
                 type: "POST",
                 dataType: "json",
                 data: function(params) {
@@ -162,10 +163,10 @@
                     params.SortBy = params.order[0].column;
                     params.IsAsc = params.order[0].dir === "asc";
 
-                    params.ContactName = $('#txtContactName').val();
-                    params.Priority = $('#ddlPriority option:selected').val();
+                    params.ContactName = $('#txtSubject').val();
+                   // params.Priority = $('#ddlPriority option:selected').val();
 
-                    params.CreatedBy = $('#txtCreatedBy').val();
+                    params.CreatedBy = $('#txtReferenceNumber').val();
 
                 },
             }
@@ -179,9 +180,9 @@
         });
 
         $('#ResetBtn').on('click', function() {
-            $('#txtContactName').val('');
-            $('#ddlPriority').val('');
-            $('#txtCreatedBy').val('');
+            $('#txtSubject').val('');
+            $('#txtReferenceNumber').val('');
+          //  $('#txtCreatedBy').val('');
 
             //$('#filterByMonth').val("");
            // setCurrentMonth();
