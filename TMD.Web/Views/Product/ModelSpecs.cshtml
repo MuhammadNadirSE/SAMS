@@ -92,8 +92,8 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ProductModel.ModelName, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-9">
+                            @Html.LabelFor(model => model.ProductModel.ModelName, new {@class = "control-label col-md-4 requiredLabel"})
+                            <div class="col-md-8">
                                 @Html.TextBoxFor(model => model.ProductModel.ModelName, new {@class = "form-control", placeholder = "Enter product model name"})
                                 @Html.ValidationMessageFor(model => model.ProductModel.ModelName)
                             </div>
@@ -101,38 +101,42 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ProductModel.ModelDescription, new {@class = "control-label col-md-3 requiredLabel"})
-                            <div class="col-md-9">
-                                @Html.TextAreaFor(model => model.ProductModel.ModelDescription, new {@class = "form-control", placeholder = "Enter product model description"})
+                            @Html.LabelFor((m => m.ProductModel.Price), new {@class = "col-md-4 control-label requiredLabel"})
+                            <div class="col-md-8">
+                                @Html.TextBoxFor((m => m.ProductModel.Price), new {@class = "form-control mandatory", placeholder = "Price"})
+                                @Html.ValidationMessageFor((x => x.ProductModel.Price))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ProductModel.ModelDescription, new { @class = "control-label col-md-4 requiredLabel" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(model => model.ProductModel.ModelDescription, new { @class = "form-control", placeholder = "Enter product model description" })
                                 @Html.ValidationMessageFor((x => x.ProductModel.ModelDescription))
                             </div>
                         </div>
                     </div>
-                    <!--/span-->
                 </div>
                 <h3 class="form-section">Technical Specs.</h3>
                 <div class="row">
                     <!--/span-->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label col-md-5">Technical Spec.</label>
-                            <div class="col-md-7">
+                            <label class="control-label col-md-4">Technical Spec.</label>
+                            <div class="col-md-8">
                                 @Html.DropDownList("Specs", new SelectList(Model.TechnicalSpecs, "TechnicalSpecId", "SpecName"), "Select Technical Specification", new {@class = "form-control select2me mandatoryModal", id = "TechSpecId"})
                             </div>
 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-7">
-                                @Html.TextBox("Specs", null, new {@class = "form-control mandatoryModal", id = "TechSpecValue", placeholder = "Technical Spec. value"})
+                            <div class="col-md-8">
+                                @Html.TextBox("Specs", null, new {@class = "form-control mandatoryModal", id = "TechSpecValue", placeholder = "Enter Technical Spec. value"})
                             </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
                             <div class="col-md-2">
                                 <button type="button" class="btn green-meadow prominent" id="TechnicalSpecAddBtn" title="Add Technical Spec.">
                                     <i class="fa fa-plus-square-o"></i>
@@ -201,7 +205,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-offset-3 col-md-9">
+                        <div class="col-md-offset-3 col-md-8">
                             <input type="submit" class="btn green-seagreen hideOthersDetail" value="Submit"/>
                             <button type="reset" class="btn green-jungle hideOthersDetail">Reset</button>
                             <a href="~/Product/Create/@productId" class="btn default cancelBtn">Cancel</a>

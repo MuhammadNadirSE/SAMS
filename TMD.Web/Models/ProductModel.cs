@@ -12,5 +12,9 @@ namespace TMD.Web.Models
         [Display(Name = "Description")]
         [Required(ErrorMessage = "Product Model Description is required.")]
         public string ModelDescription { get; set; }
+        [Display(Name = "Price")]
+        [Required(ErrorMessage = "Product Price is required.")]
+        [Range(1,double.MaxValue,ErrorMessage = "Price value must be greator than zero.")]
+        public decimal Price { get; set; }
     }
 }

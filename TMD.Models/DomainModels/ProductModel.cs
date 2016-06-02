@@ -18,7 +18,7 @@ namespace TMD.Models.DomainModels
         public int ProductId { get; set; }
         public string ModelName { get; set; }
         public string ModelDescription { get; set; }
-
+        public decimal Price { get; set; }
         public virtual Product Product { get; set; }
         
         public virtual ICollection<ProductTechSpec> ProductTechSpecs { get; set; }

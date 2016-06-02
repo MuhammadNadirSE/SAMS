@@ -22,7 +22,7 @@ namespace TMD.Web.Controllers
         {
             this.designationService = designationService;
         }
-        // [SiteAuthorize(PermissionKey = "ExclusionsList")]
+        [SiteAuthorize(PermissionKey = "DesignationsList")]
         public ActionResult Index()
         {
             List<TMD.Web.Models.DesignationModel> designations =
@@ -33,7 +33,7 @@ namespace TMD.Web.Controllers
             return View(designations);
         }
 
-        // [SiteAuthorize(PermissionKey = "CreateUpdateTechSpec")]
+        [SiteAuthorize(PermissionKey = "CreateUpdateDesignations")]
         public ActionResult Create(int? id)
         {
 
@@ -57,7 +57,7 @@ namespace TMD.Web.Controllers
             return View(exModel);
         }
 
-        //  [SiteAuthorize(PermissionKey = "CreateUpdateTechSpec")]
+        [SiteAuthorize(PermissionKey = "CreateUpdateDesignations")]
         [HttpPost]
         public ActionResult Create(DesignationModel designationModel)
         {

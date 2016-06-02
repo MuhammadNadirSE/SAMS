@@ -22,7 +22,7 @@ namespace TMD.Web.Controllers
         {
             this.exclusionService = exclusionService;
         }
-       // [SiteAuthorize(PermissionKey = "ExclusionsList")]
+        [SiteAuthorize(PermissionKey = "ExclusionsList")]
         public ActionResult Index()
         {
             List<TMD.Web.Models.ExclusionModel> exclusions =
@@ -33,7 +33,7 @@ namespace TMD.Web.Controllers
             return View(exclusions);
         }
 
-       // [SiteAuthorize(PermissionKey = "CreateUpdateTechSpec")]
+        [SiteAuthorize(PermissionKey = "CreateUpdateExclusions")]
         public ActionResult Create(int? id)
         {
 
@@ -57,7 +57,7 @@ namespace TMD.Web.Controllers
             return View(exModel);
         }
 
-      //  [SiteAuthorize(PermissionKey = "CreateUpdateTechSpec")]
+        [SiteAuthorize(PermissionKey = "CreateUpdateExclusions")]
         [HttpPost]
         public ActionResult Create(ExclusionModel exclusionModel)
         {

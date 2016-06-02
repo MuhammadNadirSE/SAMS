@@ -11,7 +11,8 @@ namespace TMD.Web.ModelMappers
                 ProductModelID = source.ProductModelId,
                 ProductId = source.ProductId,
                 ModelName = source.ModelName,
-                ModelDescription = source.ModelDescription
+                ModelDescription = source.ModelDescription,
+                Price = source.Price
             };
         }
         public static Models.ProductModel MapServerToClient(this ProductModel source)
@@ -21,7 +22,8 @@ namespace TMD.Web.ModelMappers
                 ProductModelId = source.ProductModelID,
                 ProductId = source.ProductId,
                 ModelName = source.ModelName,
-                ModelDescription = source.ModelDescription
+                ModelDescription = source.ModelDescription,
+                Price = source.Price
             };
         }
 
@@ -32,6 +34,7 @@ namespace TMD.Web.ModelMappers
                 ProductModelId = source.ProductModelID,
                 ProductId = source.ProductId,
                 ModelName = source.ModelName,
+                Price = source.Price
             };
         }
     }

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Common;
 using TMD.Implementation.Services;
+using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace TMD.Web.Controllers
         {
             this.aspNetRoleService = aspNetRoleService;
         }
-        // [SiteAuthorize(PermissionKey = "ExclusionsList")]
+        [SiteAuthorize(PermissionKey = "RolesList")]
         public ActionResult Index()
         {
             List<TMD.Web.ViewModels.UserRoles.AspNetRoleModel> Roles =
@@ -29,7 +30,7 @@ namespace TMD.Web.Controllers
            
         }
 
-        // [SiteAuthorize(PermissionKey = "CreateUpdateTechSpec")]
+        [SiteAuthorize(PermissionKey = "CreateUpdateRoles")]
         public ActionResult Create(int? id)
         {
 
@@ -53,7 +54,7 @@ namespace TMD.Web.Controllers
             return View(exModel);
         }
 
-        //  [SiteAuthorize(PermissionKey = "CreateUpdateTechSpec")]
+        [SiteAuthorize(PermissionKey = "CreateUpdateRoles")]
         [HttpPost]
         public ActionResult Create(ViewModels.UserRoles.AspNetRoleModel aspNetRoleModel)
         {
