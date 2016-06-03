@@ -45,7 +45,7 @@
         <label><b>@Model.Contact.FullName</b></label><br/>
         <label>@Model.Contact.CompanyName</label><br/>
         <label>@Model.Contact.Address</label><br/>
-        Phone:<label>@Model.Contact.PrimaryPhone</label>; Email:<label>@Model.Contact.Email</label>
+        Cell#:<label>@Model.Contact.CellNo</label>; Email:<label>@Model.Contact.Email</label>
     </div>
     <div class="col-xs-6 textAlignRight">
         <label>Ref #: @Model.Quote.QuoteReferenceNo</label><br/>
@@ -234,18 +234,22 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <h4><i><b>Exclusions</b></i></h4>
-        <ul class="list-unstyled">
-            @foreach (var exclusion in @Model.Quote.QuoteExclusions)
-            {
-                <li>
-                    @exclusion.ExclusionName
-                </li>
-            }
-        </ul>
+        @if (Model.Quote.QuoteExclusions.Any())
+        {
+            <h4><i><b>Exclusions</b></i></h4>
+            <ul class="list-unstyled">
+                @foreach (var exclusion in @Model.Quote.QuoteExclusions)
+                {
+                    <li>
+                        @exclusion.ExclusionName
+                    </li>
+                }
+            </ul>
+        }
+        
     </div>
 </div>
-
+    <br/>
     <div class="row">
         <div class="col-xs-12">
             <p>

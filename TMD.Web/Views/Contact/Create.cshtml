@@ -58,7 +58,24 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Contact.CompanyName, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.Contact.CompanyName, new { @class = "form-control", placeholder = "Company Name", rows = 5, @style = "resize:none" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Contact.Fax, new { @class = "col-md-3 control-label " })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.Contact.Fax, new { @class = "form-control ", placeholder = "Fax    ", rows = 5, @style = "resize:none" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -95,25 +112,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(x => x.Contact.Fax, new { @class = "col-md-3 control-label " })
+                            @Html.LabelFor(x => x.Contact.PrimaryPhone, new { @class = "col-md-3 control-label " })
                             <div class="col-md-9">
-                                @Html.TextBoxFor(x => x.Contact.Fax, new { @class = "form-control ", placeholder = "Fax    ", rows = 5, @style = "resize:none" })
+                                @Html.TextBoxFor(x => x.Contact.PrimaryPhone, new { @class = "form-control ", placeholder = "Primary Phone", rows = 5, @style = "resize:none" })
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(x => x.Contact.CompanyName, new { @class = "col-md-3 control-label" })
-                            <div class="col-md-9">
-                                @Html.TextBoxFor(x => x.Contact.CompanyName, new { @class = "form-control", placeholder = "Company Name", rows = 5, @style = "resize:none" })
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
+               
 
                 <div class="row">
                     <div class="portlet box red-sunglo">

@@ -63,7 +63,7 @@ namespace TMD.Web.ModelMappers
             {
                 FullName = source.FirstName + " " + source.MiddleName + " " + source.LastName,
                 Email = source.Email,
-                PrimaryPhone = source.PrimaryPhone,
+                CellNo = source.CellNo,
                 CompanyName = source.CompanyName,
                 Address = address!=null?(address.Address1+" "+ address.City+" "+ address.Country):""
             };
