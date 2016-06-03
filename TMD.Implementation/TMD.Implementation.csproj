@@ -130,6 +130,7 @@
     <Compile Include="Services\AspNetRoleService.cs" />
     <Compile Include="Services\BillDetailService.cs" />
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\DocumentService.cs" />
     <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\DistributorService.cs" />
     <Compile Include="Services\EmployeePayrollService.cs" />
@@ -164,6 +165,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TMD.Common\TMD.Common.csproj">
+      <Project>{777EB540-A05D-4F6A-A320-52E3035C7ABB}</Project>
+      <Name>TMD.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TMD.Interfaces\TMD.Interfaces.csproj">
       <Project>{98f7a831-6d93-48e9-950f-623772aa607a}</Project>
       <Name>TMD.Interfaces</Name>

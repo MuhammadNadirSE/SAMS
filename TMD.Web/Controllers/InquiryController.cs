@@ -19,10 +19,14 @@ namespace TMD.Web.Controllers
     {
 
         private readonly IInquiryService inquiryService;
-        public InquiryController(IInquiryService inquiryService)
+        private readonly IDocumentService documentService;
+
+        public InquiryController(IInquiryService inquiryService, IDocumentService documentService)
         {
             this.inquiryService = inquiryService;
+            this.documentService = documentService;
         }
+
         [SiteAuthorize(PermissionKey = "InquiriesList")]
         public ActionResult Index()
         {
@@ -77,30 +81,6 @@ namespace TMD.Web.Controllers
         [HttpPost]
         public ActionResult Create(InquiryViewModel ContactViewModel )
         {
-            //try
-            //{
-            //    productViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
-            //    productViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
-            //    // TODO: Add insert logic here
-            //    if (productViewModel.InquiryModel.InquiryID > 0)
-            //    {
-            //        inquiryService.UpdateInquiry(productViewModel.InquiryModel.MapClientToServer());
-            //    }
-            //    else
-            //    {
-            //        productViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
-            //        productViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
-
-            //        inquiryService.AddInquiry(productViewModel.InquiryModel.MapClientToServer());
-            //    }
-
-            //    return RedirectToAction("Create");
-            //}
-            //catch (Exception ex)
-            //{
-            //    return View();
-            //}
-
             try
             {
                 ContactViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
@@ -110,13 +90,10 @@ namespace TMD.Web.Controllers
                     ContactViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
                     ContactViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
                     ContactViewModel.InquiryModel.UserId = User.Identity.GetUserId();
-
                 }
 
-
                 InquiryResponse inquiryResp = new InquiryResponse();
-
-
+                
                 inquiryResp.Inquiry = ContactViewModel.InquiryModel.MapClientToServer();
                 //if (ContactViewModel.InquiryDetail != null)
                 inquiryResp.InquiryDetails = new List<InquiryDetail>
@@ -126,7 +103,22 @@ namespace TMD.Web.Controllers
                             ProductID = ContactViewModel.InquiryModel.InquiryProductId
                         }
                     };
-
+                //upload files data
+                if (ContactViewModel.UploadFiles.Any())
+                {
+                    foreach (var file in ContactViewModel.UploadFiles)
+                    {
+                        var tempStream = file.InputStream;
+                        byte[] bytes = new byte[tempStream.Length];
+                        tempStream.Read(bytes, 0, Convert.ToInt32(tempStream.Length));
+                        Document document = new Document
+                        {
+                            DocumentData = bytes
+                        };
+                        inquiryResp.InquiryDocuments.Add(document);
+                    }
+                    
+                }
                 if (inquiryService.SaveInquiry(inquiryResp))
                 {
                     TempData["message"] = new MessageViewModel
@@ -198,5 +190,20 @@ namespace TMD.Web.Controllers
                 return View();
             }
         }
+        #region User Activity Image
+        [AllowAnonymous]
+        public ActionResult Document(long id)
+        {
+            var image = documentService.GetDocumentById(id);
+            
+            if (image != null && image.DocumentData != null)
+            {
+                //string ext = image.ContentType.Split('/')[1];
+                //return File(image.ImageData, image.ContentType, "IMG_" + image.Id + ((DateTime)image.UpdatedDate).ToString("yyyyMMdd_HHmmss") + "." + ext);
+            }
+
+            return File(new byte[] { }, "image/png", "null.png");
+        }
+        #endregion
     }
 }

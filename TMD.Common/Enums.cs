@@ -24,4 +24,9 @@ namespace TMD.Common
         Medium=2,
         High=3
     }
+    public enum DocumentType
+    {
+        Product = 1,
+        Inquiry = 2
+    }
 }

@@ -15,7 +15,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Inquiry", FormMethod.Post, new { @class = "form-horizontal", role = "form", @onsubmit = "return ValidateFields(this)" }))
+@using (Html.BeginForm("Create", "Inquiry", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @*@Html.AntiForgeryToken()
         @Html.ValidationSummary(true)*@
@@ -128,9 +128,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.InquiryModel.ContactResponse, new { @class = "control-label col-md-4 requiredLabel" })
+                            @Html.LabelFor(model => model.InquiryModel.ContactResponse, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.TextAreaFor(m => m.InquiryModel.ContactResponse, new { @class = "form-control mandatory", placeholder = "Contact Response" })
+                                @Html.TextAreaFor(m => m.InquiryModel.ContactResponse, new {@class = "form-control mandatory", placeholder = "Contact Response"})
                                 @Html.ValidationMessageFor(model => model.InquiryModel.ContactResponse)
                             </div>
                         </div>
@@ -141,6 +141,16 @@
                             <div class="col-md-8">
                                 @Html.TextAreaFor(m => m.InquiryModel.UserComments, new {@class = "form-control mandatory", placeholder = "User Comments"})
                                 @Html.ValidationMessageFor(model => model.InquiryModel.UserComments)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UploadFiles, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.UploadFiles, new { @class = "form-control mandatory", type = "file", multiple = "true" })
                             </div>
                         </div>
                     </div>

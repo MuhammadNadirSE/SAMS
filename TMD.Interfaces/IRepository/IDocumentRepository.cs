@@ -7,7 +7,7 @@ using TMD.Models.DomainModels;
 
 namespace TMD.Interfaces.IRepository
 {
-    public interface IDocumentRepository : IBaseRepository<Document, int>
+    public interface IDocumentRepository : IBaseRepository<Document, long>
     {
 
     }

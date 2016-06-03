@@ -125,6 +125,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TMD.Common\TMD.Common.csproj">
+      <Project>{777EB540-A05D-4F6A-A320-52E3035C7ABB}</Project>
+      <Name>TMD.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TMD.Models\TMD.Models.csproj">
       <Project>{81067904-2176-4648-87ab-014b0d76b85e}</Project>
       <Name>TMD.Models</Name>

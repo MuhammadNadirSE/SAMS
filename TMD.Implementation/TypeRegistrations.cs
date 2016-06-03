@@ -42,7 +42,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<IProductModelService, ProductModelService>();
             unityContainer.RegisterType<IExclusionService, ExclusionService>();
             unityContainer.RegisterType<IQuoteService, QuoteService>();
-
+            unityContainer.RegisterType<IDocumentService, DocumentService>();
         } 
     }
 }

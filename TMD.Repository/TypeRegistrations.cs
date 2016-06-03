@@ -46,8 +46,6 @@ namespace TMD.Repository
             unityContainer.RegisterType<IQuoteExclusionRepository, QuoteExclusionRepository>();
             unityContainer.RegisterType<IExclusionRepository, ExclusionRepository>();
             unityContainer.RegisterType<IDocumentRepository, DocumentRepository>();
-
-
         }
     }
 }

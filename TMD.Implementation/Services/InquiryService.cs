@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMD.Common;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -15,14 +16,16 @@ namespace TMD.Implementation.Services
     public class InquiryService : IInquiryService
     {
         private readonly IInquiryRepository inquiryRepository;
+        private readonly IDocumentService documentService;
         private readonly IContactRepository contactRepository;
         private readonly IProductRepository productRepository;
         private readonly IInquiryDetailRepository inquiryDetailRepository;
 
 
-        public InquiryService(IInquiryRepository inquiryRepository, IContactRepository contactRepository, IProductRepository productRepository, IInquiryDetailRepository inquiryDetailRepository)
+        public InquiryService(IInquiryRepository inquiryRepository,IDocumentService documentService, IContactRepository contactRepository, IProductRepository productRepository, IInquiryDetailRepository inquiryDetailRepository)
         {
             this.inquiryRepository = inquiryRepository;
+            this.documentService = documentService;
             this.contactRepository = contactRepository;
             this.productRepository = productRepository;
             this.inquiryDetailRepository = inquiryDetailRepository;
@@ -90,7 +93,8 @@ namespace TMD.Implementation.Services
             inquiryRepository.SaveChanges();
 
             SaveInquiryandDetails(inquiryResp);
-
+            documentService.AddDocuments(inquiryResp.InquiryDocuments, inquiryResp.Inquiry.InquiryID,
+                DocumentType.Inquiry);
             return true;
         }
 
@@ -116,7 +120,6 @@ namespace TMD.Implementation.Services
             }
             inquiryDetailRepository.SaveChanges();
         }
-
         public InquiryResponse GetAllInquiries(InquirySearchRequest searchRequest)
         {
             var inquiries = inquiryRepository.GetAllInquiries(searchRequest);
