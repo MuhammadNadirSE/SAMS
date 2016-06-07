@@ -2,7 +2,8 @@
 {
     public enum OrderByColumnQuote
     {
-        Subject = 0,
-        ReferenceNumber = 1//, CreatedBy = 2
+        Subject = 1,
+        ReferenceNumber = 0,
+        ContactName = 2
     }
 }

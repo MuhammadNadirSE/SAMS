@@ -14,7 +14,6 @@ namespace TMD.Web.ViewModels.Inquiry
             Contacts = new List<Models.ContactModel>();
             Products=new List<Models.Product>();
             InquiryDetail= new List<Models.InquiryDetailModel>();
-            UploadFiles = new List<HttpPostedFileBase>();
             Documents=new List<Document>();
 
             data = new List<Models.InquiryModel>();

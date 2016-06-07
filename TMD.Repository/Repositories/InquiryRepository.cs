@@ -36,9 +36,10 @@ namespace TMD.Repository.Repositories
 
          new Dictionary<OrderByColumnInquiry, Func<Inquiry, object>>
             {
-                {OrderByColumnInquiry.ContactName, c => c.ContactID},
+                {OrderByColumnInquiry.ContactName, c => c.Contact.FirstName},
                 {OrderByColumnInquiry.Priority, c => c.Priority},
-                {OrderByColumnInquiry.CreatedBy, c => c.CreatedByUser.FirstName}
+                {OrderByColumnInquiry.CreatedBy, c => c.CreatedByUser.FirstName},
+                {OrderByColumnInquiry.Title, c => c.CompanyName}
             };
         public InquiryResponse GetAllInquiries(InquirySearchRequest searchRequest)
         {

@@ -78,34 +78,34 @@ namespace TMD.Web.Controllers
 
         [SiteAuthorize(PermissionKey = "CreateUpdateInquiry")]
         [HttpPost]
-        public ActionResult Create(InquiryViewModel ContactViewModel )
+        public ActionResult Create(InquiryViewModel inquiryViewModel )
         {
             try
             {
-                ContactViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
-                ContactViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
-                if (ContactViewModel.InquiryModel.InquiryID == 0)
+                inquiryViewModel.InquiryModel.UpdateDate = DateTime.UtcNow;
+                inquiryViewModel.InquiryModel.UpdatedBy = User.Identity.GetUserId();
+                if (inquiryViewModel.InquiryModel.InquiryID == 0)
                 {
-                    ContactViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
-                    ContactViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
-                    ContactViewModel.InquiryModel.UserId = User.Identity.GetUserId();
+                    inquiryViewModel.InquiryModel.CreatedDate = DateTime.UtcNow;
+                    inquiryViewModel.InquiryModel.CreatedBy = User.Identity.GetUserId();
+                    inquiryViewModel.InquiryModel.UserId = User.Identity.GetUserId();
                 }
 
                 InquiryResponse inquiryResp = new InquiryResponse();
                 
-                inquiryResp.Inquiry = ContactViewModel.InquiryModel.MapClientToServer();
-                //if (ContactViewModel.InquiryDetail != null)
+                inquiryResp.Inquiry = inquiryViewModel.InquiryModel.MapClientToServer();
+                //if (inquiryViewModel.InquiryDetail != null)
                 inquiryResp.InquiryDetails = new List<InquiryDetail>
                     {
                         new InquiryDetail
                         {
-                            ProductID = ContactViewModel.InquiryModel.InquiryProductId
+                            ProductID = inquiryViewModel.InquiryModel.InquiryProductId
                         }
                     };
                 //upload files data
-                if (ContactViewModel.UploadFiles.Any())
+                if (inquiryViewModel.UploadFiles.Any())
                 {
-                    foreach (var file in ContactViewModel.UploadFiles)
+                    foreach (var file in inquiryViewModel.UploadFiles)
                     {
                         var tempStream = file.InputStream;
                         byte[] bytes = new byte[tempStream.Length];
