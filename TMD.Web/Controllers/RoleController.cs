@@ -49,6 +49,10 @@ namespace TMD.Web.Controllers
                 }
 
             }
+            else
+            {
+                exModel.Id = aspNetRoleService.GetLatestAvailableRoleId();
+            }
 
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(exModel);
