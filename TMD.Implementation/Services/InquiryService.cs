@@ -67,6 +67,7 @@ namespace TMD.Implementation.Services
             {
                 inquiryResponse.Inquiry = inquiryRepository.Find((int)id);
                 inquiryResponse.InquiryDetails = inquiryDetailRepository.GetInquiryDailByByInquiryId((int)id).ToList();
+                inquiryResponse.InquiryDocuments = documentService.GetAllDocumentByRefId((int) id).ToList();
             }
             inquiryResponse.Contacts = contactRepository.GetAll().ToList();
             inquiryResponse.Products = productRepository.GetAll().ToList();

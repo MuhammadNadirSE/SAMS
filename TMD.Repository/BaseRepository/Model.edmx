@@ -160,9 +160,11 @@
             <PropertyRef Name="DocumentId" />
           </Key>
           <Property Name="DocumentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RefrenceType" Type="int" Nullable="false" />
-          <Property Name="RefrenceId" Type="int" Nullable="false" />
           <Property Name="DocumentData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DocumentType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DocumentName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="RefrenceId" Type="int" Nullable="false" />
+          <Property Name="RefrenceType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1577,7 +1579,6 @@
             <End Role="Notification" EntitySet="Notifications" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
           </AssociationSet>
-          <EntitySet Name="Documents" EntityType="TMD.Models.DomainModels.Document" />
           <EntitySet Name="Exclusions" EntityType="TMD.Models.DomainModels.Exclusion" />
           <EntitySet Name="QuoteDetails" EntityType="TMD.Models.DomainModels.QuoteDetail" />
           <EntitySet Name="QuoteExclusions" EntityType="TMD.Models.DomainModels.QuoteExclusion" />
@@ -1626,6 +1627,7 @@
             <End Role="Quote" EntitySet="Quotes" />
             <End Role="QuoteExclusion" EntitySet="QuoteExclusions" />
           </AssociationSet>
+          <EntitySet Name="Documents" EntityType="TMD.Models.DomainModels.Document" />
           </EntityContainer>
         <ComplexType Name="spEbayItemExists_SProcResult">
           <Property Type="Int32" Name="EbayItemtId" Nullable="false" />
@@ -2630,15 +2632,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Document">
-          <Key>
-            <PropertyRef Name="DocumentId" />
-          </Key>
-          <Property Name="DocumentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RefrenceType" Type="Int32" Nullable="false" />
-          <Property Name="RefrenceId" Type="Int32" Nullable="false" />
-          <Property Name="DocumentData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Exclusion">
           <Key>
             <PropertyRef Name="ExclusionId" />
@@ -2837,6 +2830,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="DocumentId" />
+          </Key>
+          <Property Name="DocumentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocumentData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DocumentType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RefrenceId" Type="Int32" Nullable="false" />
+          <Property Name="RefrenceType" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3252,16 +3256,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Documents">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Document">
-              <MappingFragment StoreEntitySet="Documents">
-                <ScalarProperty Name="DocumentData" ColumnName="DocumentData" />
-                <ScalarProperty Name="RefrenceId" ColumnName="RefrenceId" />
-                <ScalarProperty Name="RefrenceType" ColumnName="RefrenceType" />
-                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Exclusions">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Exclusion">
               <MappingFragment StoreEntitySet="Exclusions">
@@ -3315,6 +3309,18 @@
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="QuoteReferenceNo" ColumnName="QuoteReferenceNo" />
                 <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="RefrenceType" ColumnName="RefrenceType" />
+                <ScalarProperty Name="RefrenceId" ColumnName="RefrenceId" />
+                <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="DocumentData" ColumnName="DocumentData" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3412,7 +3418,6 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Notification_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_NotificationRecipient_AspNetUsers" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_NotificationRecipient_Notification" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Document" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Exclusion" Width="1.5" PointX="6.875" PointY="26.5" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.QuoteDetail" Width="1.5" PointX="14.75" PointY="23.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.QuoteExclusion" Width="1.5" PointX="16.75" PointY="20" />
@@ -3428,6 +3433,7 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Quote_Inquiry" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteDetails_Quote" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_QuoteExclusions_Quote" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Document" Width="1.5" PointX="0.75" PointY="0.75" />
         </Diagram>
     </Diagrams>
   </Designer>

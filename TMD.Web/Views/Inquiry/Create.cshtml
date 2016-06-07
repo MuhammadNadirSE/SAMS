@@ -148,12 +148,36 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.UploadFiles, new { @class = "control-label col-md-4" })
+                            @Html.LabelFor(model => model.UploadFiles, new {@class = "control-label col-md-4"})
                             <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.UploadFiles, new { @class = "form-control mandatory", type = "file", multiple = "true" })
+                                @Html.TextBoxFor(m => m.UploadFiles, new {@class = "form-control mandatory", type = "file", multiple = "true"})
                             </div>
                         </div>
                     </div>
+                    @if (Model.Documents.Any())
+                    {
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Download Doc(s)", new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @foreach (var doc in Model.Documents)
+                                    {
+                                        <div>
+                                            <div class="btn-group btn-group-solid">
+                                                <a href="~/Document/Download/@doc.DocumentId" class="btn blue"><i class="fa fa-download"></i></a>
+                                                <button type="button" class="btn red" onclick="DeleteDocument(@doc.DocumentId,this);"><i class="fa fa-trash-o"></i></button>
+                                            </div>
+                                            @doc.DocumentName
+
+                                            <br />
+                                            <br />
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -179,3 +203,29 @@
     </div>
 
 }
+<script>
+    $(document).ready(function() {
+        window.siteURL = $('#siteURL').val();
+    });
+    function DeleteDocument(docId, control) {
+
+        bootbox.confirm("After clicking OK, record will be deleted permanently.", function (result) {
+            if (result) {
+                //write code to delete this record
+                $.ajax({
+                    url: window.siteURL + '/Document/Delete',
+                    type: 'POST',
+                    data: { Id: docId },
+                    dataType: "json",
+                    success: function (result) {
+                        $(control).parent().parent().remove();
+                        toastr.success(result.response);
+                    },
+                    error: function (result, error) {
+                        toastr.error(result.response);
+                    }
+                });
+            }
+        });
+    }
+</script>

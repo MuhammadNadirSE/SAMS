@@ -293,6 +293,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -1726,6 +1727,7 @@
     <Content Include="Scripts\js\skel.min.js" />
     <None Include="Properties\PublishProfiles\InnoStarkSystem.pubxml" />
     <Content Include="Scripts\layout.js" />
+    <Content Include="Scripts\plugins\bootbox.min.js" />
     <Content Include="Scripts\plugins\DateTimePicker\DateTimePicker-ltie9.css" />
     <Content Include="Scripts\plugins\DateTimePicker\DateTimePicker-ltie9.js" />
     <Content Include="Scripts\plugins\DateTimePicker\DateTimePicker.css" />
@@ -2915,6 +2917,7 @@
     <Folder Include="Files\" />
     <Folder Include="ViewModels\TicketType\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Document\" />
     <Folder Include="Views\MenuController\" />
     <Folder Include="Views\Menu\" />
   </ItemGroup>

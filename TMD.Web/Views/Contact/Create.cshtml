@@ -588,11 +588,13 @@
             }
 
             $('.remove').live("click", function () {
-
-                if (!confirm("Are you sure to delete this address?")) {
-                    return;
-                }
-                $(this).parent().parent().remove();
+                var button = $(this);
+                bootbox.confirm("After clicking OK, record will be removed.", function (result) {
+                    if (!result) {
+                        return;
+                    }
+                    button.parent().parent().remove();
+                });
             });
 
             $(".saveSupervisor").click(function () {
@@ -607,26 +609,12 @@
                 var street = $("#txtStreet").val();
                 var addline1 = $("#txtAddressLine1").val();
                 var addline2 = $("#txtAddressLine2").val();
-                //var addtype = $("#chkIsPrimaryAddress").is(':checked');
 
                 $(this).closest(".modal").modal('hide');
 
                 var index = $('#AddressTableBody tr:last').index() + 1;
 
             if (country !== "") {
-                //supervisorRow = [
-                //    "<input name='Addresses.Index' type='hidden' value='" + rowCount + "'/>" + "<input readonly='readonly' name='Addresses[" + rowCount + "].AddressId' type='hidden' style='border:none;background:#f9f9f9;display:none;'/>",
-                //    "<input  name='Addresses[" + rowCount + "].Country' id='Addresses_'" + rowCount + "'__Country' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + country + "'/>",
-                //    "<input  name='Addresses[" + rowCount + "].State' id='Addresses_'" + rowCount + "'__State' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + state + "'/>",
-                //    "<input  name='Addresses[" + rowCount + "].City' id='Addresses_'" + rowCount + "'__City' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + city + "'/>",
-                //    "<input  name='Addresses[" + rowCount + "].Street' id='Addresses_'" + rowCount + "'__Street' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + street + "'/>",
-                //    "<input  name='Addresses[" + rowCount + "].Address1' id='Addresses_'" + rowCount + "'__Address1' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline1 + "'/>",
-                //    "<input  name='Addresses[" + rowCount + "].Address2' id='Addresses_'" + rowCount + "'__Address2' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addline2 + "'/>",
-                //    "<input  name='Addresses[" + rowCount + "].AddressType' id='Addresses_'" + rowCount + "'__AddressType' readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + addtype + "'/>",
-
-                //    "<a class='remove' href='javascript:;'>Remove</a>"
-                //];
-
                 var indexCell = "<td style='display:none'>" +
                                 "<input name='Addresses.Index' type='hidden' value='" + index + "' />" +
                                 "<input name='Addresses[" + index + "].ContactID' id='Addresses_" + index + "__ContactID' type='hidden'  value='" + contactId + "'/>" +
@@ -654,9 +642,6 @@
                     '<td>' +
                     '<input id="Addresses_' + index + '__Address2" name="Addresses[' + index + '].Address2" value="' + addline2 + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
                     '</td>' +
-                    //'<td>' +
-                    //'<input id="Addresses_' + index + '__AddressType" name="Addresses[' + index + '].AddressType" value="' + addtype + '" type="text" class = "ProductTableColumn" readOnly = "readOnly"/>' +
-                    //'</td>' +
                     '<td>' +
                     '<a href="javascript:;" class="btn default btn-xs red remove" title="Delete"><i class="fa fa-trash-o"></i></a>' +
                     '</td>' +
@@ -664,17 +649,7 @@
                 $('#AddressTableBody').append(html);
             }
             clearInputFields("#myModal");
-            //$(".remove").on('click', function () {
-
-            //    var target_row = $(this).closest("tr").get(0);
-            //    var aPos = oTable.fnGetPosition(target_row);
-            //    oTable.fnDeleteRow(aPos);
-            //});
         });
-
-        //$('.portletCustomHeight').show();
-
-
     });
 
 </script>

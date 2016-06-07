@@ -15,7 +15,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class InquiryController : Controller
+    public class InquiryController : BaseController
     {
 
         private readonly IInquiryService inquiryService;
@@ -57,7 +57,7 @@ namespace TMD.Web.Controllers
         [SiteAuthorize(PermissionKey = "CreateUpdateInquiry")]
         public ActionResult Create(int? ID)
         {
-            InquiryViewModel InquiryViewModel = new InquiryViewModel
+            InquiryViewModel inquiryViewModel = new InquiryViewModel
             {
                 InquiryModel = new Models.InquiryModel { InquiryDate = DateTime.UtcNow}
             };
@@ -65,16 +65,15 @@ namespace TMD.Web.Controllers
                 var inquiryResponse = inquiryService.GetInquiryResponse(ID);
                 if (inquiryResponse.Inquiry != null)
                 {
-                    InquiryViewModel.InquiryModel = inquiryResponse.Inquiry.MapServerToClient();
-                    InquiryViewModel.InquiryModel.InquiryProductId = inquiryResponse.InquiryDetails.FirstOrDefault().ProductID;
+                    inquiryViewModel.InquiryModel = inquiryResponse.Inquiry.MapServerToClient();
+                    inquiryViewModel.InquiryModel.InquiryProductId = inquiryResponse.InquiryDetails.FirstOrDefault().ProductID;
+                    inquiryViewModel.Documents = inquiryResponse.InquiryDocuments.ToList();
                 }
 
-                InquiryViewModel.Contacts = inquiryResponse.Contacts.Select(x => x.CreateDDL()).ToList();
-                InquiryViewModel.Products = inquiryResponse.Products.Select(x => x.MapServerToClient()).ToList();
+            inquiryViewModel.Contacts = inquiryResponse.Contacts.Select(x => x.CreateDDL()).ToList();
+            inquiryViewModel.Products = inquiryResponse.Products.Select(x => x.MapServerToClient()).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(InquiryViewModel);
-
-
+            return View(inquiryViewModel);
         }
 
         [SiteAuthorize(PermissionKey = "CreateUpdateInquiry")]
@@ -113,7 +112,9 @@ namespace TMD.Web.Controllers
                         tempStream.Read(bytes, 0, Convert.ToInt32(tempStream.Length));
                         Document document = new Document
                         {
-                            DocumentData = bytes
+                            DocumentData = bytes,
+                            DocumentName = file.FileName,
+                            DocumentType = file.ContentType
                         };
                         inquiryResp.InquiryDocuments.Add(document);
                     }
@@ -142,68 +143,5 @@ namespace TMD.Web.Controllers
                 return View();
             }
         }
-
-        //
-        // GET: /Inquiry/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Inquiry/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Inquiry/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Inquiry/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        #region User Activity Image
-        [AllowAnonymous]
-        public ActionResult Document(long id)
-        {
-            var image = documentService.GetDocumentById(id);
-            
-            if (image != null && image.DocumentData != null)
-            {
-                //string ext = image.ContentType.Split('/')[1];
-                //return File(image.ImageData, image.ContentType, "IMG_" + image.Id + ((DateTime)image.UpdatedDate).ToString("yyyyMMdd_HHmmss") + "." + ext);
-            }
-
-            return File(new byte[] { }, "image/png", "null.png");
-        }
-        #endregion
     }
 }
