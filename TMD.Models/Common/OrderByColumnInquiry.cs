@@ -2,8 +2,9 @@
 {
     public enum OrderByColumnInquiry
     {
-        ContactName = 0,
-        Priority = 1,
-        CreatedBy = 2
+        Title = 0,
+        ContactName = 1,
+        Priority = 2,
+        CreatedBy = 3
     }
 }

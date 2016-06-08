@@ -13,12 +13,12 @@ namespace TMD.Implementation.Services
     {
 
         #region 'Private and Constructor'
-        private readonly IAspNetRoleRepository AspNetRoleRepository;
+        private readonly IAspNetRoleRepository aspNetRoleRepository;
 
 
         public AspNetRoleService(IAspNetRoleRepository AspNetRoleRepository)
         {
-            this.AspNetRoleRepository = AspNetRoleRepository;
+            this.aspNetRoleRepository = AspNetRoleRepository;
             
         }
 
@@ -26,32 +26,36 @@ namespace TMD.Implementation.Services
 
         public string AddRole(AspNetRole AspNetRole)
         {
-            AspNetRoleRepository.Add(AspNetRole);
-            AspNetRoleRepository.SaveChanges();
+            aspNetRoleRepository.Add(AspNetRole);
+            aspNetRoleRepository.SaveChanges();
 
             return AspNetRole.Id;
         }
 
         public string UpdateRole(AspNetRole AspNetRole)
         {
-            AspNetRoleRepository.Update(AspNetRole);
-            AspNetRoleRepository.SaveChanges();
+            aspNetRoleRepository.Update(AspNetRole);
+            aspNetRoleRepository.SaveChanges();
 
             return AspNetRole.Id;
         }
+        public string GetLatestAvailableRoleId()
+        {
+            return aspNetRoleRepository.GetLatestAvailableRoleId();
+        }
         public AspNetRole GetRoleById(string id)
         {
-            return AspNetRoleRepository.Find(id);
+            return aspNetRoleRepository.Find(id);
         }
 
         public IEnumerable<AspNetRole> GetAllRegisteredRoles()
         {
-            return AspNetRoleRepository.GetAll();
+            return aspNetRoleRepository.GetAll();
         }
 
          public IEnumerable<AspNetRole> GetAllRolesExceptSuperAdmin()
          {
-             return AspNetRoleRepository.GetAllRolesExceptSuperAdmin();
+             return aspNetRoleRepository.GetAllRolesExceptSuperAdmin();
          }
     }
 }

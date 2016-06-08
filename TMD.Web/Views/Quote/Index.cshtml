@@ -1,7 +1,7 @@
 ﻿@using System.Web
 @model TMD.Web.ViewModels.Quote.QuoteViewModel
 @{
-    ViewBag.Title = "Inquiries";
+    ViewBag.Title = "Quotes";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
@@ -25,7 +25,7 @@
             @*@if (userPermissionsSet.Contains("CreatePayroll"))
                 {
                  }*@
-            <a href="@Url.Action("Create")" class="btn blue-madison"><i class="fa fa-plus">Generate Quote</i></a>
+            <a href="@Url.Action("Create")" class="btn blue-madison"><i class="fa fa-plus"> Generate Quote</i></a>
 
 
         </div>
@@ -83,7 +83,9 @@
                                 <th>
                                     Contact Name
                                 </th>
-
+                                <th>
+                                    View & Print
+                                </th>
                             </tr>
                             </thead>
 
@@ -124,9 +126,15 @@
                 }
             },
             { "data": "Subject" },
-            { "data": "ContactName" }
-           
-          
+            { "data": "ContactName" },
+            {
+                "aTargets": [4],
+                "sDefaultContent": "No Data",
+                "mRender": function (data, type, full) {
+                    var element = '<a href="/Quote/Print/' + full["QuoteID"] + '"><i class="fa fa-print"></i></a>';
+                    return element;
+                }
+            }
         ];
 
         var attendances = $('#dataTable').dataTable({
@@ -136,14 +144,13 @@
 
             "bLengthChange": false,
             "aaSorting": [sortBy],
-            "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [2] }
-            ],
             "columns": columns,
             "processing": true,
             "serverSide": true,
-            "order": [[0, "asc"]],
-
+            "order": [[0, "desc"]],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [3] }
+            ],
             "ajax": {
                 url: siteURL + "/Quote/Index/",
                 type: "POST",

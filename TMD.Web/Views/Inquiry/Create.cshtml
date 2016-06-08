@@ -2,6 +2,7 @@
 @model  TMD.Web.ViewModels.Inquiry.InquiryViewModel
 @{
     string createUpdate = Model.InquiryModel.InquiryID > 0 ? "Update" : "Add New";
+    string itemId = Model.InquiryModel.InquiryID > 0 ? Model.InquiryModel.InquiryID.ToString() : "";
     ViewBag.Title = createUpdate + " Inquiry";
     Session["MenuKey"] = 4;
 
@@ -95,7 +96,14 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new {@class = "form-control select2me"})
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new { @class = "form-control select2me" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Contact/Create?returnUrl=/Inquiry/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Contact">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
                             </div>
                         </div>
@@ -105,7 +113,14 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.InquiryProductId, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new {@class = "form-control select2me"})
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new { @class = "form-control select2me" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Product/Create?returnUrl=/Inquiry/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Product">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.InquiryModel.InquiryProductId)
                             </div>
                         </div>
@@ -148,12 +163,36 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.UploadFiles, new { @class = "control-label col-md-4" })
+                            @Html.LabelFor(model => model.UploadFiles, new {@class = "control-label col-md-4"})
                             <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.UploadFiles, new { @class = "form-control mandatory", type = "file", multiple = "true" })
+                                @Html.TextBoxFor(m => m.UploadFiles, new {@class = "form-control mandatory", type = "file", multiple = "true"})
                             </div>
                         </div>
                     </div>
+                    @if (Model.Documents.Any())
+                    {
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Download Doc(s)", new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @foreach (var doc in Model.Documents)
+                                    {
+                                        <div>
+                                            <div class="btn-group btn-group-solid">
+                                                <a href="~/Document/Download/@doc.DocumentId" class="btn blue" title="Download"><i class="fa fa-download"></i></a>
+                                                <button type="button" class="btn red" onclick="DeleteDocument(@doc.DocumentId,this);"  title="Delete"><i class="fa fa-trash-o"></i></button>
+                                            </div>
+                                            @doc.DocumentName
+
+                                            <br />
+                                            <br />
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -179,3 +218,31 @@
     </div>
 
 }
+<script>
+    $(document).ready(function() {
+        window.siteURL = $('#siteURL').val();
+
+
+    });
+    function DeleteDocument(docId, control) {
+
+        bootbox.confirm("After clicking OK, record will be deleted permanently.", function (result) {
+            if (result) {
+                //write code to delete this record
+                $.ajax({
+                    url: window.siteURL + '/Document/Delete',
+                    type: 'POST',
+                    data: { Id: docId },
+                    dataType: "json",
+                    success: function (result) {
+                        $(control).parent().parent().remove();
+                        toastr.success(result.response);
+                    },
+                    error: function (result, error) {
+                        toastr.error(result.response);
+                    }
+                });
+            }
+        });
+    }
+</script>

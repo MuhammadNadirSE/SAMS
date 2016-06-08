@@ -13,7 +13,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductService productService;
         private readonly IProductModelService productModelService;
@@ -27,12 +27,12 @@ namespace TMD.Web.Controllers
         [SiteAuthorize(PermissionKey = "ProductsList")]
         public ActionResult Index()
         {
-            List<Models.Product> Products =
+            List<Models.Product> products =
                 productService.GetAllProducts()
                     .ToList()
                     .Select(x => x.MapServerToClient()).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(Products);
+            return View(products);
         }
 
         [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
@@ -47,10 +47,15 @@ namespace TMD.Web.Controllers
             }
             else
             {
-                productViewModel.Product = new Models.Product();
+                productViewModel.Product = new Models.Product
+                {
+                    DetailDescription = string.Empty
+                };
             }
 
             productViewModel.ProductCategories = prodResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
+
+            ViewBag.ReturnUrl = Request.QueryString["returnUrl"];
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(productViewModel);
         }
@@ -80,11 +85,13 @@ namespace TMD.Web.Controllers
                     IsSaved = true,
                     Message = "Your data has been saved successfully!"
                 };
-                return RedirectToAction("ModelSpecs",new { product = (int)TempData["ProductId"] });
+                if (string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                    return RedirectToAction("ModelSpecs", new { product = (int)TempData["ProductId"]});
+                return RedirectToAction("ModelSpecs", new { product = (int)TempData["ProductId"], returnUrl = Request.QueryString["returnUrl"] });
             }
             catch (Exception ex)
             {
-                return View();
+                return View(productViewModel);
             }
         }
         [SiteAuthorize(PermissionKey = "CreateUpdateProduct")]
@@ -114,6 +121,8 @@ namespace TMD.Web.Controllers
             }
 
             viewModel.TechnicalSpecs = prodResp.TechnicalSpec.Select(x => x.CreateDropDownList()).ToList();
+
+            ViewBag.ReturnUrl = Request.QueryString["returnUrl"];
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
@@ -135,7 +144,9 @@ namespace TMD.Web.Controllers
                     IsSaved = true,
                     Message = "Your data has been saved successfully!"
                 };
-                return RedirectToAction("ModelSpecs",new {product= viewModel.ProductModel .ProductId});
+                if (string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                    return RedirectToAction("ModelSpecs", new { product = viewModel.ProductModel.ProductId });
+                return Redirect(Request.QueryString["returnUrl"]);
             }
             catch (Exception ex)
             {

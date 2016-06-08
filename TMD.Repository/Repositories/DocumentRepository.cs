@@ -23,5 +23,9 @@ namespace TMD.Repository.Repositories
             get { return db.Document; }
         }
 
+        public IEnumerable<Document> GetAllDocumentByRefId(int id)
+        {
+            return DbSet.Where(x => x.RefrenceId.Equals(id));
+        }
     }
 }

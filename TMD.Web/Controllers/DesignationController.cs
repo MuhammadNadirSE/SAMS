@@ -14,7 +14,7 @@ using TMD.Web.Models;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class DesignationController : Controller
+    public class DesignationController : BaseController
     {
         private readonly IDesignationService designationService;
 

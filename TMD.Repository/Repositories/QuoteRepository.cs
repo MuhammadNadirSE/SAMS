@@ -37,7 +37,8 @@ namespace TMD.Repository.Repositories
          new Dictionary<OrderByColumnQuote, Func<Quote, object>>
             {
                 {OrderByColumnQuote.Subject, c => c.Subject},
-                {OrderByColumnQuote.ReferenceNumber, c => c.QuoteReferenceNo}
+                {OrderByColumnQuote.ReferenceNumber, c => c.QuoteID},
+                {OrderByColumnQuote.ContactName, c => c.Contact.FirstName},
                 
             };
         public QuoteResponse GetAllQuotes(QuoteSearchRequest searchRequest)

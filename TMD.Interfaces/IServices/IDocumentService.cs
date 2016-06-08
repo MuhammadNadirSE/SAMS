@@ -8,8 +8,8 @@ namespace TMD.Interfaces.IServices
     public interface IDocumentService
     {
         int AddDocuments(List<Document> documents,int refrenceId, DocumentType refrenceType);
-        bool DeleteDocument(int documentId);
-        IEnumerable<Document> GetAllDocumentByRefID(int id);
+        bool DeleteDocument(long documentId);
+        IEnumerable<Document> GetAllDocumentByRefId(int id);
         Document GetDocumentById(long id);
     }
 }

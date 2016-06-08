@@ -10,7 +10,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
         private readonly IAspNetRoleService aspNetRoleService;
 
@@ -48,6 +48,10 @@ namespace TMD.Web.Controllers
                     exModel = aspNetRolesModel.CreateFromServerToClient();
                 }
 
+            }
+            else
+            {
+                exModel.Id = aspNetRoleService.GetLatestAvailableRoleId();
             }
 
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;

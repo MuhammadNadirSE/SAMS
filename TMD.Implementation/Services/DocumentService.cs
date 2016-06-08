@@ -33,17 +33,23 @@ namespace TMD.Implementation.Services
             return 1;
         }
 
-        public bool DeleteDocument(int documentId)
+        public bool DeleteDocument(long documentId)
         {
+            var doc = documentRepository.Find(documentId);
+
+            if (doc == null) return false;
+
+            documentRepository.Delete(doc);
+            documentRepository.SaveChanges();
             return true;
         }
         public Document GetDocumentById(long id)
         {
             return documentRepository.Find(id);
         }
-        public IEnumerable<Document> GetAllDocumentByRefID(int id)
+        public IEnumerable<Document> GetAllDocumentByRefId(int id)
         {
-            return null;
+            return documentRepository.GetAllDocumentByRefId(id);
         }
     }
 }

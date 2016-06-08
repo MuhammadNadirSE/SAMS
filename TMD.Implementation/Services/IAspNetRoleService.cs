@@ -8,6 +8,7 @@ namespace TMD.Implementation.Services
     {
         string AddRole(AspNetRole role);
         string UpdateRole(AspNetRole role);
+        string GetLatestAvailableRoleId();
         AspNetRole GetRoleById(string id);
         IEnumerable<AspNetRole> GetAllRolesExceptSuperAdmin();
     }

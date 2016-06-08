@@ -8,7 +8,7 @@
 }
 
 
-@using (Html.BeginForm("ModelSpecs", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("ModelSpecs", "Product", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x=>x.ProductModel.ProductModelId)
     @Html.HiddenFor(x=>x.ProductModel.ProductId)
@@ -46,7 +46,7 @@
         <div class="portlet-body form">
             <div class="form-body">
                 <div class="row">
-                    <div class="portlet box red-sunglo">
+                    <div class="portlet box red-sunglo"  id="pulsate-crazy-target">
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="fa fa-cogs"></i>All Models (@Model.ProductModels.Count)
@@ -220,7 +220,16 @@
     </div>
 }
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+
+        $('#pulsate-crazy-target').pulsate({
+            color: "#e26a6a",
+            reach: 50,
+            repeat: 5,
+            speed: 400,
+            glow: true
+        });
+
         $('.remove').live("click", function () {
 
             if (!confirm("Are you sure to delete this specification?")) {

@@ -15,7 +15,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class QuoteController : Controller
+    public class QuoteController : BaseController
     {
         private readonly IQuoteService quoteService;
         public QuoteController(IQuoteService quoteService)

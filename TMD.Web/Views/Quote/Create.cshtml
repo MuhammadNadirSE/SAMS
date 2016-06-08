@@ -4,7 +4,7 @@
     string createUpdate = Model.Quote.QuoteID > 0 ? "Update" : "Add New";
     ViewBag.Title = createUpdate + " Quote";
     Session["MenuKey"] = 4;
-
+    string itemId = Model.Quote.QuoteID > 0 ? Model.Quote.QuoteID.ToString() : "";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     //string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
@@ -69,7 +69,14 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Quote.ContactId, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.Quote.ContactId, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.Quote.ContactId), "--Please Select--", new {@class = "form-control select2me" })
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.Quote.ContactId, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.Quote.ContactId), "--Please Select--", new { @class = "form-control select2me" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Contact/Create?returnUrl=/Quote/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Contact">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.Quote.ContactId)
                             </div>
                         </div>
@@ -79,7 +86,14 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Quote.QuoteDetail.ProductId, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.Quote.QuoteDetail.ProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.Quote.QuoteDetail.ProductId), "--Please Select--", new {@class = "form-control select2me",@id="ProductsDDL" })
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.Quote.QuoteDetail.ProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.Quote.QuoteDetail.ProductId), "--Please Select--", new { @class = "form-control select2me", @id = "ProductsDDL" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Product/Create?returnUrl=/Quote/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Product">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.Quote.QuoteDetail.ProductId)
                             </div>
                         </div>
