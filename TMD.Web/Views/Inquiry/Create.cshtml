@@ -179,8 +179,8 @@
                                     {
                                         <div>
                                             <div class="btn-group btn-group-solid">
-                                                <a href="~/Document/Download/@doc.DocumentId" class="btn blue"><i class="fa fa-download"></i></a>
-                                                <button type="button" class="btn red" onclick="DeleteDocument(@doc.DocumentId,this);"><i class="fa fa-trash-o"></i></button>
+                                                <a href="~/Document/Download/@doc.DocumentId" class="btn blue" title="Download"><i class="fa fa-download"></i></a>
+                                                <button type="button" class="btn red" onclick="DeleteDocument(@doc.DocumentId,this);"  title="Delete"><i class="fa fa-trash-o"></i></button>
                                             </div>
                                             @doc.DocumentName
 

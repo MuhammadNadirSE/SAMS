@@ -107,18 +107,20 @@ namespace TMD.Web.Controllers
                 {
                     foreach (var file in inquiryViewModel.UploadFiles)
                     {
-                        var tempStream = file.InputStream;
-                        byte[] bytes = new byte[tempStream.Length];
-                        tempStream.Read(bytes, 0, Convert.ToInt32(tempStream.Length));
-                        Document document = new Document
+                        if (file != null)
                         {
-                            DocumentData = bytes,
-                            DocumentName = file.FileName,
-                            DocumentType = file.ContentType
-                        };
-                        inquiryResp.InquiryDocuments.Add(document);
+                            var tempStream = file.InputStream;
+                            byte[] bytes = new byte[tempStream.Length];
+                            tempStream.Read(bytes, 0, Convert.ToInt32(tempStream.Length));
+                            Document document = new Document
+                            {
+                                DocumentData = bytes,
+                                DocumentName = file.FileName,
+                                DocumentType = file.ContentType
+                            };
+                            inquiryResp.InquiryDocuments.Add(document);
+                        }
                     }
-                    
                 }
                 if (inquiryService.SaveInquiry(inquiryResp))
                 {
