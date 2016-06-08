@@ -3,6 +3,9 @@
     int productID = Model.Product.ProductID > 0 ? Model.Product.ProductID : 0;
     string productModelsURL = Model.Product.ProductID > 0 ? Url.Action("ModelSpecs", "Product", new {product=productID}) : "javascript:;";
     string createUpdate = Model.Product.ProductID > 0 ? "Update": "Create";
+
+    string itemId = Model.Product.ProductID > 0 ? Model.Product.ProductID.ToString() : "";
+
     ViewBag.Title = createUpdate + " Product";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 8;
@@ -10,7 +13,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form",@id="ProductForm" }))
+@using (Html.BeginForm("Create", "Product", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form",@id="ProductForm" }))
 {
 
    @Html.AntiForgeryToken()
@@ -63,9 +66,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-md-4 control-label requiredLabel">Category</label>
-                            <div class="col-md-6">
-                                @Html.DropDownListFor((x => x.Product.ProductCategoryID), new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", (object)Model.Product.ProductCategoryID), "--Please Select--", new {@class = "form-control select2me", @id= "ProductCategoryID" })
+                            @Html.LabelFor((m => m.Product.ProductCategoryID), new { @class = "col-md-4 control-label requiredLabel" })
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.DropDownListFor((x => x.Product.ProductCategoryID), new SelectList(Model.ProductCategories, "ProductCategoryID", "CatName", (object)Model.Product.ProductCategoryID), "--Please Select--", new { @class = "form-control select2me", @id = "ProductCategoryID" })
+                                    <span class="input-group-btn">
+                                        <a href="~/ProductCategory/Create?returnUrl=/Product/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Product">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor((x => x.Product.ProductCategoryID))
                             </div>
                         </div>
                     </div>
@@ -82,7 +93,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor((m => m.Product.DetailDescription), new {@class = "col-md-4 control-label requiredLabel"})
+                            @Html.LabelFor((m => m.Product.DetailDescription), new {@class = "col-md-4 control-label"})
                             <div class="col-md-8">
                                 @Html.TextAreaFor((m => m.Product.DetailDescription), new {@class = "form-control mandatory", placeholder = "Detail Description"})
                             </div>

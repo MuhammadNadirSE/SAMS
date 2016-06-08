@@ -5,6 +5,7 @@
 @model TMD.Web.ViewModels.Common.MenuViewModel
 @{
     Layout = null;
+    var currentUrl = Request.Url.ToString().Contains("?")? Request.Url.ToString().Split('?')[0]: Request.Url.ToString();
 }
 
 @{
@@ -18,7 +19,7 @@
 
             if (!menuRightchildList.Any())
             {
-                <li class=@((Request.Url.ToString().Contains(header.Menu.MenuTargetController) == true)? "active" : "")>
+                <li class=@((currentUrl.Contains(header.Menu.MenuTargetController) == true)? "active" : "")>
                     <a href="@(Url.Action(header.Menu.MenuFunction, header.Menu.MenuTargetController))" class="@header.Menu.MenuItemClass">
                         <i class="icon-photon @header.Menu.MenuImagePath"></i>
                         <span class="title">@header.Menu.MenuTitle</span>
@@ -40,7 +41,7 @@
                             foreach (MenuRight menuRight in menuRightchildList)
                             {
                                 // display childs
-                                <li class=@(Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController) == true ? "innerSelected" : "")>
+                                <li class=@(currentUrl.Contains(menuRight.Menu.MenuTargetController) == true ? "innerSelected" : "")>
                                     <a href="@Url.Action(menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController)" class="@menuRight.Menu.MenuItemClass">
                                         <i class="@menuRight.Menu.MenuImagePath"></i>
                                         <span class="title">@menuRight.Menu.MenuTitle</span>

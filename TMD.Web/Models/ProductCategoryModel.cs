@@ -16,6 +16,7 @@ namespace TMD.Web.Models
 
         [Display(Name = "Short Description")]
         [Required(ErrorMessage = "Category Short Description is required.")]
+        [StringLength(100)]
         public string ShortDescription { get; set; }
 
         [Display(Name = "Detail Description")]

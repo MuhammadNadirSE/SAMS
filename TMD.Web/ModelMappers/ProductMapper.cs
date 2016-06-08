@@ -11,7 +11,7 @@ namespace TMD.Web.ModelMappers
                 ProductID = source.ProductID,
                 ProductName = source.ProductName,
                 ShortDescription = source.ShortDescription,
-                DetailDescription = source.DetailDescription,
+                DetailDescription = source.DetailDescription ?? "",
                 ProductCategoryID = source.ProductCategoryID,
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,

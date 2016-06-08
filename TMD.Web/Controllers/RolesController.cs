@@ -12,8 +12,8 @@ using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers
 {
-    [Authorize(Roles = "Admin,SuperAdmin")]
-    public class RolesController : Controller
+    [Authorize]
+    public class RolesController : BaseController
     {
         private IMenuRightsService menuRightsService;
 
@@ -48,7 +48,7 @@ namespace TMD.Web.Controllers
             }
         }
 
-        //[SiteAuthorize(PermissionKey = "RightsManagement")]
+        [SiteAuthorize(PermissionKey = "RightsManagement")]
         public ActionResult RightsManagement()
         {
             UserMenuResponse userMenuRights = menuRightsService.GetRoleMenuRights(string.Empty);

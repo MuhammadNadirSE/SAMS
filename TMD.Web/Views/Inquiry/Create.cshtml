@@ -2,6 +2,7 @@
 @model  TMD.Web.ViewModels.Inquiry.InquiryViewModel
 @{
     string createUpdate = Model.InquiryModel.InquiryID > 0 ? "Update" : "Add New";
+    string itemId = Model.InquiryModel.InquiryID > 0 ? Model.InquiryModel.InquiryID.ToString() : "";
     ViewBag.Title = createUpdate + " Inquiry";
     Session["MenuKey"] = 4;
 
@@ -95,7 +96,14 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.ContactID, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new {@class = "form-control select2me"})
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.InquiryModel.ContactID, new SelectList(Model.Contacts, "ContactID", "FirstName", Model.InquiryModel.ContactID), "--Please Select--", new { @class = "form-control select2me" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Contact/Create?returnUrl=/Inquiry/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Contact">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.InquiryModel.ContactID)
                             </div>
                         </div>
@@ -105,7 +113,14 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.InquiryModel.InquiryProductId, new {@class = "control-label col-md-4 requiredLabel"})
                             <div class="col-md-8">
-                                @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new {@class = "form-control select2me"})
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.InquiryModel.InquiryProductId, new SelectList(Model.Products, "ProductID", "ProductName", Model.InquiryModel.InquiryProductId), "--Please Select--", new { @class = "form-control select2me" })
+                                    <span class="input-group-btn">
+                                        <a href="~/Product/Create?returnUrl=/Inquiry/Create/@itemId" class="btn default green-seagreen-stripe" title="Add New Product">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
                                 @Html.ValidationMessageFor(model => model.InquiryModel.InquiryProductId)
                             </div>
                         </div>
@@ -206,6 +221,8 @@
 <script>
     $(document).ready(function() {
         window.siteURL = $('#siteURL').val();
+
+
     });
     function DeleteDocument(docId, control) {
 

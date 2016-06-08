@@ -12,12 +12,14 @@ namespace TMD.Web.Models
 
         [Display(Name = "Short Description")]
         [Required(ErrorMessage = "Short Description is required.")]
+        [StringLength(100)]
         public string ShortDescription { get; set; }
 
         [Display(Name = "Detail Description")]
-        [Required(ErrorMessage = "Detail Description is required.")]
         public string DetailDescription { get; set; }
-        
+
+        [Display(Name = "Category")]
+        [Required(ErrorMessage = "Product Category is required.")]
         public int ProductCategoryID { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }

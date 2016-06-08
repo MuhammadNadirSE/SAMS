@@ -13,7 +13,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class TechnicalSpecsController : Controller
+    public class TechnicalSpecsController : BaseController
     {
         private readonly ITechnicalSpecsService technicalSpecsService;
         public TechnicalSpecsController(ITechnicalSpecsService technicalSpecsService)

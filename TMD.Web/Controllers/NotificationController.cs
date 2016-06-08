@@ -10,7 +10,7 @@ using TMD.Web.Models;
 
 namespace TMD.Web.Controllers
 {
-    public class NotificationController : Controller
+    public class NotificationController : BaseController
     {
         private readonly INotificationService notificationService;
         public NotificationController(INotificationService notificationService)

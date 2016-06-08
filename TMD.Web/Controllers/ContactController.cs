@@ -14,7 +14,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class ContactController : Controller
+    public class ContactController : BaseController
     {
 
         private readonly IContactService contactService;
@@ -63,6 +63,7 @@ namespace TMD.Web.Controllers
                 }
                     
             }
+            ViewBag.ReturnUrl = Request.QueryString["returnUrl"];
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(contactViewModel);
         }
@@ -98,7 +99,9 @@ namespace TMD.Web.Controllers
                     IsSaved = true,
                     Message = "Your data has been saved successfully!"
                 };
-                return RedirectToAction("Create");
+                if (string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                    return RedirectToAction("Create");
+                return Redirect(Request.QueryString["returnUrl"]);
             }
             catch(Exception e)
             {

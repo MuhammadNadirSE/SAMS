@@ -10,7 +10,7 @@ using TMD.WebBase.Mvc;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
         private readonly IAspNetRoleService aspNetRoleService;
 

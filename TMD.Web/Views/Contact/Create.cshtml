@@ -10,7 +10,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Contact", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
+@using (Html.BeginForm("Create", "Contact", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createForm" }))
 {
     @Html.AntiForgeryToken();
     @Html.HiddenFor(x=>x.Contact.ContactID);

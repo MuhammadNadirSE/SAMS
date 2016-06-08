@@ -8,7 +8,7 @@
 }
 
 
-@using (Html.BeginForm("ModelSpecs", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("ModelSpecs", "Product", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x=>x.ProductModel.ProductModelId)
     @Html.HiddenFor(x=>x.ProductModel.ProductId)

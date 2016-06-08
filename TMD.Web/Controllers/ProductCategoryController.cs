@@ -10,7 +10,8 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class ProductCategoryController : Controller
+    [Authorize]
+    public class ProductCategoryController : BaseController
     {
         private readonly IProductCategoryService productCategoryService;
         public ProductCategoryController(IProductCategoryService productCategoryService)
@@ -47,6 +48,8 @@ namespace TMD.Web.Controllers
                 productCategoryViewModel.ProductCategory = prodCatResp.ProductCategory != null ? prodCatResp.ProductCategory.MapServerToClient() : new Models.ProductCategoryModel();
 
                 productCategoryViewModel.ProductCategories = prodCatResp.ProductCategories.Select(x => x.MapServerToClient()).ToList();
+
+            ViewBag.ReturnUrl = Request.QueryString["returnUrl"];
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(productCategoryViewModel);
         }
@@ -77,57 +80,11 @@ namespace TMD.Web.Controllers
                     IsSaved = true,
                     Message = "Your data has been saved successfully!"
                 };
-                return RedirectToAction("Create");
+                if (string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                    return RedirectToAction("Create");
+                return Redirect(Request.QueryString["returnUrl"]);
             }
             catch(Exception ex)
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /ProductCategory/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /ProductCategory/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /ProductCategory/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /ProductCategory/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
             {
                 return View();
             }

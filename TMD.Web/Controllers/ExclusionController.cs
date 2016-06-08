@@ -14,7 +14,7 @@ using TMD.Web.Models;
 namespace TMD.Web.Controllers
 {
     [Authorize]
-    public class ExclusionController : Controller
+    public class ExclusionController : BaseController
     {
         private readonly IExclusionService exclusionService;
 

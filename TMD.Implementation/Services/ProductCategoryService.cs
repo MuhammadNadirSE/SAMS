@@ -20,12 +20,10 @@ namespace TMD.Implementation.Services
         }
         public int AddCategory(Models.DomainModels.ProductCategory productCategory)
         {
-            
              prodCategoryRepository.Add(productCategory);
              prodCategoryRepository.SaveChanges();
 
              return productCategory.ProductCategoryID; // If Exception occurs this line will not be executed
-            
         }
 
         public int UpdateCategory(Models.DomainModels.ProductCategory productCategory)
