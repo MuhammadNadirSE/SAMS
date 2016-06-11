@@ -45,6 +45,7 @@ namespace TMD.Web.Controllers
             if (prodResp.Product != null)
             {
                 productViewModel.Product = prodResp.Product.MapServerToClient();
+                productViewModel.Documents = prodResp.Documents.ToList();
             }
             else
             {
@@ -85,22 +86,22 @@ namespace TMD.Web.Controllers
                                 DocumentName = file.FileName,
                                 DocumentType = file.ContentType
                             };
-                            productViewModel.Documents.Add(document);
+                            productViewModel.Product.Documents.Add(document);
                         }
                     }
                 }
                 // TODO: Add insert logic here
                 if (productViewModel.Product.ProductID > 0)
                 {
-                    
-                    TempData["ProductId"] = productService.UpdateProduct(productViewModel.Product.MapClientToServer());
+
+                    TempData["ProductId"] = productService.UpdateProduct(productViewModel.Product.MapClientToServerWithDocuments());
                 }
                 else
                 {
                     productViewModel.Product.CreatedDate = DateTime.UtcNow;
                     productViewModel.Product.CreatedBy = User.Identity.GetUserId();
 
-                    TempData["ProductId"] = productService.AddProduct(productViewModel.Product.MapClientToServer());
+                    TempData["ProductId"] = productService.AddProduct(productViewModel.Product.MapClientToServerWithDocuments());
                 }
                 TempData["message"] = new MessageViewModel
                 {

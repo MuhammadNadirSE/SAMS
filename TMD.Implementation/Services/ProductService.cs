@@ -68,6 +68,8 @@ namespace TMD.Implementation.Services
             if (id != null)
             {
                 prodResp.Product = prodRepository.Find((int)id);
+                
+                prodResp.Documents = documentService.GetAllDocumentByRefId((int)id, (int)DocumentType.Product).ToList();
             }
             prodResp.ProductCategories = productCategoryRepository.GetAllLeafCategories();
             return prodResp;

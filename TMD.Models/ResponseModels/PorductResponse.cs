@@ -11,6 +11,8 @@ namespace TMD.Models.ResponseModels
     {
         public Product Product { get; set; }
         public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        public List<Document> Documents { get; set; }
+
 
     }
 }

@@ -16,8 +16,24 @@ namespace TMD.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
                 UpdatedBy = source.UpdatedBy,
-                UpdatedDate = source.UpdatedDate  ,
-                Documents=source.Documents
+                UpdatedDate = source.UpdatedDate  
+
+            };
+        }
+        public static Product MapClientToServerWithDocuments(this Models.Product source)
+        {
+            return new Product
+            {
+                ProductID = source.ProductID,
+                ProductName = source.ProductName,
+                ShortDescription = source.ShortDescription,
+                DetailDescription = source.DetailDescription ?? "",
+                ProductCategoryID = source.ProductCategoryID,
+                CreatedBy = source.CreatedBy,
+                CreatedDate = source.CreatedDate,
+                UpdatedBy = source.UpdatedBy,
+                UpdatedDate = source.UpdatedDate,
+                Documents = source.Documents
 
             };
         }
