@@ -22,7 +22,7 @@ namespace TMD.Web.Controllers
         public ActionResult Index()
         {
             List<NotificationModel> Notifications =
-                notificationService.GetAllNotificationsByUserId(User.Identity.GetUserId())
+                notificationService.Get30DaysNotificationsByUserId(User.Identity.GetUserId())
                     .ToList()
                     .Select(x => x.MapServerToClient()).ToList();
 

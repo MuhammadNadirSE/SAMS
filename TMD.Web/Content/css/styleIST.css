@@ -418,3 +418,9 @@ body {
 input[type = search] {
     height: 30px !important;
 }
+
+
+
+.width100pt {
+    width: 100% !important;
+}

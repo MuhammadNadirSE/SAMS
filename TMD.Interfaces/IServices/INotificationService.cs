@@ -6,7 +6,7 @@ namespace TMD.Interfaces.IServices
     public interface INotificationService
     {
         long AddNotification(Notification notification);
-        IEnumerable<Notification> GetAllNotificationsByUserId(string userId);
+        IEnumerable<Notification> Get30DaysNotificationsByUserId(string userId);
         int GetUnreadNotificationsCount(string userId);
     }
 }

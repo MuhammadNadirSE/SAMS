@@ -23,9 +23,9 @@ namespace TMD.Repository.Repositories
             get { return db.Document; }
         }
 
-        public IEnumerable<Document> GetAllDocumentByRefId(int id)
+        public IEnumerable<Document> GetAllDocumentByRefId(int id, int type)
         {
-            return DbSet.Where(x => x.RefrenceId.Equals(id));
+            return DbSet.Where(x => x.RefrenceId.Equals(id) && x.RefrenceType.Equals(type));
         }
     }
 }

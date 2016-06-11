@@ -8,10 +8,12 @@ namespace TMD.Implementation.Services
     public class NotificationService : INotificationService
     {
         private readonly INotificationRepository notificationRepository;
+        private readonly INotificationRecipientRepository notificationRecipientRepository;
 
-        public NotificationService(INotificationRepository notificationRepository)
+        public NotificationService(INotificationRepository notificationRepository, INotificationRecipientRepository notificationRecipientRepository)
         {
             this.notificationRepository = notificationRepository;
+            this.notificationRecipientRepository = notificationRecipientRepository;
         }
 
         public long AddNotification(Notification notification)
@@ -21,14 +23,14 @@ namespace TMD.Implementation.Services
             return notification.NotificationId;
         }
 
-        public IEnumerable<Notification> GetAllNotificationsByUserId(string userId)
+        public IEnumerable<Notification> Get30DaysNotificationsByUserId(string userId)
         {
-            return notificationRepository.GetAll();
+            return notificationRepository.Get30DaysNotificationsByUserId(userId);
         }
 
         public int GetUnreadNotificationsCount(string userId)
         {
-            throw new System.NotImplementedException();
+            return notificationRecipientRepository.GetUnreadNotificationsCount(userId);
         }
     }
 }
