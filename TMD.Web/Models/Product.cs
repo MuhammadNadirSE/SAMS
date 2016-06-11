@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web.Models
 {
@@ -21,6 +22,9 @@ namespace TMD.Web.Models
         [Display(Name = "Category")]
         [Required(ErrorMessage = "Product Category is required.")]
         public int ProductCategoryID { get; set; }
+
+        public List<Document> Documents { get; set; }
+
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

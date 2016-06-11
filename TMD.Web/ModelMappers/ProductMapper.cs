@@ -16,7 +16,8 @@ namespace TMD.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
                 UpdatedBy = source.UpdatedBy,
-                UpdatedDate = source.UpdatedDate  
+                UpdatedDate = source.UpdatedDate  ,
+                Documents=source.Documents
 
             };
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMD.Common;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -15,11 +16,14 @@ namespace TMD.Implementation.Services
     {
         private readonly IProductRepository prodRepository;
         private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IDocumentService documentService;
 
-        public ProductService(IProductRepository prodRepository, IProductCategoryRepository productCategoryRepository)
+
+        public ProductService(IProductRepository prodRepository, IProductCategoryRepository productCategoryRepository, IDocumentService documentService)
         {
             this.prodRepository = prodRepository;
             this.productCategoryRepository = productCategoryRepository;
+            this.documentService = documentService;
 
         }
         public int AddProduct(Models.DomainModels.Product product)
@@ -27,6 +31,9 @@ namespace TMD.Implementation.Services
 
             prodRepository.Add(product);
             prodRepository.SaveChanges();
+
+            if (product.Documents !=null && product.Documents.Count>0)
+                  documentService.AddDocuments(product.Documents, product.ProductID, DocumentType.Product);
 
             return product.ProductID; // If Exception occurs this line will not be executed
 
@@ -36,6 +43,10 @@ namespace TMD.Implementation.Services
         {
             prodRepository.Update(product);
             prodRepository.SaveChanges();
+
+            if (product.Documents != null && product.Documents.Count > 0)
+                documentService.AddDocuments(product.Documents, product.ProductID, DocumentType.Product);
+
 
             return product.ProductID;
         }
