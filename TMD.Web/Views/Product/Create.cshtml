@@ -86,7 +86,7 @@
                         <div class="form-group">
                             @Html.LabelFor((m => m.Product.ShortDescription), new {@class = "col-md-4 control-label requiredLabel"})
                             <div class="col-md-8">
-                                @Html.TextAreaFor((m => m.Product.ShortDescription), new {@class = "form-control mandatory", placeholder = "Short Description"})
+                                @Html.TextAreaFor((m => m.Product.ShortDescription), new {@class = "form-control mandatory", placeholder = "Short Description", rows="4"})
                                 @Html.ValidationMessageFor((x => x.Product.ShortDescription))
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                         <div class="form-group">
                             @Html.LabelFor((m => m.Product.DetailDescription), new {@class = "col-md-4 control-label"})
                             <div class="col-md-8">
-                                @Html.TextAreaFor((m => m.Product.DetailDescription), new {@class = "form-control mandatory", placeholder = "Detail Description"})
+                                @Html.TextAreaFor((m => m.Product.DetailDescription), new {@class = "form-control mandatory", placeholder = "Detail Description", rows = "4" })
                             </div>
                         </div>
                     </div>

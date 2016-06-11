@@ -15,22 +15,15 @@ namespace TMD.Repository.Repositories
         public NotificationRepository(IUnityContainer container) : base(container)
         {
         }
-
-      //  protected override IDbSet<Notification> DbSet => db.Notification;
-
+        
         protected override IDbSet<Notification> DbSet
         {
             get { return db.Notification; }
         }
         
-        public int GetUnreadNotificationsCount(string userId)
+        public IEnumerable<Notification> Get30DaysNotificationsByUserId(string userId)
         {
-            var today = DateTime.UtcNow;
-
-            Expression<Func<Notification, bool>> query = s => (((s.NotificationRecipients.FirstOrDefault(r => r.UserId == userId).IsRead == false))
-                                     && (s.CreatedDate <= today));
-
-            return DbSet.Count(query);
+            return DbSet.Include(x => x.NotificationRecipients.Where(y => y.UserId.Equals(userId)));
         }
     }
 }

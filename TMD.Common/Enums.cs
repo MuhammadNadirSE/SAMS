@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TMD.Common
+﻿namespace TMD.Common
 {
     public enum ContactType 
     {
             Customer =1 
-            
     }
 
     public enum AddressType
@@ -28,5 +21,18 @@ namespace TMD.Common
     {
         Product = 1,
         Inquiry = 2
+    }
+
+    public enum NotificationType
+    {
+        Quote = 1,
+        Inquiry = 2
+    }
+    public enum ActionPerformed
+    {
+        Created = 1,
+        Read = 2,
+        Updated = 3,
+        Deleted = 4
     }
 }

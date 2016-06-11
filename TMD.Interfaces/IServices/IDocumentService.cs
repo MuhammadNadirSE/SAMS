@@ -9,7 +9,7 @@ namespace TMD.Interfaces.IServices
     {
         int AddDocuments(List<Document> documents,int refrenceId, DocumentType refrenceType);
         bool DeleteDocument(long documentId);
-        IEnumerable<Document> GetAllDocumentByRefId(int id);
+        IEnumerable<Document> GetAllDocumentByRefId(int id, int type);
         Document GetDocumentById(long id);
     }
 }

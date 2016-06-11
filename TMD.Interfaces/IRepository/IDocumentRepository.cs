@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TMD.Models.DomainModels;
 
 namespace TMD.Interfaces.IRepository
 {
     public interface IDocumentRepository : IBaseRepository<Document, long>
     {
-        IEnumerable<Document> GetAllDocumentByRefId(int id);
+        IEnumerable<Document> GetAllDocumentByRefId(int id, int type);
     }
 }

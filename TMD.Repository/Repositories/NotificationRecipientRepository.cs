@@ -15,12 +15,13 @@ namespace TMD.Repository.Repositories
         public NotificationRecipientRepository(IUnityContainer container) : base(container)
         {
         }
-     //   protected override IDbSet<NotificationRecipient> DbSet => db.NotificationRecipient;
-
            protected override IDbSet<NotificationRecipient> DbSet
         {
             get { return db.NotificationRecipient; }
         }
-       
+        public int GetUnreadNotificationsCount(string userId)
+        {
+            return DbSet.Count(x=>x.UserId.Equals(userId) && x.IsRead==false);
+        }
     }
 }

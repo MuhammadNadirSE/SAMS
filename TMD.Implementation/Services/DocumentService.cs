@@ -47,9 +47,9 @@ namespace TMD.Implementation.Services
         {
             return documentRepository.Find(id);
         }
-        public IEnumerable<Document> GetAllDocumentByRefId(int id)
+        public IEnumerable<Document> GetAllDocumentByRefId(int id, int type)
         {
-            return documentRepository.GetAllDocumentByRefId(id);
+            return documentRepository.GetAllDocumentByRefId(id,type);
         }
     }
 }
