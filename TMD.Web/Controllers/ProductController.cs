@@ -9,6 +9,7 @@ using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Product;
 using TMD.WebBase.Mvc;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web.Controllers
 {
@@ -44,6 +45,7 @@ namespace TMD.Web.Controllers
             if (prodResp.Product != null)
             {
                 productViewModel.Product = prodResp.Product.MapServerToClient();
+                productViewModel.Documents = prodResp.Documents.ToList();
             }
             else
             {
@@ -68,17 +70,38 @@ namespace TMD.Web.Controllers
             {
                 productViewModel.Product.UpdatedDate = DateTime.UtcNow;
                 productViewModel.Product.UpdatedBy = User.Identity.GetUserId();
+                //upload files data
+                if (productViewModel.UploadFiles.Any())
+                {
+                    foreach (var file in productViewModel.UploadFiles)
+                    {
+                        if (file != null)
+                        {
+                            var tempStream = file.InputStream;
+                            byte[] bytes = new byte[tempStream.Length];
+                            tempStream.Read(bytes, 0, Convert.ToInt32(tempStream.Length));
+                            Document document = new Document
+                            {
+                                DocumentData = bytes,
+                                DocumentName = file.FileName,
+                                DocumentType = file.ContentType
+                            };
+                            productViewModel.Product.Documents.Add(document);
+                        }
+                    }
+                }
                 // TODO: Add insert logic here
                 if (productViewModel.Product.ProductID > 0)
                 {
-                    TempData["ProductId"] = productService.UpdateProduct(productViewModel.Product.MapClientToServer());
+
+                    TempData["ProductId"] = productService.UpdateProduct(productViewModel.Product.MapClientToServerWithDocuments());
                 }
                 else
                 {
                     productViewModel.Product.CreatedDate = DateTime.UtcNow;
                     productViewModel.Product.CreatedBy = User.Identity.GetUserId();
 
-                    TempData["ProductId"] = productService.AddProduct(productViewModel.Product.MapClientToServer());
+                    TempData["ProductId"] = productService.AddProduct(productViewModel.Product.MapClientToServerWithDocuments());
                 }
                 TempData["message"] = new MessageViewModel
                 {
