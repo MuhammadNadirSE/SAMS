@@ -1629,6 +1629,7 @@
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Images\pic05.jpg" />
     <Content Include="Images\reportsSpinner.gif" />
+    <Content Include="Images\syncfusion-icons-white.png" />
     <Content Include="Images\Web\banner1.PNG" />
     <Content Include="Images\Web\banner2.jpg" />
     <Content Include="Images\Web\banner3.jpg" />

@@ -166,10 +166,11 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
-                ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+                
                 return View();
             }
             else
@@ -180,7 +181,7 @@ namespace IdentitySample.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             try
@@ -262,7 +263,7 @@ namespace IdentitySample.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", new { e=ex.Message});
+                return View("Error", new { e=ex.Message});
             }
         }
         public ActionResult LogOff()
@@ -712,6 +713,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Error(string e)
         {
+            ViewBag.Error = e;
             return View(e);
         }
         //
@@ -806,6 +808,7 @@ namespace IdentitySample.Controllers
                 {
                     ModelState.AddModelError("", "Email not found.");
                     // Don't reveal that the user does not exist or is not confirmed
+                    TempData["message"] = new MessageViewModel { IsError = true, Message = "Email not found." };
                     return View(model);
                 }
 
@@ -817,10 +820,13 @@ namespace IdentitySample.Controllers
                         "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
                 ViewBag.Link = callbackUrl;
 
-                TempData["message"] = new MessageViewModel {IsInfo = true, Message = "Reset Password Link has been sent to your email."};
+
+                ModelState.AddModelError("", "Reset Password Link has been sent to your email.");
+                TempData["message"] = new MessageViewModel {IsSaved = true, Message = "Reset Password Link has been sent to your email."};
                 return RedirectToAction("Login");
             }
             // If we got this far, something failed, redisplay form
+            TempData["message"] = new MessageViewModel { IsError = true, Message = "We apologise, some error occured." };
             return View(model);
         }
 
