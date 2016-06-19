@@ -2919,7 +2919,6 @@
     <Folder Include="ViewModels\TicketType\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Document\" />
-    <Folder Include="Views\MenuController\" />
     <Folder Include="Views\Menu\" />
   </ItemGroup>
   <ItemGroup>

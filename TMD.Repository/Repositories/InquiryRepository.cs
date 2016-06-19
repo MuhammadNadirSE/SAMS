@@ -47,10 +47,16 @@ namespace TMD.Repository.Repositories
             int toRow = searchRequest.PageSize;
 
             Expression<Func<Inquiry, bool>> query =
-                s =>
+                s =>searchRequest.HasPermissionToViewAll?
                     (
                     (string.IsNullOrEmpty(searchRequest.ContactName) || (s.Contact.FirstName + " " + s.Contact.LastName).Contains(searchRequest.ContactName)) &&
                     (searchRequest.Priority==0 || (s.Priority) == searchRequest.Priority) &&
+                    (string.IsNullOrEmpty(searchRequest.CreatedBy) || (s.CreatedByUser.FirstName + " " + s.CreatedByUser.LastName).Contains(searchRequest.CreatedBy))
+                    ):
+                    (
+                    (string.IsNullOrEmpty(searchRequest.ContactName) || (s.Contact.FirstName + " " + s.Contact.LastName).Contains(searchRequest.ContactName)) &&
+                    (searchRequest.Priority == 0 || (s.Priority) == searchRequest.Priority) &&
+                    (s.CreatedBy==searchRequest.CurrentUserId) &&
                     (string.IsNullOrEmpty(searchRequest.CreatedBy) || (s.CreatedByUser.FirstName + " " + s.CreatedByUser.LastName).Contains(searchRequest.CreatedBy))
                     );
 

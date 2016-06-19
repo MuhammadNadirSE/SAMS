@@ -8,6 +8,8 @@ namespace TMD.Models.RequestModels
         public string ContactName { get; set; }
         public int Priority { get; set; }
         public string CreatedBy { get; set; }
+        public string CurrentUserId { get; set; }
+        public bool HasPermissionToViewAll { get; set; }
 
         public OrderByColumnInquiry OrderByColumn
         {

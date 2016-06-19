@@ -41,6 +41,9 @@ namespace TMD.Web.Controllers
         [HttpPost]
         public JsonResult Index(InquirySearchRequest searchRequest)
         {
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            searchRequest.HasPermissionToViewAll = userPermissionsSet.Contains("ViewAllInquiries");
+            searchRequest.CurrentUserId = User.Identity.GetUserId();
 
             var contactResponse = inquiryService.GetAllInquiries(searchRequest);
             var inquiryList = contactResponse.Inquiries.ToList().Select(x => x.MapServerToClientSearch()).ToList();
