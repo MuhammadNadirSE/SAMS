@@ -4,7 +4,8 @@
     Session["MenuKey"] = 8;
     Session["ParentMenu"] = 1;
 
-
+    string createUpdate = Model.DesignationId > 0 ? "Update" : "Add New";
+    ViewBag.Title = createUpdate + " Designation";
 }
 
 
@@ -23,7 +24,7 @@
             <div class="caption">
                 <i class="icon-credit-card font-red-sunglo"></i>
                 <span class="caption-subject font-red-sunglo bold uppercase">Designation</span>
-                <span class="caption-helper">Create/Update</span>
+                <span class="caption-helper">@createUpdate</span>
 
             </div>
         </div>
@@ -79,7 +80,7 @@
                                 <div class="col-md-offset-4 col-md-6">
                                     <button type="submit" class="btn green-seagreen">Save</button>
                                     <button type="button" class="btn blue-steel" onclick="clearInputFields('#createForm')">Clear</button>
-                                    <a href="@Url.Action("Index", "TechnicalSpecs")" class="btn red-sunglo">Cancel</a>
+                                    <a href="@Url.Action("Index", "Designation")" class="btn red-sunglo">Cancel</a>
                                 </div>
                             </div>
                         </div>

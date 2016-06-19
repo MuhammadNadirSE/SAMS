@@ -46,12 +46,14 @@ namespace TMD.Web.Controllers
                 if (aspNetRolesModel != null)
                 {
                     exModel = aspNetRolesModel.CreateFromServerToClient();
+                    ViewBag.CurrentAction = "Update";
                 }
 
             }
             else
             {
-                exModel.Id = aspNetRoleService.GetLatestAvailableRoleId();
+                exModel.Id = aspNetRoleService.GetLatestAvailableRoleId()+1;
+                ViewBag.CurrentAction = "Create";
             }
 
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -64,8 +66,6 @@ namespace TMD.Web.Controllers
         {
             try
             {
-               
-                // TODO: Add insert logic here
                 if (aspNetRoleModel.Id !=  null)
                 {
                     aspNetRoleService.UpdateRole(aspNetRoleModel.CreateFromClientToServer());

@@ -4,7 +4,8 @@
     Session["MenuKey"] = 8;
     Session["ParentMenu"] = 1;
 
-
+    string createUpdate = ViewBag.CurrentAction.ToString();
+    ViewBag.Title = createUpdate + " Role";
 }
 
 
@@ -22,7 +23,7 @@
             <div class="caption">
                 <i class="icon-credit-card font-red-sunglo"></i>
                 <span class="caption-subject font-red-sunglo bold uppercase">Role</span>
-                <span class="caption-helper">Create/Update</span>
+                <span class="caption-helper">@createUpdate</span>
 
             </div>
         </div>
@@ -36,7 +37,7 @@
                         <div class="form-group">
                             @Html.LabelFor(x => x.Name, new { @class = "col-md-3 control-label requiredLabel" })
                             <div class="col-md-9">
-                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control mandatory", placeholder = "Name", rows = 5, @style = "resize:none" })
+                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control mandatory", placeholder = "Role Name"})
                                 @Html.ValidationMessageFor(x => x.Name)
                             </div>
                         </div>
