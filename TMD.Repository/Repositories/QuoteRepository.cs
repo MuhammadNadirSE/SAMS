@@ -47,11 +47,16 @@ namespace TMD.Repository.Repositories
             int toRow = searchRequest.PageSize;
 
             Expression<Func<Quote, bool>> query =
-                s =>
+                s => searchRequest.HasPermissionToViewAll ?
                     (
                         (string.IsNullOrEmpty(searchRequest.Subject) || (s.Subject).Contains(searchRequest.Subject)) &&
                         (string.IsNullOrEmpty(searchRequest.ReferenceNumber) || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber)) 
                    
+                    ): (
+                        (string.IsNullOrEmpty(searchRequest.Subject) || (s.Subject).Contains(searchRequest.Subject)) &&
+                        ((s.CreatedBy).Equals(searchRequest.CurrentUserId)) &&
+                        (string.IsNullOrEmpty(searchRequest.ReferenceNumber) || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber))
+
                     );
 
             IEnumerable<Quote> quotes = searchRequest.IsAsc

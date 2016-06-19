@@ -7,7 +7,8 @@ namespace TMD.Models.RequestModels
     {
         public string Subject { get; set; }
         public string ReferenceNumber { get; set; }
-       // public string CreatedBy { get; set; }
+        public string CurrentUserId { get; set; }
+        public bool HasPermissionToViewAll { get; set; }
 
         public OrderByColumnQuote OrderByColumn
         {

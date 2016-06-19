@@ -26,11 +26,6 @@ namespace TMD.Web.Controllers
         [SiteAuthorize(PermissionKey = "QuotesList")]
         public ActionResult Index()
         {
-            //List<TMD.Web.Models.InquiryModel> Inquiries =
-            //    inquiryService.GetAllInquiries()
-            //        .ToList()
-            //        .Select(x => x.MapServerToClient()).ToList();
-            //ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new QuoteViewModel());
         }
@@ -38,6 +33,9 @@ namespace TMD.Web.Controllers
         [HttpPost]
         public JsonResult Index(QuoteSearchRequest searchRequest)
         {
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            searchRequest.HasPermissionToViewAll = userPermissionsSet.Contains("ViewAllInquiries");
+            searchRequest.CurrentUserId = User.Identity.GetUserId();
 
             var contactResponse = quoteService.GetAllQuotes(searchRequest);
             var quoteList = contactResponse.Quotes.ToList().Select(x => x.MapServerToClientSearch()).ToList();

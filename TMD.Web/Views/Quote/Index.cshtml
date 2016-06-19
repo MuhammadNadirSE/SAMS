@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Quotes";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <style>
     .ui-datepicker-calendar {
@@ -104,13 +103,6 @@
 
 <script type="text/javascript" language="javascript">
     $(document).ready(function() {
-        @*$('<style type="text/css"> .ui-datepicker-current { display: none; } </style>').appendTo("head");
-        //setCurrentMonth();
-        if ('@userPermissionsSet.Contains("ViewAllEmployeesPayroll")' == 'False')
-            $('#PayrollSearchRequest_EmployeeId').addClass('notAllowed');*@
-
-        //$("#PayrollSearchRequest_EmployeeId").select2();
-
         var siteURL = $('#siteURL').val();
         var start = ('@Model.quoteSearchRequest.PageNo' - 1) * '@Model.quoteSearchRequest.PageSize';
         var isAsc = '@Model.quoteSearchRequest.IsAsc' == "True" || '@Model.quoteSearchRequest.IsAsc' == "true";
