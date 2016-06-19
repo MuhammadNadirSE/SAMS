@@ -1819,7 +1819,6 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
-    <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Product\ModelSpecs.cshtml" />
     <Content Include="Views\Inquiry\Create.cshtml" />
     <Content Include="Views\Inquiry\Index.cshtml" />

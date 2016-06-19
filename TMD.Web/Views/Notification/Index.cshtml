@@ -84,7 +84,7 @@
         $.ajax({
             type: "POST",
             data: "{ id:" + recipientId + "}",
-            url: siteURL + "Notification/Read",
+            url: siteURL + "/Notification/Read",
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             success: function (res) {
