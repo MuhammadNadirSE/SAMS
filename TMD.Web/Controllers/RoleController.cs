@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Common;
-using TMD.Implementation.Services;
+using TMD.Interfaces.IServices;
 using TMD.WebBase.Mvc;
 
 namespace TMD.Web.Controllers

@@ -57,5 +57,9 @@ namespace TMD.Implementation.Services
          {
              return aspNetRoleRepository.GetAllRolesExceptSuperAdmin();
          }
+        public IEnumerable<AspNetRole> GetAllRoles()
+        {
+            return aspNetRoleRepository.GetAllRoles();
+        }
     }
 }

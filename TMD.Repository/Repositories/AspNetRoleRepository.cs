@@ -24,6 +24,10 @@ namespace TMD.Repository.Repositories
         {
             return DbSet.Where(x => x.Name != "SuperAdmin");
         }
+        public IEnumerable<AspNetRole> GetAllRoles()
+        {
+            return DbSet.ToList();
+        }
         public string GetLatestAvailableRoleId()
         {
             return DbSet.OrderByDescending(x=>x.Id).FirstOrDefault().Id;

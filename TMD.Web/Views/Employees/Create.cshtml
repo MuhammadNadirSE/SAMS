@@ -10,8 +10,7 @@
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     string display = "";
     bool readonly1 = true;
-    
-
+    bool IsSuperAdmin = Session["RoleName"].ToString().ToLower() == "superadmin";
 }
 
 
@@ -115,95 +114,7 @@
                     </div>
                     <!--/row-->
 
-                    @*<div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-centered">
-
-                            <div class="modal-content">
-                                <div class="modal-header " style="background: #e26a6a; color: white;">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title text-align-center ">Select Supervisor</h4>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="form-group row text-align-center">
-                                        @Html.Label("Supervisor", new {@class = "control-label col-md-4"})
-                                        <div class="col-md-5">
-                                            @Html.DropDownList("Supervisor", new SelectList(Model.Employees, "EmployeeId", "FullName"), new {@class = "form-control col-md-2", @id = "SupervisorDDL"})
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger saveSupervisor">Save</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>*@
-
-                    @*<div class="row hideOthersDetail">
-                        <div class="portlet box red-sunglo">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-cogs"></i>Supervisor(s)
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:;" data-toggle="modal" data-target="#myModal" class="mustDisplay" style="color: white;">
-                                        <i class="fa fa-plus-circle"></i>
-                                    </a>
-                                    <a href="javascript:;" class="collapse">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="portlet-body flip-scroll">
-                                <table class="table table-bordered table-striped table-condensed flip-content" id="supervisorTable">
-                                    <thead class="flip-content">
-                                        <tr>
-                                            <th style="width: 1% !important">
-
-                                            </th>
-                                            <th width="20%">
-                                                Name
-                                            </th>
-                                            <th>
-                                                Designation
-                                            </th>
-                                            <th class="numeric">
-                                                Email
-                                            </th>
-                                            <th>
-                                                <span class="mustDisplay">Remove</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.EmployeesSupervisors != null)
-                                        {
-                                            for (int i = 0; i < Model.EmployeesSupervisors.Count; i++)
-                                            {
-                                                <tr data-id="@i">
-                                                    <td style="width: 1% !important">
-                                                        <input name='EmployeeSupervisor.Index' type='hidden' value='@i' />
-
-                                                        <input readonly='readonly' name='EmployeeSupervisor[@i].SupervisorId' type='hidden' style='border: none; background: #f9f9f9; display: none;' value='@Model.EmployeesSupervisors[i].EmployeeId' />
-                                                    </td>
-                                                    <td>@Html.ActionLink(Model.EmployeesSupervisors[i].FullName, "Create", new {id = Model.EmployeesSupervisors[i].EmployeeId}) </td>
-                                                    <td>
-                                                        @Model.EmployeesSupervisors[i].DesignationTitle
-                                                    </td>
-                                                    <td>@Model.EmployeesSupervisors[i].Email</td>
-                                                    <td><a class='remove mustDisplay' href='javascript:;'>Remove</a></td>
-                                                </tr>
-                                            }
-                                        }
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>*@
-
+                    
                     <h3 class="form-section">Personal Details</h3>
                     <div class="row">
                         <div class="col-md-6">
@@ -307,6 +218,7 @@
 
 <script>
     $(document).ready(function () {
+        
         @{
             if (userPermissionsSet.Contains("AddEmployee"))
             {
@@ -319,95 +231,45 @@
                 readonly1 = true ;
             }
         }
-
+        
         $(".mustDisplay").css("display", '@display');
         if('@readonly1' == 'True')
             $(".mustReadonly").prop("readOnly", true);
         else
             $(".mustReadonly").prop("readOnly", false);
 
-
+        
         var employee = $("#Employee_EmployeeId").val();
-        if (employee != "0") {
-            if (employee != '@Session["EmployeeID"].ToString()') {
+    
+        if ('@IsSuperAdmin'==='False') {
+            
+            if (employee != "0") {
+                if (employee != '@Session["EmployeeID"]') {
 
-                if ('@readonly1' != 'False') {
-                    $(".hideOthersDetail").remove();
-                    //$(".hideOthersDetail").css("display", "none");
-                    $(".readonlyOthersDetail").prop("readOnly", true);
-                    $(".mustDisplay").css("display", "none");
-                    $(".mustReadonly").prop("readOnly", true);
+                    if ('@readonly1' != 'False') {
+                        $(".hideOthersDetail").remove();
+                        $(".readonlyOthersDetail").prop("readOnly", true);
+                        $(".mustDisplay").css("display", "none");
+                        $(".mustReadonly").prop("readOnly", true);
+                    }
+
+                } else {
+                    $(".hideOthersDetail").show();
+                    $(".readonlyOthersDetail").prop("readOnly", false);
+
+                    if ('@readonly1' != 'False') {
+                        $(".mustDisplay").css("display", "none");
+                        $(".mustReadonly").prop("readOnly", true);
+                    }
                 }
-
-         } else {
-             $(".hideOthersDetail").show();
-             //$(".hideOthersDetail").css("display", "inline");
-             $(".readonlyOthersDetail").prop("readOnly", false);
-
-             if ('@readonly1' != 'False') {
-                 $(".mustDisplay").css("display", "none");
-                 $(".mustReadonly").prop("readOnly", true);
-             }
-         }
+            }
         }
-
-
 
         $("#DesignationDDL").select2();
         $("#RoleDDL").select2();
         $("#SupervisorDDL").select2();
         $("#empCNIC").mask("99999-9999999-9");
-
         $("#empPhone").mask("99-999-9999999");
-        @*var oTable = $("#supervisorTable").dataTable({
-            "paging": false,
-            "ordering": false,
-            "info": false,
-            bFilter: false,
-
-        });
-
-        if ($("#supervisorTable").children("tbody").children("tr").children("td").html() == "No data available in table") {
-            $("#supervisorTable").children("tbody").children("tr").remove();
-        }
-        $(".remove").on('click', function () {
-            var target_row = $(this).closest("tr").get(0);
-            var aPos = oTable.fnGetPosition(target_row);
-            oTable.fnDeleteRow(aPos);
-        });
-        $(".saveSupervisor").click(function () {
-            var supervisorId = $("#SupervisorDDL").val();
-
-            $(this).closest(".modal").modal('hide');
-
-            var supervisorsList = '@Html.Raw(Json.Encode(Model.Employees))';
-
-            var parsedSupervisorList = JSON.parse(supervisorsList);
-            var rowCount = $('table#supervisorTable tbody tr:last').index() + 1;
-
-
-            $.each(parsedSupervisorList, function (key, value) {
-                if (value.EmployeeId == parseInt(supervisorId)) {
-                    var DesignationsList = '@Html.Raw(Json.Encode(Model.Designation))';
-                    var parsedDesignationsList = JSON.parse(DesignationsList);
-                    $.each(parsedDesignationsList, function(key2, value2) {
-                        if (value2.DesignationId == parseInt(value.DesignationId)) {
-                            supervisorRow = ["<input name='EmployeeSupervisor.Index' type='hidden' value='" + rowCount + "'/>" + "<input readonly='readonly' name='EmployeeSupervisor[" + rowCount + "].SupervisorId' type='hidden' style='border:none;background:#f9f9f9;display:none;' value='" + value.EmployeeId + "'/>", "<input readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + value.FullName + "'/>", "<input readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + value2.Title + "'/>", "<input readonly='readonly' type='text' style='border:none;background:#f9f9f9' value='" + value.Email + "'/>", "<a class='remove' href='javascript:;'>Remove</a>"];
-                        }
-                    });
-                }
-            });
-
-
-
-            oTable.fnAddData(supervisorRow);
-            $(".remove").on('click', function () {
-
-                var target_row = $(this).closest("tr").get(0);
-                var aPos = oTable.fnGetPosition(target_row);
-                oTable.fnDeleteRow(aPos);
-            });
-        });*@
     });
 
-    </script>
+</script>

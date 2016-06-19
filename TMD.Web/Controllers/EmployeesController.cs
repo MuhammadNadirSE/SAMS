@@ -49,16 +49,14 @@ namespace TMD.Web.Controllers
             var GMT = Convert.ToInt32(Session["ClientGMT"]);
             if (employeeBasedata.Employee != null)
             {
-                //employeeViewModel.RemainingCasualLeaves = employeeBasedata.RemainingCasualLeaves;
-                //employeeViewModel.RemainingMedicalLeaves = employeeBasedata.RemainingMedicalLeaves;
-                //employeeViewModel.RemainingPaidLeaves = employeeBasedata.RemainingPaidLeaves;
-
                 employeeViewModel.Employee = employeeBasedata.Employee.CreateFromServerToClient(GMT);
-                //employeeViewModel.EmployeesSupervisors = employeeBasedata.EmployeeSupervisors.Select(x => x.Supervisor.CreateFromServerToClient(GMT)).ToList();
             }
             employeeViewModel.Designation = employeeBasedata.Designation.Select(x => x.CreateFromServerToClient()).OrderBy(x=>x.Title).ToList();
-            //employeeViewModel.Employees = employeeBasedata.Employees.Select(x => x.CreateFromServerToClient(GMT)).OrderBy(x=>x.FullName).ToList();
-            employeeViewModel.Roles = employeeBasedata.Role.Select(x => x.CreateFromServerToClient()).OrderBy(x=>x.Name).ToList();
+
+            var roles = Session["RoleName"].ToString().ToLower() == "superadmin"
+                ? employeeBasedata.Role
+                : employeeBasedata.Role.Where(x => x.Name != "SuperAdmin").ToList();
+            employeeViewModel.Roles = roles.Select(x => x.CreateFromServerToClient()).OrderBy(x=>x.Name).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(employeeViewModel);
         }

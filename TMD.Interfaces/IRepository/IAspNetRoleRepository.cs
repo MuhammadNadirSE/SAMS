@@ -6,6 +6,7 @@ namespace TMD.Interfaces.IRepository
     public interface IAspNetRoleRepository : IBaseRepository<AspNetRole, string>
     {
         IEnumerable<AspNetRole> GetAllRolesExceptSuperAdmin();
+        IEnumerable<AspNetRole> GetAllRoles();
         string GetLatestAvailableRoleId();
     }
 }

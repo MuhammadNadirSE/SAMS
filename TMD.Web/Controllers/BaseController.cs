@@ -80,9 +80,6 @@ namespace TMD.Web.Controllers
             //save menu permissions in session
             Session["UserPermissionSet"] = menuItems.Select(user => user.Menu.PermissionKey).ToArray();
         }
-
-        #endregion
-
         [HttpPost]
         public JsonResult SetGMTSession(string GMT)
         {
@@ -104,6 +101,7 @@ namespace TMD.Web.Controllers
             info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             System.Threading.Thread.CurrentThread.CurrentCulture = info;
             System.Threading.Thread.CurrentThread.CurrentUICulture = info;
-        } 
+        }
+        #endregion
     }
 }

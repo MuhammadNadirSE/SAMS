@@ -48,13 +48,17 @@ namespace TMD.Web.Controllers
             }
         }
 
-        [SiteAuthorize(PermissionKey = "RightsManagement")]
+        //[SiteAuthorize(PermissionKey = "RightsManagement")]
         public ActionResult RightsManagement()
         {
             UserMenuResponse userMenuRights = menuRightsService.GetRoleMenuRights(string.Empty);
             RightsManagementViewModel viewModel = new RightsManagementViewModel();
 
-            viewModel.Roles = userMenuRights.Roles.ToList();
+            var roles = Session["RoleName"].ToString().ToLower() == "superadmin"
+                ? userMenuRights.Roles.ToList()
+                : userMenuRights.Roles.Where(x => x.Name != "SuperAdmin").ToList();
+
+            viewModel.Roles = roles;
             viewModel.Rights =
                 userMenuRights.Menus.Select(
                     m =>

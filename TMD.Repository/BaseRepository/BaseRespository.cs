@@ -150,7 +150,7 @@ namespace TMD.Repository.BaseRepository
 
         public IEnumerable<AspNetRole> Roles()
         {
-            return db.UserRoles.Where(r => !r.Name.Equals("SuperAdmin"));
+            return db.UserRoles.ToList();
             //return null;
         }
 

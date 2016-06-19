@@ -42,28 +42,11 @@ namespace TMD.Implementation.Services
             {
                 var empId = (int) employeeId;
                 baseData.Employee = employeeRepository.Find(empId);
-
-                //var WorkingHoursOfCasualLeaves = ticketRepository.WorkingHoursOfCasualLeaves(empId);
-                //var WorkingHoursOfMedicalLeaves = ticketRepository.WorkingHoursOfMedicalLeaves(empId);
-                //var WorkingHoursOfPaidLeaves = ticketRepository.WorkingHoursOfPaidLeaves(empId);
-
-                //var MonthsTillNow = DateTime.UtcNow.Month;
-
-                //var absValueCasual = Math.Round((baseData.Employee.AllowedAnnualCasualLeaves/12.0) * MonthsTillNow, 0);
-                //var absValuePaid = Math.Round((baseData.Employee.AllowedAnnualPaidLeaves / 12.0) * MonthsTillNow, 0);
-                //var absValueMedical = Math.Round((baseData.Employee.AllowedAnnualMedicalLeaves / 12.0) * MonthsTillNow, 0);
-
-                //baseData.RemainingCasualLeaves = absValueCasual - WorkingHoursOfCasualLeaves;
-                //baseData.RemainingMedicalLeaves = absValueMedical - WorkingHoursOfMedicalLeaves;
-                //baseData.RemainingPaidLeaves = absValuePaid - WorkingHoursOfPaidLeaves;
-
-                //baseData.EmployeeSupervisors = baseData.Employee.EmployeeSupervisors;
             }
                 
             baseData.Designation = designationRepository.GetAll();
-            //baseData.Employees = employeeRepository.GetAll();
-           
-            baseData.Role = aspNetRoleRepository.GetAll().Where(x=>x.Name.ToLower()!="superadmin").ToList();
+
+            baseData.Role = aspNetRoleRepository.GetAll();
 
             return baseData;
 
