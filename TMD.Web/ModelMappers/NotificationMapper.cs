@@ -1,4 +1,5 @@
-﻿using TMD.Models.DomainModels;
+﻿using System.Linq;
+using TMD.Models.DomainModels;
 using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
@@ -22,8 +23,9 @@ namespace TMD.Web.ModelMappers
 
             };
         }
-        public static NotificationModel MapServerToClient(this Notification source)
+        public static NotificationModel MapServerToClient(this Notification source, string userId)
         {
+            var recipient = source.NotificationRecipients.FirstOrDefault(x => x.UserId == userId);
             return new NotificationModel
             {
                 NotificationId = source.NotificationId,
@@ -33,7 +35,9 @@ namespace TMD.Web.ModelMappers
                 CategoryId = source.CategoryId,
                 ItemId = source.ItemId,
                 CreatedDate = source.CreatedDate,
-                CreatedBy = source.CreatedBy
+                CreatedBy = source.CreatedByUser.FirstName,
+                isRead = recipient.IsRead?"Yes":"No",
+                RecipientId = recipient.Id
             };
         }
     }

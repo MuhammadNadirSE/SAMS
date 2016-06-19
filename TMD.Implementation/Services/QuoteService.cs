@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMD.Common;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -14,6 +15,7 @@ namespace TMD.Implementation.Services
 {
     public class QuoteService : IQuoteService
     {
+        private readonly INotificationService notificationService;
         private readonly IExclusionRepository exclusionRepository;
         private readonly IQuoteRepository quoteRepository;
         private readonly IQuoteDetailRepository quoteDetailRepository;
@@ -22,8 +24,9 @@ namespace TMD.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly IProductModelRepository productModelRepository;
 
-        public QuoteService(IExclusionRepository exclusionRepository,IQuoteRepository quoteRepository, IQuoteDetailRepository quoteDetailRepository, IQuoteExclusionRepository quoteExclusionRepository, IContactRepository contactRepository, IProductRepository productRepository, IProductModelRepository productModelRepository)
+        public QuoteService(INotificationService notificationService,IExclusionRepository exclusionRepository,IQuoteRepository quoteRepository, IQuoteDetailRepository quoteDetailRepository, IQuoteExclusionRepository quoteExclusionRepository, IContactRepository contactRepository, IProductRepository productRepository, IProductModelRepository productModelRepository)
         {
+            this.notificationService = notificationService;
             this.exclusionRepository = exclusionRepository;
             this.quoteRepository = quoteRepository;
             this.quoteDetailRepository = quoteDetailRepository;
@@ -76,11 +79,13 @@ namespace TMD.Implementation.Services
         {
             try
             {
+                bool isCreated = true;
                 if (model.QuoteID > 0)
                 {
                     UpdateQuote(model);
                     SaveQuoteDetails(model);
                     SaveQuoteExclusions(model);
+                    isCreated = false;
                 }
                 else
                 {
@@ -89,6 +94,17 @@ namespace TMD.Implementation.Services
                     model.QuoteReferenceNo = "Z-LHR-" + model.QuoteID;
                     UpdateQuote(model);
                 }
+
+                //Send Notification
+                notificationService.AddNotification(new Notification
+                {
+                    CategoryId = (int)NotificationType.Quote,
+                    ItemId = model.QuoteID,
+                    ActionPerformed = isCreated ? (int)ActionPerformed.Created : (int)ActionPerformed.Updated,
+                    CreatedBy = model.UpdatedBy,
+                    CreatedDate = DateTime.UtcNow,
+                    Title = "Quote - " + (model.QuoteReferenceNo.Length > 35 ? model.QuoteReferenceNo.Substring(0, 35) + "..." : model.QuoteReferenceNo)
+                });
                 return true;
             }
             catch (Exception ex)

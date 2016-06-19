@@ -15,6 +15,7 @@ namespace TMD.Implementation.Services
 {
     public class InquiryService : IInquiryService
     {
+        private readonly INotificationService notificationService;
         private readonly IInquiryRepository inquiryRepository;
         private readonly IDocumentService documentService;
         private readonly IContactRepository contactRepository;
@@ -22,8 +23,9 @@ namespace TMD.Implementation.Services
         private readonly IInquiryDetailRepository inquiryDetailRepository;
 
 
-        public InquiryService(IInquiryRepository inquiryRepository,IDocumentService documentService, IContactRepository contactRepository, IProductRepository productRepository, IInquiryDetailRepository inquiryDetailRepository)
+        public InquiryService(INotificationService notificationService,IInquiryRepository inquiryRepository,IDocumentService documentService, IContactRepository contactRepository, IProductRepository productRepository, IInquiryDetailRepository inquiryDetailRepository)
         {
+            this.notificationService = notificationService;
             this.inquiryRepository = inquiryRepository;
             this.documentService = documentService;
             this.contactRepository = contactRepository;
@@ -83,9 +85,11 @@ namespace TMD.Implementation.Services
 
         public bool SaveInquiry(InquiryResponse inquiryResp)
         {
+            bool isCreated = true;
             if (inquiryResp.Inquiry.InquiryID > 0)
             {
                 inquiryRepository.Update(inquiryResp.Inquiry);
+                isCreated = false;
             }
             else
             {
@@ -93,13 +97,23 @@ namespace TMD.Implementation.Services
             }
             inquiryRepository.SaveChanges();
 
-            SaveInquiryandDetails(inquiryResp);
-            documentService.AddDocuments(inquiryResp.InquiryDocuments, inquiryResp.Inquiry.InquiryID,
-                DocumentType.Inquiry);
+            SaveInquiryDetails(inquiryResp);
+            documentService.AddDocuments(inquiryResp.InquiryDocuments, inquiryResp.Inquiry.InquiryID,DocumentType.Inquiry);
+
+            //Send Notification
+            notificationService.AddNotification(new Notification
+            {
+                CategoryId = (int)NotificationType.Inquiry,
+                ItemId = inquiryResp.Inquiry.InquiryID,
+                ActionPerformed = isCreated?(int)ActionPerformed.Created: (int)ActionPerformed.Updated,
+                CreatedBy = inquiryResp.Inquiry.UpdatedBy,
+                CreatedDate = DateTime.UtcNow,
+                Title = "Inquiry - " + (inquiryResp.Inquiry.CompanyName.Length>35? inquiryResp.Inquiry.CompanyName.Substring(0,35) + "..." : inquiryResp.Inquiry.CompanyName)
+            });
             return true;
         }
 
-        private void SaveInquiryandDetails(InquiryResponse inquiryResp)
+        private void SaveInquiryDetails(InquiryResponse inquiryResp)
         {
             if (inquiryResp.Inquiry.InquiryID > 0)
             {

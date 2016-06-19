@@ -8,6 +8,7 @@ namespace TMD.Web.Models
     public class NotificationModel
     {
         public long NotificationId { get; set; }
+        public long RecipientId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int ActionPerformed { get; set; }
@@ -15,5 +16,6 @@ namespace TMD.Web.Models
         public int ItemId { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
+        public string isRead { get; set; }
     }
 }

@@ -10,7 +10,8 @@ using TMD.Web.Models;
 
 namespace TMD.Web.Controllers
 {
-    public class NotificationController : BaseController
+    [Authorize]
+    public class NotificationController : Controller
     {
         private readonly INotificationService notificationService;
         public NotificationController(INotificationService notificationService)
@@ -24,7 +25,7 @@ namespace TMD.Web.Controllers
             List<NotificationModel> Notifications =
                 notificationService.Get30DaysNotificationsByUserId(User.Identity.GetUserId())
                     .ToList()
-                    .Select(x => x.MapServerToClient()).ToList();
+                    .Select(x => x.MapServerToClient(User.Identity.GetUserId())).ToList();
 
 
             return View(Notifications);
@@ -32,81 +33,14 @@ namespace TMD.Web.Controllers
 
         //
         // GET: /Notification/Details/5
-        public ActionResult Details(int id)
+        public int Unread()
         {
-            return View();
+            return notificationService.GetUnreadNotificationsCount(User.Identity.GetUserId());
         }
-
-        //
-        // GET: /Notification/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Notification/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public bool Read(long id)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Notification/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Notification/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Notification/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Notification/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return notificationService.MarkNotificationAsRead(id);
         }
     }
 }

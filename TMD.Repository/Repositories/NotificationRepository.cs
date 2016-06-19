@@ -23,7 +23,8 @@ namespace TMD.Repository.Repositories
         
         public IEnumerable<Notification> Get30DaysNotificationsByUserId(string userId)
         {
-            return DbSet.Include(x => x.NotificationRecipients.Where(y => y.UserId.Equals(userId)));
+            //return DbSet.Include("NotificationRecipients").Select(n => new { notification= n,r=n.NotificationRecipients.Where(y => y.UserId.Equals(userId))}).AsEnumerable().Select(x=>x.notification);
+            return DbSet.Include("NotificationRecipients").Where(x => x.NotificationRecipients.Any(y => y.UserId.Equals(userId))).ToList();
         }
     }
 }

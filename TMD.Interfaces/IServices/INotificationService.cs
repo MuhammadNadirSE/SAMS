@@ -8,5 +8,6 @@ namespace TMD.Interfaces.IServices
         long AddNotification(Notification notification);
         IEnumerable<Notification> Get30DaysNotificationsByUserId(string userId);
         int GetUnreadNotificationsCount(string userId);
+        bool MarkNotificationAsRead(long id);
     }
 }

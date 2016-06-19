@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace TMD.Repository.Repositories
         public IEnumerable<AspNetRole> GetAllRoles()
         {
             return DbSet.ToList();
+        }
+
+        public List<AspNetUser> GetAllUsersOfRoles(List<string> roleIds)
+        {
+            var roles = DbSet.Where(x => roleIds.Contains(x.Id));
+            List<AspNetUser> users = new List<AspNetUser>();
+            foreach (var role in roles)
+            {
+                users.AddRange(role.AspNetUsers);
+            }
+            return users;
         }
         public string GetLatestAvailableRoleId()
         {

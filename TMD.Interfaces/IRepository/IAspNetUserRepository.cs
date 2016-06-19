@@ -9,5 +9,4 @@ namespace TMD.Interfaces.IRepository
         IEnumerable<AspNetUser> GetAllUsersOfEmployeeRole();
         IEnumerable<string> GetAllUsersEmailOfSpecificRole(string roleName);
     }
-
 }

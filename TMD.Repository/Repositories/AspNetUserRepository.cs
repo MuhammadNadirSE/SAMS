@@ -53,9 +53,5 @@ namespace TMD.Repository.Repositories
 
             return emails;
         }
-        public new IEnumerable<AspNetRole> Roles()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

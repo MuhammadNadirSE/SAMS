@@ -72,7 +72,7 @@
                     <li class="dropdown dropdown-notification" id="header_notification_bar">
                         <a href="~/Notification/Index"  class="dropdown-toggle" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
-                            <span class="badge badge-default">0</span>
+                            <span class="badge badge-default" id="notificationCount">@{Html.RenderAction("Unread","Notification");}</span>
                         </a>
                     </li>
                     <!-- END NOTIFICATION DROPDOWN -->
@@ -227,8 +227,8 @@
                     Metronic.init(); // init metronic core components
                     Layout.init();
                     QuickSidebar.init(); // init quick sidebar
-                    //UIConfirmations.init(); // init UIConfirmations
-                    SetGMTSession();
+                    UIConfirmations.init(); // init UIConfirmations
+                    //SetGMTSession();
                 });
         //$('.innerSelected').closest('ul').closest('li').addClass('active');
 

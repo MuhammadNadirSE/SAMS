@@ -145,7 +145,7 @@ namespace TMD.Web.Controllers
             }
             catch (Exception e)
             {
-                return View();
+                return View(inquiryViewModel);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿@model List<TMD.Web.Models.NotificationModel>
+﻿@using TMD.Common
+@model List<TMD.Web.Models.NotificationModel>
 @{
     ViewBag.Title = "Notifications";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -7,12 +8,6 @@
 }
 
 <div class="portlet portletCustomHeight light bg-inverse">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-bulb font-red-sunglo"></i>
-            <span class="caption-subject font-red-sunglo uppercase">Notifications</span>
-        </div>
-    </div>
     <div class="portlet-body form">
         <div class="form-body">
             <div class="row">
@@ -25,21 +20,32 @@
                     <div class="portlet-body flip-scroll">
                         <table id="dataTable" class="table table-bordered table-striped table-condensed flip-content">
                             <thead class="flip-content">
-                                <tr>
-                                    <th class="">Title</th>
-                                    <th class="">Description</th>
-                                    <th class="">Date</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th class="">Date</th>
+                                <th class="">Title</th>
+                                <th class="">Description</th>
+                                <th>Read</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@(Html.ActionLink(item.Title, "Details"@*, new { id = item.CategoryId }, new { @class = item.MainCategoryId == null ? "" : "padding-left-10percent" })*@))</td>
-                                <td>@item.Description</td>
                                 <td>@item.CreatedDate</td>
-                                <td></td>
+                                <td><a href=@Url.Action("Create", ((NotificationType)item.CategoryId).ToString(), new { id = item.ItemId })>@item.Title</a></td>
+                                <td>@(item.CreatedBy +" "+ ((ActionPerformed) item.ActionPerformed).ToString().ToLower() +" "+ ((NotificationType)item.CategoryId).ToString() +" on " + item.CreatedDate.ToString()
+                                          )
+                                </td>
+                                <td class="isRead">@item.isRead</td>
+                                <td>
+                                    @if (item.isRead == "No")
+                                    {
+                                        <a href="javascript:;" class="btn  btn-xs blue NotificationItem" title="Mark as Read" id="@item.RecipientId">
+                                            <i class="icon-bell"></i>
+                                        </a>
+                                    }
+                                </td>
                             </tr>
                         }
                             </tbody>
@@ -56,11 +62,43 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var siteURL = $('#siteURL').val();
+
         $('#dataTable').dataTable({
             "sPaginationType": "full_numbers",
-            "iDisplayLength": 10,
+            "iDisplayLength": 15,
             "bFilter": true,
             "bLengthChange": false,
+            "order": [[0, "desc"]],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [4] }
+            ]
+        });
+    });
+
+    $(".NotificationItem").on("click", function () {
+        var currentRow = $(this).parent().parent();
+        var currentColumn = $(this).parent();
+        var recipientId = $(this).attr('id');
+        // mark notification as read
+        $.ajax({
+            type: "POST",
+            data: "{ id:" + recipientId + "}",
+            url: siteURL + "Notification/Read",
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            success: function (res) {
+                toastr.success("You have read the notification.");
+                currentRow.children('td.isRead').text("Yes");
+                currentColumn.html("");
+                var count = parseInt($("#notificationCount").text());
+                if (count > 0) {
+                    $("#notificationCount").text(count - 1);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //toastr.error(thrownError);
+            }
         });
     });
 </script>
