@@ -9,7 +9,6 @@ namespace TMD.Models.MenuModels
     {
         public int MenuId { get; set; }
         public string MenuTitle { get; set; }
-        public string MenuTitleA { get; set; }
         public int MenuKey { get; set; }
         public bool IsRootItem { get; set; }
         public bool IsMenuItem { get; set; }

@@ -160,11 +160,11 @@
             <PropertyRef Name="DocumentId" />
           </Key>
           <Property Name="DocumentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefrenceType" Type="int" Nullable="false" />
+          <Property Name="RefrenceId" Type="int" Nullable="false" />
           <Property Name="DocumentData" Type="varbinary(max)" Nullable="false" />
           <Property Name="DocumentType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DocumentName" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="RefrenceId" Type="int" Nullable="false" />
-          <Property Name="RefrenceType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -254,7 +254,6 @@
           </Key>
           <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MenuTitle" Type="nvarchar(max)" />
-          <Property Name="MenuTitleA" Type="nvarchar(max)" />
           <Property Name="MenuKey" Type="int" Nullable="false" />
           <Property Name="IsRootItem" Type="bit" Nullable="false" />
           <Property Name="IsMenuItem" Type="bit" Nullable="false" />
@@ -1671,7 +1670,6 @@
           </Key>
           <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MenuTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MenuTitleA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MenuKey" Type="Int32" Nullable="false" />
           <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
           <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
@@ -2860,7 +2858,6 @@
                 <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
                 <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
                 <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
-                <ScalarProperty Name="MenuTitleA" ColumnName="MenuTitleA" />
                 <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
               </MappingFragment>
