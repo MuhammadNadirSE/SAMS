@@ -15,6 +15,8 @@ namespace TMD.Models.ResponseModels
         }
 
         public Quote Quote { get; set; }
+        public int QuoteCount{get;set;}
+   
         //Base Data
         public IEnumerable<Exclusion> Exclusions { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
