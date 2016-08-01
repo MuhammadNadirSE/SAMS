@@ -76,6 +76,7 @@ namespace TMD.Web.Controllers
             QuoteViewModel viewModel = new QuoteViewModel();
 
             var quoteResponse = quoteService.GetQuoteResponse(id);
+            int QuoteCount = quoteResponse.QuoteCount;
             if (quoteResponse.Quote != null)
             {
                 viewModel.Quote = quoteResponse.Quote.MapServerToClient();
@@ -97,8 +98,8 @@ namespace TMD.Web.Controllers
                     WarrantyTerms = "1 Year(s)",
                     ValidityTerms = "1 Week(s)"
                 };
-
-                viewModel.Quote.QuoteReferenceNo = "Z-LHR-"+ viewModel.Quote.QuoteID;
+                string ModelNo = Convert.ToString(QuoteCount).PadLeft(3, '0');
+                viewModel.Quote.QuoteReferenceNo = "ZAM-"+ ModelNo;
                 viewModel.Quote.QuoteDetail.Make = "ZAMTAS";
             }
             viewModel.Contacts = quoteResponse.Contacts.Select(x => x.CreateDDL()).ToList();

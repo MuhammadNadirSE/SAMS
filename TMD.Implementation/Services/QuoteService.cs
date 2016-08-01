@@ -60,12 +60,17 @@ namespace TMD.Implementation.Services
             {
                 response.Quote = quoteRepository.GetQuoteAndQuoteDetail((int)id);
             }
+            else
+            {
+                response.QuoteCount = quoteRepository.GetAll().Count()+1;
+            }
 
             //BaseData
             response.Contacts = contactRepository.GetAll().ToList();
             response.Products = productRepository.GetAll().ToList();
             response.ProductModels = productModelRepository.GetAll().ToList();
             response.Exclusions = exclusionRepository.GetAll().ToList();
+         
 
             return response;
         }
@@ -90,8 +95,9 @@ namespace TMD.Implementation.Services
                 else
                 {
                     AddQuote(model);
+                    string ModelNo = Convert.ToString(model.QuoteID).PadLeft(3, '0');
 
-                    model.QuoteReferenceNo = "Z-LHR-" + model.QuoteID;
+                    model.QuoteReferenceNo = "ZAM-" + ModelNo;
                     UpdateQuote(model);
                 }
 
