@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Models.BaseDataModels;
+using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels.Common;
 using TMD.Web.ViewModels.Employee;
@@ -51,6 +52,10 @@ namespace TMD.Web.Controllers
             {
                 employeeViewModel.Employee = employeeBasedata.Employee.CreateFromServerToClient(GMT);
             }
+            if (employeeBasedata.EmployeePhoto != null)
+            {
+                employeeViewModel.EmployeePhoto = employeeBasedata.EmployeePhoto;
+            }
             employeeViewModel.Designation = employeeBasedata.Designation.Select(x => x.CreateFromServerToClient()).OrderBy(x=>x.Title).ToList();
 
             var roles = Session["RoleName"].ToString().ToLower() == "superadmin"
@@ -76,6 +81,21 @@ namespace TMD.Web.Controllers
 
                 EmployeeBaseData employeeData = new EmployeeBaseData();
                 employeeData.Employee = employeeViewModel.Employee.CreateFromClientToServer();
+                if (employeeViewModel.UploadFile != null)
+                {
+                    var tempStream = employeeViewModel.UploadFile.InputStream;
+                    byte[] bytes = new byte[tempStream.Length];
+                    tempStream.Read(bytes, 0, Convert.ToInt32(tempStream.Length));
+                    Document document = new Document
+                    {
+                        DocumentData = bytes,
+                        DocumentName = employeeViewModel.UploadFile.FileName,
+                        DocumentType = employeeViewModel.UploadFile.ContentType
+                    };
+                    if (employeeViewModel.EmployeePhoto!=null && employeeViewModel.EmployeePhoto.DocumentId > 0)
+                        document.DocumentId = employeeViewModel.EmployeePhoto.DocumentId;
+                    employeeData.EmployeePhoto = document;
+                }
                 //if (employeeViewModel.EmployeeSupervisor != null)
                 //    employeeData.EmployeeSupervisors = employeeViewModel.EmployeeSupervisor.Select(x => x.CreateFromClientToServer()).ToList();
                 employeeService.SaveEmployee(employeeData);

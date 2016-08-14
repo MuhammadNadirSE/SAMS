@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 using TMD.Models.DomainModels;
 using TMD.Models.RequestModels;
+using TMD.Web.ViewModels.Employee;
 using Models=TMD.Web.Models;
 
 namespace TMD.Web.ViewModels.Inquiry
@@ -15,10 +16,12 @@ namespace TMD.Web.ViewModels.Inquiry
             Products=new List<Models.Product>();
             InquiryDetail= new List<Models.InquiryDetailModel>();
             Documents=new List<Document>();
+            Employees = new List<EmployeeDDL>();
 
             data = new List<Models.InquiryModel>();
             InquirySearchRequest=new InquirySearchRequest();
         }
+        public List<EmployeeDDL> Employees { get; set; }
         public Models.InquiryModel InquiryModel { get; set; }
         public IList<Models.ContactModel> Contacts { get; set; }
         public IList<Models.Product> Products { get; set; }

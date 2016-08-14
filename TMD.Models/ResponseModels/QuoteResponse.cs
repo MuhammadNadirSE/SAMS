@@ -19,6 +19,7 @@ namespace TMD.Models.ResponseModels
    
         //Base Data
         public IEnumerable<Exclusion> Exclusions { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<ProductModel> ProductModels { get; set; }

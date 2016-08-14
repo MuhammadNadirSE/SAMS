@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using TMD.Models.RequestModels;
 using TMD.Web.Models;
+using TMD.Web.ViewModels.Employee;
 
 namespace TMD.Web.ViewModels.Quote
 {
@@ -12,6 +13,7 @@ namespace TMD.Web.ViewModels.Quote
         public QuoteViewModel()
         {
             Contacts = new List<ContactModel>();
+            Employees = new List<EmployeeDDL>();
             Products = new List<Models.Product>();
             ProductModels = new List<ProductModel>();
             Exclusions=new List<ExclusionModel>();
@@ -22,6 +24,7 @@ namespace TMD.Web.ViewModels.Quote
         public QuoteModel Quote { get; set; }        
         //Base Data
         public List<ExclusionModel> Exclusions { get; set; }
+        public List<EmployeeDDL> Employees { get; set; }
         public List<QuoteExclusionModel> QuoteExclusions { get; set; }
         public IEnumerable<ContactModel> Contacts { get; set; }
         public IEnumerable<Models.Product> Products { get; set; }

@@ -53,6 +53,7 @@ namespace TMD.Web.ModelMappers
 
         public static TMD.Web.Models.InquiryModel MapServerToClientSearch(this Inquiry source)
         {
+            var creator = source.CreatedByUser.Employees.FirstOrDefault();
             return new TMD.Web.Models.InquiryModel
             {
 
@@ -63,7 +64,7 @@ namespace TMD.Web.ModelMappers
                 ContactResponse = source.ContactResponse,
                 CreatedDate = source.CreatedDate,
                 CreatedBy = source.CreatedBy,
-                CreatedByName = source.CreatedByUser.FirstName+" "+ source.CreatedByUser.LastName,
+                CreatedByName = creator!=null? creator.FullName:"",
                 UpdateDate = source.UpdateDate,
                 UpdatedBy = source.UpdatedBy,
                 UserId = source.UserId,

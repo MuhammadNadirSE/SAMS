@@ -13,6 +13,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Quote.QuoteID)
+    @Html.HiddenFor(x => x.Quote.InquiryId)
     @Html.HiddenFor(x => x.Quote.CreatedDate)
     @Html.HiddenFor(x => x.Quote.CreatedBy)
  
@@ -223,48 +224,60 @@
                     </div>
                     <!--/span-->
                 </div>
-                <div class="row hideOthersDetail">
-                    <div class="portlet box">
-                        <div class="portlet-body flip-scroll">
-                            <table class="table table-bordered table-striped table-condensed flip-content" id="ExclusionsTable">
-                                <thead class="flip-content">
-                                    <tr>
-                                        <th style="display: none"></th>
-                                        <th width="90%">
-                                            Exclusion
-                                        </th>
-                                        <th width="10%">
-                                            <span class="mustDisplay">Remove</span>
-                                        </th>
+            <div class="row hideOthersDetail">
+                <div class="portlet box">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed flip-content" id="ExclusionsTable">
+                            <thead class="flip-content">
+                            <tr>
+                                <th style="display: none"></th>
+                                <th width="90%">
+                                    Exclusion
+                                </th>
+                                <th width="10%">
+                                    <span class="mustDisplay">Remove</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="techspecBody">
+                            @if (Model.QuoteExclusions != null)
+                            {
+                                for (int i = 0; i < Model.QuoteExclusions.Count; i++)
+                                {
+                                    <tr data-id="@i">
+                                        <td style="display: none">
+                                            <input name='QuoteExclusions.Index' type='hidden' value='@i'/>
+                                            <input name='QuoteExclusions[@i].QuoteExclusionId' type='hidden' value='@Model.QuoteExclusions[i].QuoteExclusionId'/>
+                                            <input name='QuoteExclusions[@i].ExclusionId' type='hidden' value='@Model.QuoteExclusions[i].ExclusionId'/>
+                                            <input name='QuoteExclusions[@i].QuoteId' type='hidden' value='@Model.QuoteExclusions[i].QuoteId'/>
+                                        </td>
+                                        <td width="90%">
+                                            <input name='QuoteExclusions[@i].ExclusionName' tabindex="-1" type='text' class="ProductTableColumn" readonly="readonly" value='@Model.QuoteExclusions[i].ExclusionName'/>
+                                        </td>
+                                        <td width="10%">
+                                            <a href="javascript:;" class="btn default btn-xs red remove" tabindex="-1" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody id="techspecBody">
-                                    @if (Model.QuoteExclusions!= null)
-                                    {
-                                        for (int i = 0; i < Model.QuoteExclusions.Count; i++)
-                                        {
-                                            <tr data-id="@i">
-                                                <td style="display: none">
-                                                    <input name='QuoteExclusions.Index' type='hidden' value='@i' />
-                                                    <input name='QuoteExclusions[@i].QuoteExclusionId' type='hidden' value='@Model.QuoteExclusions[i].QuoteExclusionId' />
-                                                    <input name='QuoteExclusions[@i].ExclusionId' type='hidden' value='@Model.QuoteExclusions[i].ExclusionId' />
-                                                    <input name='QuoteExclusions[@i].QuoteId' type='hidden' value='@Model.QuoteExclusions[i].QuoteId' />
-                                                </td>
-                                                <td width="90%">
-                                                    <input name='QuoteExclusions[@i].ExclusionName' tabindex="-1" type='text' class="ProductTableColumn" readonly="readonly" value='@Model.QuoteExclusions[i].ExclusionName' />
-                                                </td>
-                                                <td width="10%">
-                                                    <a href="javascript:;" class="btn default btn-xs red remove" tabindex="-1" title="Delete"><i class="fa fa-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
+                                }
+                            }
 
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Quote.Comments, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Quote.Comments, new { @class = "form-control fullRowField", placeholder = "Quote Comments" })
+                                @Html.ValidationMessageFor(model => model.Quote.Comments)
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

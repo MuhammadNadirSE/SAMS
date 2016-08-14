@@ -1,5 +1,5 @@
-quote filter by emplyee and flag for converted to order or not
-quote comments filed
-quote ref# format= zam-001
+--quote filter by emplyee and flag for converted to order or not
+--quote comments filed
+--quote ref# format= zam-001
 
-employee field: salary, photo, joining date
+--employee fields on create employee: salary, photo, joining date

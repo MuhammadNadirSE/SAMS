@@ -18,16 +18,22 @@ namespace TMD.Web.Controllers
     public class QuoteController : BaseController
     {
         private readonly IQuoteService quoteService;
-        public QuoteController(IQuoteService quoteService)
+        private readonly IEmployeeService employeeService;
+
+        public QuoteController(IQuoteService quoteService, IEmployeeService employeeService)
         {
             this.quoteService = quoteService;
+            this.employeeService = employeeService;
         }
+
         // GET: /Quote/
         [SiteAuthorize(PermissionKey = "QuotesList")]
         public ActionResult Index()
         {
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(new QuoteViewModel());
+            var vm = new QuoteViewModel();
+            vm.Employees = employeeService.GetAllEmployees().Select(x => x.MapEmployeeDdlFromServerToClient()).ToList();
+            return View(vm);
         }
 
         [HttpPost]
@@ -71,7 +77,7 @@ namespace TMD.Web.Controllers
 
         // GET: /Quote/Create
         [SiteAuthorize(PermissionKey = "CreateUpdateQuote")]
-        public ActionResult Create(int? id)
+        public ActionResult Create(int? id, int? inq, int? con)
         {
             QuoteViewModel viewModel = new QuoteViewModel();
 
@@ -101,6 +107,11 @@ namespace TMD.Web.Controllers
                 string ModelNo = Convert.ToString(QuoteCount).PadLeft(3, '0');
                 viewModel.Quote.QuoteReferenceNo = "ZAM-"+ ModelNo;
                 viewModel.Quote.QuoteDetail.Make = "ZAMTAS";
+                if (inq != null)
+                {
+                    viewModel.Quote.InquiryId = inq;
+                    viewModel.Quote.ContactId = con;
+                }
             }
             viewModel.Contacts = quoteResponse.Contacts.Select(x => x.CreateDDL()).ToList();
             viewModel.Products = quoteResponse.Products.Select(x => x.CreateDDL()).ToList();

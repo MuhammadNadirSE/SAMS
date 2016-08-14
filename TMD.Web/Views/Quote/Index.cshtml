@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Quotes";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <style>
     .ui-datepicker-calendar {
@@ -38,7 +39,7 @@
                         <label class="control-label col-md-3">Subject</label>
 
                         <div class="col-md-9">
-                            <input id="txtSubject" class="form-control" />
+                            <input id="txtSubject" class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,33 @@
                         <label class="control-label col-md-3">Ref. No.</label>
 
                         <div class="col-md-9">
-                            <input id="txtReferenceNumber" class="form-control" />
+                            <input id="txtReferenceNumber" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+                @if (userPermissionsSet.Contains("ViewAllQuotes"))
+                {
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Created By</label>
+
+                            <div class="col-md-9">
+                                @Html.DropDownList("employeesList", new SelectList(Model.Employees, "EmployeeUserId", "FullName"), "--Please Select--", new { @class = "form-control select2me",@id="ddlEmployeeId" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="control-label col-md-5">Converted to Order?</label>
+
+                        <div class="col-md-7">
+                            <input id="isOrder" class="form-control" type="checkbox"/>
                         </div>
                     </div>
                 </div>
@@ -159,6 +186,8 @@
                     params.Subject = $('#txtSubject').val();
                    // params.Priority = $('#ddlPriority option:selected').val();
                     params.ReferenceNumber = $('#txtReferenceNumber').val();
+                    params.EmployeeUserId = $('#ddlEmployeeId option:selected').val();
+                    params.isConvertedToOrder = $('#isOrder').prop("checked");
 
                 },
             }
@@ -174,10 +203,7 @@
         $('#ResetBtn').on('click', function() {
             $('#txtSubject').val('');
             $('#txtReferenceNumber').val('');
-          //  $('#txtCreatedBy').val('');
-
-            //$('#filterByMonth').val("");
-           // setCurrentMonth();
+            $('#ddlEmployeeId').select2("val", "");
             attendances.fnDraw();
         });
 

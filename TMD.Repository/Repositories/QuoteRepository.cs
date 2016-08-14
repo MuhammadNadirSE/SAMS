@@ -37,8 +37,9 @@ namespace TMD.Repository.Repositories
          new Dictionary<OrderByColumnQuote, Func<Quote, object>>
             {
                 {OrderByColumnQuote.Subject, c => c.Subject},
-                {OrderByColumnQuote.ReferenceNumber, c => c.QuoteID},
+                {OrderByColumnQuote.ReferenceNumber, c => c.QuoteReferenceNo},
                 {OrderByColumnQuote.ContactName, c => c.Contact.FirstName},
+                {OrderByColumnQuote.EmployeeUserId, c => c.CreatedBy}
                 
             };
         public QuoteResponse GetAllQuotes(QuoteSearchRequest searchRequest)
@@ -50,7 +51,8 @@ namespace TMD.Repository.Repositories
                 s => searchRequest.HasPermissionToViewAll ?
                     (
                         (string.IsNullOrEmpty(searchRequest.Subject) || (s.Subject).Contains(searchRequest.Subject)) &&
-                        (string.IsNullOrEmpty(searchRequest.ReferenceNumber) || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber)) 
+                        (string.IsNullOrEmpty(searchRequest.ReferenceNumber) || (s.QuoteReferenceNo).Contains(searchRequest.ReferenceNumber))&& 
+                        (string.IsNullOrEmpty(searchRequest.EmployeeUserId) || (s.CreatedBy).Equals(searchRequest.EmployeeUserId)) 
                    
                     ): (
                         (string.IsNullOrEmpty(searchRequest.Subject) || (s.Subject).Contains(searchRequest.Subject)) &&

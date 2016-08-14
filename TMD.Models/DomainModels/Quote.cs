@@ -30,6 +30,7 @@ namespace TMD.Models.DomainModels
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<int> InquiryId { get; set; }
         public Nullable<int> ContactId { get; set; }
+        public string Comments { get; set; }
 
         public virtual AspNetUser CreatedByUser { get; set; }
         public virtual AspNetUser UpdatedByUser { get; set; }

@@ -45,6 +45,7 @@ namespace TMD.Web.Models
         public Nullable<int> ContactId { get; set; }
 
         public string ContactName { get; set; }
+        public string Comments { get; set; }
 
         public QuoteDetailModel QuoteDetail { get; set; }
         public List<QuoteExclusionModel> QuoteExclusions { get; set; }

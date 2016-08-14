@@ -20,22 +20,22 @@ namespace TMD.Web.Controllers
 
         private readonly IInquiryService inquiryService;
         private readonly IDocumentService documentService;
+        private readonly IEmployeeService employeeService;
 
-        public InquiryController(IInquiryService inquiryService, IDocumentService documentService)
+        public InquiryController(IInquiryService inquiryService, IDocumentService documentService,IEmployeeService employeeService)
         {
             this.inquiryService = inquiryService;
             this.documentService = documentService;
+            this.employeeService = employeeService;
         }
 
         [SiteAuthorize(PermissionKey = "InquiriesList")]
         public ActionResult Index()
         {
-            //List<TMD.Web.Models.InquiryModel> Inquiries =
-            //    inquiryService.GetAllInquiries()
-            //        .ToList()
-            //        .Select(x => x.MapServerToClient()).ToList();
+            var vm = new InquiryViewModel();
+            vm.Employees = employeeService.GetAllEmployees().Select(x => x.MapEmployeeDdlFromServerToClient()).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(new InquiryViewModel());
+            return View(vm);
         }
 
         [HttpPost]
