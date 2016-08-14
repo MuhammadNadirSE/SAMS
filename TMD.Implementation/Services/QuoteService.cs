@@ -15,6 +15,7 @@ namespace TMD.Implementation.Services
 {
     public class QuoteService : IQuoteService
     {
+        private readonly IEmployeeRepository employeeRepository;
         private readonly INotificationService notificationService;
         private readonly IExclusionRepository exclusionRepository;
         private readonly IQuoteRepository quoteRepository;
@@ -24,8 +25,9 @@ namespace TMD.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly IProductModelRepository productModelRepository;
 
-        public QuoteService(INotificationService notificationService,IExclusionRepository exclusionRepository,IQuoteRepository quoteRepository, IQuoteDetailRepository quoteDetailRepository, IQuoteExclusionRepository quoteExclusionRepository, IContactRepository contactRepository, IProductRepository productRepository, IProductModelRepository productModelRepository)
+        public QuoteService(IEmployeeRepository employeeRepository,INotificationService notificationService,IExclusionRepository exclusionRepository,IQuoteRepository quoteRepository, IQuoteDetailRepository quoteDetailRepository, IQuoteExclusionRepository quoteExclusionRepository, IContactRepository contactRepository, IProductRepository productRepository, IProductModelRepository productModelRepository)
         {
+            this.employeeRepository = employeeRepository;
             this.notificationService = notificationService;
             this.exclusionRepository = exclusionRepository;
             this.quoteRepository = quoteRepository;

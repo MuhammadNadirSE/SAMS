@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TMD.Web.ViewModels.Employee
 {
@@ -61,14 +62,14 @@ namespace TMD.Web.ViewModels.Employee
         [Display(Name = "Is Active User?")]
         public bool IsRegistered { get; set; }
         public decimal? Salary { get; set; }
-
-
-        
+        [Display(Name = "Joining Date")]
+        public DateTime? JoiningDate { get; set; }
     }
 
     public class EmployeeDDL
     {
         public int EmployeeId { get; set; }
+        public string EmployeeUserId { get; set; }
         public string FullName { get; set; }
     }
 }

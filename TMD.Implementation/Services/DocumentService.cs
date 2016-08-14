@@ -32,7 +32,27 @@ namespace TMD.Implementation.Services
             documentRepository.SaveChanges();
             return 1;
         }
-
+        public int AddDocument(Document document, int refrenceId, DocumentType refrenceType)
+        {
+            var doc = documentRepository.Find(document.DocumentId);
+            if (doc != null)
+            {
+                //update photo content
+                document.RefrenceType = (int)refrenceType;
+                document.RefrenceId = refrenceId;
+                doc.DocumentType = document.DocumentType;
+                doc.DocumentData = document.DocumentData;
+                documentRepository.Update(doc);
+            }
+            else
+            {
+                document.RefrenceType = (int)refrenceType;
+                document.RefrenceId = refrenceId;
+                documentRepository.Add(document);
+            }
+            documentRepository.SaveChanges();
+            return 1;
+        }
         public bool DeleteDocument(long documentId)
         {
             var doc = documentRepository.Find(documentId);

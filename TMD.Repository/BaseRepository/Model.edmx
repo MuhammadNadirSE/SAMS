@@ -188,6 +188,7 @@
           <Property Name="AllowedAnnualCasualLeaves" Type="int" Nullable="false" />
           <Property Name="AllowedAnnualMedicalLeaves" Type="int" Nullable="false" />
           <Property Name="Salary" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="JoiningDate" Type="datetime" />
         </EntityType>
         <EntityType Name="EmployeePayroll">
           <Key>
@@ -362,6 +363,7 @@
           <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="InquiryId" Type="int" />
           <Property Name="ContactId" Type="int" />
+          <Property Name="Comments" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="QuoteDetails">
           <Key>
@@ -1887,6 +1889,7 @@
           <NavigationProperty Name="SupervisorOfEmployees" Relationship="TMD.Models.DomainModels.FK_EmployeeSupervisors_Supervisor" FromRole="Employee" ToRole="EmployeeSupervisor" />
           <NavigationProperty Name="Tickets" Relationship="TMD.Models.DomainModels.FK_Ticket_Employee" FromRole="Employee" ToRole="Ticket" />
           <NavigationProperty Name="ApprovedEmployeeTickets" Relationship="TMD.Models.DomainModels.FK_Ticket_Employee_ApprovedBy" FromRole="Employee" ToRole="Ticket" />
+          <Property Name="JoiningDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="EmployeePayroll">
           <Key>
@@ -2755,6 +2758,7 @@
           <NavigationProperty Name="Inquiry" Relationship="TMD.Models.DomainModels.FK_Quote_Inquiry" FromRole="Quote" ToRole="Inquiry" />
           <NavigationProperty Name="QuoteDetails" Relationship="TMD.Models.DomainModels.FK_QuoteDetails_Quote" FromRole="Quote" ToRole="QuoteDetail" />
           <NavigationProperty Name="QuoteExclusions" Relationship="TMD.Models.DomainModels.FK_QuoteExclusions_Quote" FromRole="Quote" ToRole="QuoteExclusion" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Quote_AspNetUsers">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -2989,6 +2993,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
                 <ScalarProperty Name="AllowedAnnualMedicalLeaves" ColumnName="AllowedAnnualMedicalLeaves" />
                 <ScalarProperty Name="AllowedAnnualCasualLeaves" ColumnName="AllowedAnnualCasualLeaves" />
@@ -3291,6 +3296,7 @@
           <EntitySetMapping Name="Quotes">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Quote">
               <MappingFragment StoreEntitySet="Quote">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="ContactId" ColumnName="ContactId" />
                 <ScalarProperty Name="InquiryId" ColumnName="InquiryId" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />

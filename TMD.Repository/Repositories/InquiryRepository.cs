@@ -38,7 +38,7 @@ namespace TMD.Repository.Repositories
             {
                 {OrderByColumnInquiry.ContactName, c => c.Contact.FirstName},
                 {OrderByColumnInquiry.Priority, c => c.Priority},
-                {OrderByColumnInquiry.CreatedBy, c => c.CreatedByUser.FirstName},
+                {OrderByColumnInquiry.CreatedBy, c => c.CreatedBy},
                 {OrderByColumnInquiry.Title, c => c.CompanyName}
             };
         public InquiryResponse GetAllInquiries(InquirySearchRequest searchRequest)
@@ -51,7 +51,7 @@ namespace TMD.Repository.Repositories
                     (
                     (string.IsNullOrEmpty(searchRequest.ContactName) || (s.Contact.FirstName + " " + s.Contact.LastName).Contains(searchRequest.ContactName)) &&
                     (searchRequest.Priority==0 || (s.Priority) == searchRequest.Priority) &&
-                    (string.IsNullOrEmpty(searchRequest.CreatedBy) || (s.CreatedByUser.FirstName + " " + s.CreatedByUser.LastName).Contains(searchRequest.CreatedBy))
+                    (string.IsNullOrEmpty(searchRequest.CreatedBy) || (s.CreatedBy).Equals(searchRequest.CreatedBy))
                     ):
                     (
                     (string.IsNullOrEmpty(searchRequest.ContactName) || (s.Contact.FirstName + " " + s.Contact.LastName).Contains(searchRequest.ContactName)) &&

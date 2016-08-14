@@ -20,7 +20,8 @@
     public enum DocumentType
     {
         Product = 1,
-        Inquiry = 2
+        Inquiry = 2,
+        EmployeePhoto=3
     }
 
     public enum NotificationType

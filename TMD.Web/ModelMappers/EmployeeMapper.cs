@@ -31,7 +31,8 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDt = Utility.ConvertTimeByGMT(GMT,source.RecCreatedDt),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = Utility.ConvertTimeByGMT(GMT, source.RecLastUpdatedDt),
-                Salary = source.Salary
+                Salary = source.Salary,
+                JoiningDate = source.JoiningDate
             };
             if (source.AspNetUser != null)
             {
@@ -66,7 +67,8 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                Salary = source.Salary
+                Salary = source.Salary,
+                JoiningDate = source.JoiningDate
             };
         }
 
@@ -75,6 +77,7 @@ namespace TMD.Web.ModelMappers
             return new EmployeeDDL
             {
                 EmployeeId = soorce.EmployeeId,
+                EmployeeUserId = soorce.UserId,
                 FullName = soorce.FullName
             };
         }

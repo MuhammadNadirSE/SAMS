@@ -8,9 +8,9 @@
     width: 263% !important;
 }
 
-    .form-group .select2-container {
+.form-group .select2-container, .input-group .form-control .select2me{
   position: relative;
-  z-index: 2;
+  z-index: 0 !important;
   float: left;
   width: 100%;
   margin-bottom: 0;

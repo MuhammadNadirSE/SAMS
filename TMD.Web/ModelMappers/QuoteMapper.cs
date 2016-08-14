@@ -20,6 +20,7 @@ namespace TMD.Web.ModelMappers
                 ValidityTerms=source.ValidityTerms,
                 WarrantyTerms=source.WarrantyTerms,
                 PaymentTerms=source.PaymentTerms,
+                Comments= source.Comments,
                 
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
@@ -42,6 +43,7 @@ namespace TMD.Web.ModelMappers
                 ValidityTerms = source.ValidityTerms,
                 WarrantyTerms = source.WarrantyTerms,
                 PaymentTerms = source.PaymentTerms,
+                Comments = source.Comments,
 
                 CreatedBy = source.CreatedBy,
                 CreatedDate = source.CreatedDate,
@@ -85,22 +87,22 @@ namespace TMD.Web.ModelMappers
             {
 
                 QuoteID = source.QuoteID,
-                ContactId = source.ContactId,
-                InquiryId = source.InquiryId,
+                //ContactId = source.ContactId,
+                //InquiryId = source.InquiryId,
                 QuoteReferenceNo = source.QuoteReferenceNo,
                 Subject = source.Subject,
-                DeliveryTerms = source.DeliveryTerms,
-                FreeServiceTerms = source.FreeServiceTerms,
-                InstallationTerms = source.InstallationTerms,
-                ValidityTerms = source.ValidityTerms,
-                WarrantyTerms = source.WarrantyTerms,
-                PaymentTerms = source.PaymentTerms,
+                //DeliveryTerms = source.DeliveryTerms,
+                //FreeServiceTerms = source.FreeServiceTerms,
+                //InstallationTerms = source.InstallationTerms,
+                //ValidityTerms = source.ValidityTerms,
+                //WarrantyTerms = source.WarrantyTerms,
+                //PaymentTerms = source.PaymentTerms,
                 ContactName=source.Contact.FirstName+" "+source.Contact.LastName,
 
-                CreatedBy = source.CreatedBy,
-                CreatedDate = source.CreatedDate,
-                UpdatedBy = source.UpdatedBy,
-                UpdatedDate = source.UpdatedDate
+                //CreatedBy = source.CreatedBy,
+                //CreatedDate = source.CreatedDate,
+                //UpdatedBy = source.UpdatedBy,
+                //UpdatedDate = source.UpdatedDate
 
                 
             };

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMD.Common;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.BaseDataModels;
@@ -12,15 +13,19 @@ namespace TMD.Implementation.Services
     {
 
         #region 'Private and Constructor'
-        private readonly IEmployeeRepository employeeRepository;
+
+         private readonly IDocumentService documentService;
+         private readonly IDocumentRepository documentRepository;
+         private readonly IEmployeeRepository employeeRepository;
          private readonly IDesignationRepository designationRepository;
          private readonly IEmployeeSupervisorRepository employeeSupervisorRepository;
          private readonly IAspNetRoleRepository aspNetRoleRepository;
          private readonly ITicketRepository ticketRepository;
 
-
-         public EmployeeService(IEmployeeRepository EmployeeRepository,IDesignationRepository designationRepository,IEmployeeSupervisorRepository employeeSupervisorRepository,IAspNetRoleRepository aspNetRoleRepository, ITicketRepository ticketRepository)
+         public EmployeeService(IDocumentService documentService,IDocumentRepository documentRepository,IEmployeeRepository EmployeeRepository,IDesignationRepository designationRepository,IEmployeeSupervisorRepository employeeSupervisorRepository,IAspNetRoleRepository aspNetRoleRepository, ITicketRepository ticketRepository)
          {
+             this.documentService = documentService;
+             this.documentRepository = documentRepository;
              this.employeeRepository = EmployeeRepository;
              this.designationRepository = designationRepository;
              //this.employeeSupervisorRepository = employeeSupervisorRepository;
@@ -42,6 +47,8 @@ namespace TMD.Implementation.Services
             {
                 var empId = (int) employeeId;
                 baseData.Employee = employeeRepository.Find(empId);
+                baseData.EmployeePhoto =
+                    documentRepository.GetAllDocumentByRefId(empId, (int) DocumentType.EmployeePhoto).FirstOrDefault();
             }
                 
             baseData.Designation = designationRepository.GetAll();
@@ -63,7 +70,9 @@ namespace TMD.Implementation.Services
              {
                  employeeRepository.Add(employeeData.Employee);
              }
-             employeeRepository.SaveChanges();
+            if (employeeData.EmployeePhoto != null)
+                documentService.AddDocument(employeeData.EmployeePhoto, employeeData.Employee.EmployeeId, DocumentType.EmployeePhoto);
+            employeeRepository.SaveChanges();
 
             //SaveEmployeeSupervisors(employeeData);
 

@@ -14,7 +14,7 @@
 }
 
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @onsubmit = "return ValidateFields(this)" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", @onsubmit = "return ValidateFields(this)" }))
 {
     @*@Html.AntiForgeryToken()
       @Html.ValidationSummary(true)*@
@@ -90,9 +90,13 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Employee.Salary, new {@class = "control-label col-md-3"})
 
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Employee.Salary, new { @class = "form-control mustReadonly", placeholder = "Amount e.g. 10000 (Optional)", onkeypress = "return isNumberKey(this)" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.Employee.Salary, new {@class = "form-control mustReadonly", placeholder = "Amount e.g. 10000 (Optional)", onkeypress = "return isNumberKey(this)"})
+                                </div>
+                                @Html.LabelFor(model => model.Employee.JoiningDate, new { @class = "control-label col-md-3" })
 
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.Employee.JoiningDate,"{0:d}", new { @class = "form-control mustReadonly datepicker" })
                                 </div>
                             </div>
                         </div>
@@ -189,7 +193,27 @@
                             </div>
                         </div>
                     </div>
-                    <!--/span-->
+                    <div class="row hideOthersDetail">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class = "control-label col-md-3">Photo</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.UploadFile, new {@class = "form-control", type = "file", accept = ".pdf,.jpg,.jpeg,.png"})
+                                </div>
+                                @if (Model.EmployeePhoto != null && Model.EmployeePhoto.DocumentType != null)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.HiddenFor(model => model.EmployeePhoto.DocumentId)
+                                            @Html.HiddenFor(model => model.EmployeePhoto.DocumentData)
+                                            @Html.HiddenFor(model => model.EmployeePhoto.DocumentType)
+                                            <img class="cursorHand" data-mfp-src="@Url.Content("~/Document/Download/"+Model.EmployeePhoto.DocumentId)" src="@Url.Content("~/Document/Download/"+Model.EmployeePhoto.DocumentId)" alt="" style="height: 200px;" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
             </div>
 
             <!--/row-->
@@ -234,9 +258,9 @@
         
         $(".mustDisplay").css("display", '@display');
         if('@readonly1' == 'True')
-            $(".mustReadonly").prop("readOnly", true);
+            $(".mustReadonly").prop("disabled", true);
         else
-            $(".mustReadonly").prop("readOnly", false);
+            $(".mustReadonly").prop("disabled", false);
 
         
         var employee = $("#Employee_EmployeeId").val();

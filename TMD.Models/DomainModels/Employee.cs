@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TMD.Models.DomainModels
 {
@@ -21,6 +22,7 @@ namespace TMD.Models.DomainModels
         public int AllowedAnnualPaidLeaves { get; set; }
         public int AllowedAnnualCasualLeaves { get; set; }
         public int AllowedAnnualMedicalLeaves { get; set; }
+        public DateTime? JoiningDate { get; set; }
         public decimal? Salary { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }

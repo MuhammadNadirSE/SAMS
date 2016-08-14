@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using TMD.Models.DomainModels;
 using TMD.Web.ViewModels.EmployeeSupervisor;
 using TMD.Web.ViewModels.Designation;
 using TMD.Web.ViewModels.UserRoles;
@@ -17,6 +19,7 @@ namespace TMD.Web.ViewModels.Employee
             Employee=new EmployeeModel();
         }
         public EmployeeModel Employee { get; set; }
+        public Document EmployeePhoto { get; set; }
 
         public double RemainingMedicalLeaves { get; set; }
         public double RemainingCasualLeaves { get; set; }
@@ -30,5 +33,7 @@ namespace TMD.Web.ViewModels.Employee
 
         public List<AspNetRoleModel> Roles { get; set; }
         public string SupervisorIdsToDelete { get; set; }
+
+        public HttpPostedFileBase UploadFile { get; set; }
     }
 }
